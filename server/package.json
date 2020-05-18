@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "app/index.js",
+  "scripts": {
+    "nodemon": "nodemon"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "engines": {
+    "node": ">=6.11.0"
+  }
+}
