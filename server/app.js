@@ -16,7 +16,9 @@ const mongoose = require('mongoose');
 // 加载bodyparser模块，用来解析前端post方式提交过来的数据
 const bodyparser = require('body-parser');
 
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({
+  extended: true
+}));
 app.use('/public', express.static(`${__dirname}/public`));
 
 router(app);
@@ -29,10 +31,13 @@ app.listen(3000, () => {
   console.log('server : http://localhost:3000');
 });
 
-mongoose.connect('mongodb://localhost:27017/business');
+mongoose.connect('mongodb://localhost:27017/business', {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 const db = mongoose.connection;
 db.once('open', () => {
-    console.log('Mongo Connected');
-    app.listen(8888);
+  console.log('Mongo Connected');
+  app.listen(8888);
 });
 db.on('error', console.error.bind(console, 'Mongoose Connection Error'));
