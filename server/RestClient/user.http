@@ -1,0 +1,13 @@
+@url='http://localhost:3000'
+content-type: application/json
+
+### get
+get http://localhost:3000
+
+### login
+post http://localhost:3000/login
+
+{
+  "username":"Juliette",
+  "password":"123456"
+}
