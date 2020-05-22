@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-05-21 15:45:44
+ * @LastEditTime: 2020-05-22 17:14:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -21,6 +21,8 @@ app.use(bodyparser.urlencoded({
 app.use('/public', express.static(`${__dirname}/public`));
 
 app.all('*', (req, res, next) => {
+  console.log('Hello node');
+
   res.send('Hello node');
   next();
 });

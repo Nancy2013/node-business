@@ -5,7 +5,7 @@ content-type: application/json
 get http://localhost:3000
 
 ### login
-post http://localhost:3000/login
+post http://localhost:3000/user/login
 
 {
   "username":"Juliette",

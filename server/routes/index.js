@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-05-21 15:09:47
+ * @LastEditTime: 2020-05-22 16:44:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
  */
-import User from './user';
+const user = require('./user');
 
 module.exports = (app) => {
-  app.use('./user', User);
+  app.use('/user', user);
 };
