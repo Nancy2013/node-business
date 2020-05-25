@@ -1,11 +1,12 @@
 @url='http://localhost:3000'
-content-type: application/json
+@contentType=content-type: application/json
 
 ### get
-get http://localhost:3000
+get http://localhost:3000/node-business
 
 ### login
-post http://localhost:3000/user/login
+post http://localhost:3000/node-business/user/login
+{{contentType}}
 
 {
   "username":"Juliette",

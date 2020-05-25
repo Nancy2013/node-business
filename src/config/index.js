@@ -2,8 +2,8 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2019-06-22 11:51:43
- * @LastEditors: your name
+ * @LastEditTime: 2020-05-25 16:31:26
+ * @LastEditors: Please set LastEditors
  */
 /**
  * @namespace
@@ -32,7 +32,7 @@ export const DEFAULT_REQ_METHOD = HTTP_METHOD.GET;
  * @default
  */
 export const BASE_URL = ''; // 服务器ip
-export const URL_DEFAULT_PREFIXER = '/v1'; // 默认请求前缀，发布时，前后端为不同服务器使用 http://10.10.30.70:8282
+export const URL_DEFAULT_PREFIXER = '/node-business'; // 默认请求前缀，发布时，前后端为不同服务器使用 http://10.10.30.70:8282
 
 /**
  * 请求默认超时时间
