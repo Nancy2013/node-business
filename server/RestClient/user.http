@@ -1,14 +1,80 @@
-@url='http://localhost:3000'
-@contentType=content-type: application/json
+@url = 'http://localhost:3000'
+@contentType = content-type: application/json
 
 ### get
 get http://localhost:3000/node-business
 
-### login
-post http://localhost:3000/node-business/user/login
+  ###login
+post http:/localhost:3000/node-business/account/login
+  {
+    {
+      contentType
+    }
+  }
+
+{
+  "uid": "",
+  "token": "",
+  "pid": "",
+  "accountinfo": {
+    "displayname": "Juliette",
+    "accountname": "13601403070",
+    "accountpwd": "123456",
+    "pid": "",
+    "roleid": "",
+    "rolename": "",
+    "name": "Juliette",
+    "sex": "",
+    "job": "",
+    "age": 0,
+    "hobby": "爱好广泛",
+    "createtime": ""
+  }
+}
+
+### get
+
+get http://localhost:3000/node-business/account/get
+
+### add
+post http://localhost:3000/node-business/account/add
 {{contentType}}
 
 {
-  "username":"Juliette",
-  "password":"123456"
+  "uid": "",
+  "token": "",
+  "displayname": "Juliette",
+  "accountname": "13601403070",
+  "accountpwd": "123456",
+  "pid": "",
+  "roleid": "",
+  "rolename": "",
+  "name": "Juliette",
+  "sex": "",
+  "job": "",
+  "age": 0,
+  "hobby": "爱好广泛",
+  "createtime": ""
+}
+
+### mod
+post http://localhost:3000/node-business/account/mod/5ece1a8786210260ac75e866
+{{contentType}}
+
+{
+  "uid": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
+  "token": "",
+  "id": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
+  "displayname": "Juliette",
+  "accountname": "13601403070",
+  "accountpwd": "123456",
+  "pid": "1",
+  "roleid": "fef5272e-c9f2-4661-b47e-91375855e3eb",
+  "rolename": "项目管理员",
+  "name": "Juliette",
+  "sex": "",
+  "job": "",
+  "age": 0,
+  "hobby": "爱好广泛",
+  "createtime": ""
 }

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-12 11:27:59
- * @LastEditTime: 2020-05-27 15:12:47
+ * @LastEditTime: 2020-03-13 10:35:54
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -110,49 +110,49 @@ async function dynamicRoutes(to, from, next) {
   }
 }
 
-// router.beforeEach((to, from, next) => {
-//   const { projectInfo } = store.state.app;
-//   const auth = JSON.parse(localStorage[`authB_${projectInfo.id}`] || '{}');
-//   if (to.name !== 'login') {
-//     if (!auth.token) {
-//       next('/login');
-//     }
-//     // 项目模块显示
-//     const { isUpdate } = projectInfo;
-//     if (!isUpdate) {
-//       // 动态加载路由
-//       dynamicRoutes(to, from, next);
-//     }
-//     console.log('from: ', from, 'to: ', to);
-//     if (whiteList.includes(to.path)) {
-//       next();
-//     } else {
-//       // 从登录进入,循环进入任意模块
-//       if (!initRoute) {
-//         if (from.path === '/login' || from.path === '/home') {
-//           initPermissionRoute(next);
-//         }
-//       }
-//       initRoute = '';
-//       // 权限判断
-//       isPermissionValid(to.path).then(result => {
-//         const perssion = result;
-//         if (perssion) {
-//           if (!isUpdate) {
-//             next(to.path);
-//           } else {
-//             // 防止进入死循环
-//             next();
-//           }
-//         } else {
-//           next(false);
-//         }
-//       });
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const { projectInfo } = store.state.app;
+  const auth = JSON.parse(localStorage[`authB_${projectInfo.id}`] || '{}');
+  if (to.name !== 'login') {
+    if (!auth.token) {
+      next('/login');
+    }
+    // 项目模块显示
+    const { isUpdate } = projectInfo;
+    if (!isUpdate) {
+      // 动态加载路由
+      dynamicRoutes(to, from, next);
+    }
+    console.log('from: ', from, 'to: ', to);
+    if (whiteList.includes(to.path)) {
+      next();
+    } else {
+      // 从登录进入,循环进入任意模块
+      if (!initRoute) {
+        if (from.path === '/login' || from.path === '/home') {
+          initPermissionRoute(next);
+        }
+      }
+      initRoute = '';
+      // 权限判断
+      isPermissionValid(to.path).then(result => {
+        const perssion = result;
+        if (perssion) {
+          if (!isUpdate) {
+            next(to.path);
+          } else {
+            // 防止进入死循环
+            next();
+          }
+        } else {
+          next(false);
+        }
+      });
+    }
+  } else {
+    next();
+  }
+});
 
 
 // 使用vuex管理 router状态
