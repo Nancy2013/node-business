@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-05-28 17:44:20
+ * @LastEditTime: 2020-05-28 17:58:56
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
 
 const accountModel = require('../../models/account');
-const { sendDatas } = require('../../common/utils');
+const { response } = require('../../common/utils');
 const errorCode = require('../../common/error');
 
 const {
@@ -18,13 +18,13 @@ const {
 
 const accountController = {
   login: async (req, res) => {
-    let response;
+    let sendDatas;
     const { accountname, password } = req.body;
     accountModel.find({ accountname }).then(result => {
       if (isEmpty(result)) {
-       response = sendDatas(null, errorCode.forbidden, '用户不存在');
+        sendDatas = response(null, errorCode.forbidden, '用户不存在');
       } else if (result[0].accountpwd !== password) {
-        response = sendDatas(null, errorCode.forbidden, '密码错误');
+        sendDatas = response(null, errorCode.forbidden, '密码错误');
       } else {
         const { uid, token, pid } = result[0];
         const data = {
@@ -33,9 +33,9 @@ const accountController = {
           pid,
           accountinfo: result,
         };
-        response = sendDatas(data);
+        sendDatas = response(data);
       }
-      res.send(response);
+      res.send(sendDatas);
     }).catch(e => {
       console.error(e);
     });
