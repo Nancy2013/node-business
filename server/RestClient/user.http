@@ -63,11 +63,11 @@ post http://localhost:3000/node-business/account/mod/5ece1a8786210260ac75e866
 
 {
   "uid": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
-  "token": "",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxIiwiZXhwIjoxNTkwNzE2OTI3LCJqdGkiOiJUT0RPIiwiaWF0IjoxNTkwNjMwNTI3LCJpc3MiOiIxODAxMzk1OTU4OCIsIm5iZiI6MTU5MDYzMDUyNywic3ViIjoiMSJ9.UF69F-7fOY5syeuWX4tN2V1thiM02TvfV8RKMUV610E",
   "id": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
   "displayname": "Juliette",
   "accountname": "13601403070",
-  "accountpwd": "123456",
+  "accountpwd": "e10adc3949ba59abbe56e057f20f883e",
   "pid": "1",
   "roleid": "fef5272e-c9f2-4661-b47e-91375855e3eb",
   "rolename": "项目管理员",

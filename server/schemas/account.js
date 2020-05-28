@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-05-27 15:48:56
+ * @LastEditTime: 2020-05-28 09:56:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -9,19 +9,51 @@
 const mongoose = require('mongoose');
 
 module.exports = new mongoose.Schema({
-  uid: String,
-  token: String,
-  id: String,
-  displayname: String,
-  accountname: String,
-  accountpwd: String,
-  pid: String,
-  roleid: String,
-  rolename: String,
-  name: String,
-  sex: String,
-  job: String,
-  age: Number,
-  hobby: String,
-  createtime: String
+  uid: {
+    type: String,
+  },
+  token: {
+    type: String,
+  },
+  id: {
+    type: String,
+  },
+  displayname: {
+    type: String,
+  },
+  accountname: {
+    type: String,
+    unique: true,
+  },
+  accountpwd: {
+    type: String,
+  },
+  pid: {
+    type: String,
+  },
+  roleid: {
+    type: String,
+  },
+  rolename: {
+    type: String,
+  },
+  name: {
+    type: String,
+    unique: true,
+  },
+  sex: {
+    type: String,
+  },
+  job: {
+    type: String,
+  },
+  age: {
+    type: Number,
+  },
+  hobby: {
+    type: String,
+  },
+  createtime: {
+    type: String,
+  }
 });

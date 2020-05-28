@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2019-10-15 16:42:08
+ * @LastEditTime: 2020-05-28 14:25:42
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -16,8 +16,8 @@ import Message from 'ant-design-vue/lib/message';
 export function ajaxFulFilledHandle(data = {}, config) {
   return new Promise((resolve, reject) => {
     console.log(data);
-    const { errcode } = data;
-    let errMsg = JSON.stringify(data.errmsg || DEFAULT_ERR_MSG);
+    const { errcode, msg } = data;
+    let errMsg = JSON.stringify(msg || DEFAULT_ERR_MSG);
     if (errcode === 200) {
       // 返回成功
       resolve(data);

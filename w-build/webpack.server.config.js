@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-05-25 16:30:31
+ * @LastEditTime: 2020-05-28 10:16:33
  * @LastEditors: Please set LastEditors
  */
 const { resolve } = require('path');
@@ -26,7 +26,7 @@ module.exports = () =>
         openPage: `${build.extraPath}/index.html`,
         proxy: [
           {
-            context: ['/v1'], // 路径前缀
+            context: ['/node-business'], // 路径前缀
             target: 'http://localhost:3000', // 服务器ip osim: http://10.10.30.70:8282 || 9889  定时联动：http://10.10.30.70:9989   aliyun: https://osimdev.ibroadlink.com
             changeOrigin: true,
             logLevel: 'debug',

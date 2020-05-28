@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-05-27 14:28:21
+ * @LastEditTime: 2020-05-28 14:56:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -16,7 +16,10 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 // 加载mongoose模块，这个中间件是nodejs与mongoDB数据库的桥梁
 const mongoose = require('./mongodb/db');
+const libs = require('./libs');
 
+// 全局引用第三方依赖包
+libs();
 const router = require('./routes/index');
 
 app.use(bodyparser.urlencoded({

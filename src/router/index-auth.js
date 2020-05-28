@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-05-27 16:40:04
+ * @LastEditTime: 2019-10-30 10:41:48
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue';
@@ -45,8 +45,11 @@ export const defaultRoutes = [
     component: projectSet,
   },
 ];
+export const router = new Router({
+  routes: defaultRoutes,
+});
 
-export const routes = [
+export const asyncRoutes = [
   {
     path: '/',
     component: Main,
@@ -63,14 +66,9 @@ export const routes = [
       },
     ],
   },
-  ...defaultRoutes,
   {
     path: '*',
     show: false,
     component: () => import('viewsPath/Error404/index.vue'),
   },
 ];
-
-export const router = new Router({
-  routes,
-});
