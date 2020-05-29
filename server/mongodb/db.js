@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-05-20 13:54:29
+ * @LastEditTime: 2020-05-29 10:51:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -12,7 +12,8 @@ module.exports = app => {
   mongoose.Promise = global.Promise;
   mongoose.connect('mongodb://localhost:27017/business', {
     useCreateIndex: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
   const db = mongoose.connection;
   db.once('open', () => {

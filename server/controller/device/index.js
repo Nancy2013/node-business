@@ -1,12 +1,13 @@
 /*
  * @Author: your name
- * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-05-29 15:28:16
+ * @Date: 2020-05-19 16:32:59
+ * @LastEditTime: 2020-05-29 15:28:09
  * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \node-business\server\controller\app\index.js
+ * @Description: In project Settings Edit
+ * @FilePath: \node-business\server\controller\project\index.js
  */
-const Model = require('../../models')('model');
+
+const Model = require('../../models')('device');
 
 const controller = {
   get: async (req, res) => {
@@ -43,4 +44,3 @@ const controller = {
   },
 };
 module.exports = controller;
-

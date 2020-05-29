@@ -4,36 +4,16 @@
 ### get
 get http://localhost:3000/node-business
 
-  ###login
-post http:/localhost:3000/node-business/account/login
-  {
-    {
-      contentType
-    }
-  }
+### login
+post http://localhost:3000/node-business/account/login
+{{contentType}}
 
 {
-  "uid": "",
-  "token": "",
-  "pid": "",
-  "accountinfo": {
-    "displayname": "Juliette",
-    "accountname": "13601403070",
-    "accountpwd": "123456",
-    "pid": "",
-    "roleid": "",
-    "rolename": "",
-    "name": "Juliette",
-    "sex": "",
-    "job": "",
-    "age": 0,
-    "hobby": "爱好广泛",
-    "createtime": ""
-  }
+  "accountname": "13601403070",
+  "accountpwd": "123456"
 }
 
 ### get
-
 get http://localhost:3000/node-business/account/get
 
 ### add
@@ -58,7 +38,7 @@ post http://localhost:3000/node-business/account/add
 }
 
 ### mod
-post http://localhost:3000/node-business/account/mod/5ece1a8786210260ac75e866
+post http://localhost:3000/node-business/account/mod/08e937e6-0fc7-4135-bfca-83080e4acbc6
 {{contentType}}
 
 {

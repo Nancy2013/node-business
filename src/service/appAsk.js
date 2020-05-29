@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-08-27 10:16:12
+ * @LastEditTime: 2020-05-29 14:06:00
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
@@ -62,7 +62,7 @@ export default {
     method: HTTP_METHOD.POST,
   }),
    // 查询项目详情
-   getInfoProject: reqHandle('/project/getinfo', {
+   getInfoProject: reqHandle('/project/get', {
     method: HTTP_METHOD.POST,
    }),
   //  查询项目apk
