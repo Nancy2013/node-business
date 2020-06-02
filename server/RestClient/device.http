@@ -1,0 +1,15 @@
+@url = 'http://localhost:3000'
+@contentType = content-type: application/json
+@base='device'
+
+### get
+get {{url}}/get
+
+### add
+post http://localhost:3000/node-business/account/add
+{{contentType}}
+
+
+### mod
+post http://localhost:3000/node-business/account/mod/08e937e6-0fc7-4135-bfca-83080e4acbc6
+{{contentType}}

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-09-18 09:35:28
+ * @LastEditTime: 2020-06-02 10:21:37
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -27,49 +27,50 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex';
-  import { asyncRoutes } from 'routerPath';
+import { mapGetters, mapMutations } from 'vuex';
+import { routes } from 'routerPath';
 
-  export default {
-    name: 'SideBar',
-    components: {},
-    props: {},
-    data() {
-      return {
-        menuList: [],
-      };
+export default {
+  name: 'SideBar',
+  components: {},
+  props: {},
+  data() {
+    return {
+      menuList: [],
+    };
+  },
+  computed: {
+    defaultSelectedKeys() {
+      return [this.$route.meta.activeName || this.$route.name];
     },
-    computed: {
-      defaultSelectedKeys() {
-        return [this.$route.meta.activeName || this.$route.name];
-      },
-      ...mapGetters('app', ['addRouters']),
+    ...mapGetters('app', ['addRouters']),
+  },
+  watch: {},
+  created() {},
+  mounted() {
+    this.getMenu();
+  },
+  methods: {
+    // 生成menu菜单 TODO浏览器后台高亮menu
+    getMenu() {
+      // const main = this.addRouters[0].children;
+      const main = routes[0];
+      const { children } = main.children[0];
+      const menu = children;
+      this.menuList = menu;
     },
-    watch: {},
-    created() {},
-    mounted() {
-      this.getMenu();
+    // 选择菜单
+    selectMenu({ item, key, keyPath }) {
+      this.$router.push({ path: item.value });
     },
-    methods: {
-      // 生成menu菜单 TODO浏览器后台高亮menu
-      getMenu() {
-        const main = this.addRouters[0].children;
-        const { children } = main[0];
-        const menu = children;
-        this.menuList = menu;
-      },
-      // 选择菜单
-      selectMenu({ item, key, keyPath }) {
-        this.$router.push({ path: item.value });
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  .side-menu {
-    padding-left: 24px;
-    line-height: 40px;
-    color: #fff;
-  }
+.side-menu {
+  padding-left: 24px;
+  line-height: 40px;
+  color: #fff;
+}
 </style>
