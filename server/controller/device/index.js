@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-05-29 15:28:09
+ * @LastEditTime: 2020-06-02 10:00:01
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -38,6 +38,42 @@ const controller = {
   del: async (req, res) => {
     const { id } = req.params;
     const params = { id };
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  controls: async (req, res) => {
+    const params = req.body;
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  getControlLogs: async (req, res) => {
+    const params = req.body;
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  getErrorLogs: async (req, res) => {
+    const params = req.body;
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  getDevServices: async (req, res) => {
+    const params = req.body;
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  getRepairLogs: async (req, res) => {
+    const params = req.body;
+    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+      console.error(e);
+    });
+  },
+  getAttributes: async (req, res) => {
+    const params = req.body;
     Model.findOneAndDelete(params).then(result => { }).catch(e => {
       console.error(e);
     });
