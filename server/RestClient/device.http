@@ -3,16 +3,52 @@
 @module=device
 
 ### get 查询
-get {{url}}{{module}}/get
+post {{url}}{{module}}/get
 
 
 ### add 添加
 post {{url}}{{module}}/add
 {{contentType}}
 
-{
-
-}
+    {
+        "id": "device_f8871954-8d10-4df5-9426-02b9fcc1ff45",
+        "did": "0000000000000000000034ea34186f47",
+        "productid": "000000000000000000000000e15f0000",
+        "projectid": "1",
+        "mac": "34:ea:34:18:6f:47",
+        "typename": "按摩椅",
+        "cookie": "eyJkZXZpY2UiOnsiaWQiOjEsImtleSI6IjE1OGVmNjE0NTc3MzhiYTYzMWM4MmExMjI3MmUyODI0IiwiYWVza2V5IjoiMTU4ZWY2MTQ1NzczOGJhNjMxYzgyYTEyMjcyZTI4MjQiLCJkaWQiOiIwMDAwMDAwMDAwMDAwMDAwMDAwMDM0ZWEzNDE4NmY0NyIsInBpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGUxNWYwMDAwIiwibWFjIjoiMzQ6ZWE6MzQ6MTg6NmY6NDciLCJsYW5hZGRyIjoiMTkyLjE2OC4yLjEwQDgwIn19",
+        "displayname": "OSIM智能按摩椅",
+        "online": "1",
+        "remark": "安装",
+        "running": "0",
+        "siteid": null,
+        "worker": "18068849786",
+        "workername": "黄长青",
+        "installdate": "2020-04-22T01:58:53",
+        "isbroken": 0,
+        "groupid": null,
+        "status": {
+          "Apricon": "OFF",
+          "ChangePowerState": "OFF",
+          "Errcode": 0,
+          "Position": "OFF",
+          "Set3DLumbar": 1,
+          "Set3DShoulder": 1,
+          "SetAirBag": "WEAK",
+          "SetBackChange": 0,
+          "SetLegChange": 0,
+          "SetLegMassage": "OFF",
+          "SetLegVibration": "OFF",
+          "SetModeChange": "PAUSE",
+          "SetShoulderHeight": 1,
+          "SetWarmAir": "OFF",
+          "Timedig": 15,
+          "Traposition": "OFF",
+          "Worktisec": 0
+        },
+        "assstatus": "2"
+      }
 
 
 ### detail 详情

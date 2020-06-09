@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-05-29 15:07:27
+ * @LastEditTime: 2020-06-09 19:22:58
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -19,13 +19,13 @@ const controller = {
   login: async (req, res) => {
     let sendDatas;
     const { accountname, password } = req.body;
-    Model.find({ accountname }).then(result => {
+    Model.findOne({ accountname }).then(result => {
       if (isEmpty(result)) {
         sendDatas = response(null, errorCode.forbidden, '用户不存在');
-      } else if (result[0].accountpwd !== password) {
+      } else if (result.accountpwd !== password) {
         sendDatas = response(null, errorCode.forbidden, '密码错误');
       } else {
-        const { uid, token, pid } = result[0];
+        const { uid, token, pid } = result;
         const data = {
           uid,
           token,
