@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-06-02 11:07:04
+ * @LastEditTime: 2020-06-09 10:39:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -47,7 +47,7 @@ module.exports = new mongoose.Schema({
     type: String,
   },
   siteid: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'site',
+    type: mongoose.SchemaTypes.ObjectId, ref: 'Site',
   },
   worker: {
     type: String,
@@ -62,7 +62,7 @@ module.exports = new mongoose.Schema({
     type: Number,
   },
   groupid: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'group',
+    type: mongoose.SchemaTypes.ObjectId, ref: 'Group',
   },
   status: {
     Apricon: String,

@@ -1,11 +1,9 @@
-@url = 'http://localhost:3000'
+@url = http://localhost:3000/node-business/
 @contentType = content-type: application/json
-
-### get
-get http://localhost:3000/node-business
+@module=account
 
 ### login
-post http://localhost:3000/node-business/account/login
+post {{url}}{{module}}/login
 {{contentType}}
 
 {
@@ -13,11 +11,13 @@ post http://localhost:3000/node-business/account/login
   "accountpwd": "123456"
 }
 
+
 ### get
-get http://localhost:3000/node-business/account/get
+get {{url}}{{module}}/get
+
 
 ### add
-post http://localhost:3000/node-business/account/add
+post {{url}}{{module}}/add
 {{contentType}}
 
 {
@@ -37,8 +37,9 @@ post http://localhost:3000/node-business/account/add
   "createtime": ""
 }
 
+
 ### mod
-post http://localhost:3000/node-business/account/mod/08e937e6-0fc7-4135-bfca-83080e4acbc6
+post {{url}}{{module}}/mod/08e937e6-0fc7-4135-bfca-83080e4acbc6
 {{contentType}}
 
 {

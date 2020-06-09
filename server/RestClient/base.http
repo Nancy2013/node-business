@@ -1,6 +1,6 @@
 @url = http://localhost:3000/node-business/
 @contentType = content-type: application/json
-@module=device
+@module=base
 
 ### get 查询
 get {{url}}{{module}}/get
@@ -10,9 +10,7 @@ get {{url}}{{module}}/get
 post {{url}}{{module}}/add
 {{contentType}}
 
-{
-
-}
+{}
 
 
 ### detail 详情
@@ -32,11 +30,6 @@ post {{url}}{{module}}/detail/
 {{contentType}}
 
 
-### controls 控制
-post {{url}}{{module}}/controls/
-{{contentType}}
-
-{}
 
 
 

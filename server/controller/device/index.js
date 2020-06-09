@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-02 10:00:01
+ * @LastEditTime: 2020-06-09 11:21:05
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -11,13 +11,19 @@ const Model = require('../../models')('device');
 
 const controller = {
   get: async (req, res) => {
-    Model.find().then(result => { }).catch(e => {
+    const { offset, limit } = req.body;
+    const params = {
+      limit,
+    };
+    Model.find(params).then(result => { }).catch(e => {
       console.error(e);
     });
   },
   add: async (req, res) => {
     const params = req.body;
-    Model.create(params).then(result => { }).catch(e => {
+    Model.create(params).then(result => {
+
+    }).catch(e => {
       console.error(e);
     });
   },
