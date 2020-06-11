@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-09 19:54:28
+ * @LastEditTime: 2020-06-11 19:39:53
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -12,13 +12,19 @@ const Model = require('../../models')('device');
 const controller = {
   get: async (req, res) => {
     const { offset, limit, displayname, location, online, seq } = req.body;
+    const totalSize = await Model.count();
     const params = {};
-    Model.find(params).limit(limit).skip(limit * (offset - 1)).then(result => {
+    // displayname&&params[displayname]=/d/;
+    Model.find(params)
+      .limit(limit)
+      .skip(limit * (offset - 1))
+      .sort({ id: seq })
+      .then(result => {
       console.log(result);
       if (result) {
         const data = {
           deviceInfos: result,
-          totalsize: 100
+          totalsize: totalSize,
         };
         res.send(response(data));
       }
