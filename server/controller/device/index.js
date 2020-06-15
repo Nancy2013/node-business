@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-11 19:39:53
+ * @LastEditTime: 2020-06-15 19:41:53
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -12,9 +12,21 @@ const Model = require('../../models')('device');
 const controller = {
   get: async (req, res) => {
     const { offset, limit, displayname, location, online, seq } = req.body;
-    const totalSize = await Model.count();
+
     const params = {};
-    // displayname&&params[displayname]=/d/;
+    // 条件查询
+    if (displayname) {
+      const reg = new RegExp(displayname, 'i'); // 不区分大小写
+      params.displayname = { $regex: reg };
+    }
+    if (location) {
+      const reg = new RegExp(location, 'i'); // 不区分大小写
+      params.location = { $regex: reg };
+    }
+    if (online) {
+      params.online = online;
+    }
+    const totalSize = await Model.count(params);
     Model.find(params)
       .limit(limit)
       .skip(limit * (offset - 1))
