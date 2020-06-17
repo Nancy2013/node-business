@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-06-01 14:13:28
+ * @LastEditTime: 2020-06-16 19:46:29
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -17,5 +17,12 @@ const modules = files.map(v => require(`./${v}`));
 module.exports = (app) => {
   modules.forEach((v, index) => {
     app.use(`${global.URL_DEFAULT_PREFIXER}/${files[index]}`, v);
+  });
+
+  app.use((error, req, res, next) => {
+    console.error(error);
+    const { message } = error;
+    req.send(message);
+    next();
   });
 };

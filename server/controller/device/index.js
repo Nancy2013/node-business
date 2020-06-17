@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-15 19:48:16
+ * @LastEditTime: 2020-06-16 19:30:40
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -11,7 +11,7 @@ const Model = require('../../models')('device');
 
 const controller = {
   get: async (req, res) => {
-    const { offset, limit, displayname, location, online, seq } = req.body;
+    const { offset, limit, displayname, location, online, did, seq } = req.body;
 
     const params = {};
     // 条件查询
@@ -25,6 +25,9 @@ const controller = {
     }
     if (online) {
       params.online = online;
+    }
+    if (did) {
+      params.did = did;
     }
     const totalSize = await Model.count(params);
     Model.find(params)
@@ -56,7 +59,12 @@ const controller = {
   detail: async (req, res) => {
     const { id } = req.params;
     const params = { id };
-    Model.find(params).then(result => { }).catch(e => {
+    Model.findOne(params).then(result => {
+      const data = {
+        deviceInfos: result,
+      };
+      req.send(response(data));
+    }).catch(e => {
       console.error(e);
     });
   },

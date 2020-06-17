@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-09 19:22:58
+ * @LastEditTime: 2020-06-16 19:43:29
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-
+const assert = require('http-assert');
 const Model = require('../../models')('account');
 const { response } = require('../../common/utils');
 const errorCode = require('../../common/error');
@@ -20,12 +20,24 @@ const controller = {
     let sendDatas;
     const { accountname, password } = req.body;
     Model.findOne({ accountname }).then(result => {
-      if (isEmpty(result)) {
-        sendDatas = response(null, errorCode.forbidden, '用户不存在');
-      } else if (result.accountpwd !== password) {
-        sendDatas = response(null, errorCode.forbidden, '密码错误');
-      } else {
-        const { uid, token, pid } = result;
+      assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
+      assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
+      // if (isEmpty(result)) {
+      //   sendDatas = response(null, errorCode.forbidden, '用户不存在');
+      // } else if (result.accountpwd !== password) {
+      //   sendDatas = response(null, errorCode.forbidden, '密码错误');
+      // } else {
+      //   const { uid, token, pid } = result;
+      //   const data = {
+      //     uid,
+      //     token,
+      //     pid,
+      //     accountinfo: result,
+      //   };
+      //   sendDatas = response(data);
+      // }
+
+      const { uid, token, pid } = result;
         const data = {
           uid,
           token,
@@ -33,7 +45,6 @@ const controller = {
           accountinfo: result,
         };
         sendDatas = response(data);
-      }
       res.send(sendDatas);
     }).catch(e => {
       console.error(e);
