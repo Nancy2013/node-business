@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-06-01 14:13:28
+ * @LastEditTime: 2020-06-16 19:46:29
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -21,5 +21,5 @@ module.exports = (app) => {
   // 错误统一处理
   app.use(async (err, req, res, next) => {
     res.status(err.statusCode).send({});
-  });
-};
+  }
+}
