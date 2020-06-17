@@ -18,4 +18,8 @@ module.exports = (app) => {
   modules.forEach((v, index) => {
     app.use(`${global.URL_DEFAULT_PREFIXER}/${files[index]}`, v);
   });
+  // 错误统一处理
+  app.use(async (err, req, res, next) => {
+    res.status(err.statusCode).send({});
+  });
 };

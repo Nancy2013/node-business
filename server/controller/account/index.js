@@ -6,9 +6,11 @@
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-
+const assert = require('http-assert');
 const Model = require('../../models')('account');
-const { response } = require('../../common/utils');
+const {
+  response
+} = require('../../common/utils');
 const errorCode = require('../../common/error');
 
 const {
@@ -18,14 +20,24 @@ const {
 const controller = {
   login: async (req, res) => {
     let sendDatas;
-    const { accountname, password } = req.body;
-    Model.findOne({ accountname }).then(result => {
+    const {
+      accountname,
+      password
+    } = req.body;
+    Model.findOne({
+      accountname
+    }).then(result => {
       if (isEmpty(result)) {
+        assert(result, 422, '用户不存在');
         sendDatas = response(null, errorCode.forbidden, '用户不存在');
       } else if (result.accountpwd !== password) {
         sendDatas = response(null, errorCode.forbidden, '密码错误');
       } else {
-        const { uid, token, pid } = result;
+        const {
+          uid,
+          token,
+          pid
+        } = result;
         const data = {
           uid,
           token,

@@ -9,14 +9,19 @@
  * ajax 错误处理
  * @see 具体参数文档 - https://github.com/mzabriskie/axios#response-schema
  */
-import { DEFAULT_ERR_MSG } from 'configPath/index';
+import {
+  DEFAULT_ERR_MSG
+} from 'configPath/index';
 import Message from 'ant-design-vue/lib/message';
 
-
+// TODO 错误码拦截
 export function ajaxFulFilledHandle(data = {}, config) {
   return new Promise((resolve, reject) => {
     console.log(data);
-    const { errcode, msg } = data;
+    const {
+      errcode,
+      msg
+    } = data;
     let errMsg = JSON.stringify(msg || DEFAULT_ERR_MSG);
     if (errcode === 200) {
       // 返回成功
@@ -24,10 +29,14 @@ export function ajaxFulFilledHandle(data = {}, config) {
     } else {
       if (errcode === 403001) {
         // token过期
-        const { href, hash } = window.location;
+        const {
+          href,
+          hash
+        } = window.location;
         Message.info('token过期，请重新登录');
         localStorage.removeItem(`authB_${PROJECT.id}`);
         localStorage.removeItem(`userInfoB_${PROJECT.id}`);
+        // TODO 使用Vue router进行界面跳转
         window.location = href.replace(hash, '#/login');
       } else {
         if (errMsg.length > 100) {
@@ -42,7 +51,9 @@ export function ajaxFulFilledHandle(data = {}, config) {
 
 export function ajaxRejectedHandle(err) {
   console.error('ajax err', err);
-  const { response } = err;
+  const {
+    response
+  } = err;
   Message.error(response.statusText);
   return Promise.reject(err);
 }
