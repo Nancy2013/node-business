@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-16 19:43:29
+ * @LastEditTime: 2020-06-18 20:00:56
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -36,7 +36,6 @@ const controller = {
       //   };
       //   sendDatas = response(data);
       // }
-
       const { uid, token, pid } = result;
         const data = {
           uid,
