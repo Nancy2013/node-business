@@ -1,23 +1,32 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-16 19:43:29
+ * @LastEditTime: 2020-06-18 20:00:56
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
 const assert = require('http-assert');
 const Model = require('../../models')('account');
-const { response } = require('../../common/utils');
+const {
+  response
+} = require('../../common/utils');
 const errorCode = require('../../common/error');
 
-const { isEmpty } = global.$lodash;
+const {
+  isEmpty
+} = global.$lodash;
 
 const controller = {
   login: async (req, res) => {
     let sendDatas;
-    const { accountname, password } = req.body;
-    Model.findOne({ accountname })
+    const {
+      accountname,
+      password
+    } = req.body;
+    Model.findOne({
+        accountname
+      })
       .then(result => {
         assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
         assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
@@ -36,7 +45,11 @@ const controller = {
         //   sendDatas = response(data);
         // }
 
-        const { uid, token, pid } = result;
+        const {
+          uid,
+          token,
+          pid
+        } = result;
         const data = {
           uid,
           token,
@@ -54,7 +67,9 @@ const controller = {
     console.log('logout');
   },
   mod: async (req, res) => {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
     const params = req.body;
     const result = await Model.findOneAndUpdate(id, params);
     res.send({

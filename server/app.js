@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-05-28 14:56:40
+ * @LastEditTime: 2020-06-18 19:55:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -23,8 +23,8 @@ libs();
 const router = require('./routes/index');
 
 app.use(bodyparser.urlencoded({
-    extended: true,
-  }));
+  extended: true,
+}));
 
 app.use(cors());
 // 请求体解析中间件，传递的参数为json格式，存放在body中
