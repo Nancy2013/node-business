@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-06-18 19:55:50
+ * @LastEditTime: 2020-06-22 19:12:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -35,9 +35,9 @@ app.all('*', (req, res, next) => {
   next();
 });
 
-router(app);
-mongoose(app);
 
+mongoose(app);
+router(app);
 app.listen(3000, () => {
   console.log('server : http://localhost:3000');
 });

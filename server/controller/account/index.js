@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-18 20:00:56
+ * @LastEditTime: 2020-06-22 19:30:39
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -18,7 +18,7 @@ const {
 } = global.$lodash;
 
 const controller = {
-  login: async (req, res) => {
+  login: async (req, res, next) => {
     let sendDatas;
     const {
       accountname,
@@ -28,8 +28,8 @@ const controller = {
         accountname
       })
       .then(result => {
-        assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
-        assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
+        // assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
+        // assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
         // if (isEmpty(result)) {
         //   sendDatas = response(null, errorCode.forbidden, '用户不存在');
         // } else if (result.accountpwd !== password) {
@@ -58,9 +58,6 @@ const controller = {
         };
         sendDatas = response(data);
         res.send(sendDatas);
-      })
-      .catch(e => {
-        console.error(e);
       });
   },
   logout: async (req, res) => {
