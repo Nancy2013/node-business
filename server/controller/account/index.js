@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-23 10:14:12
+ * @LastEditTime: 2020-06-23 19:44:26
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -28,9 +28,8 @@ const controller = {
         accountname
       })
       .then(result => {
-        // assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
-        // assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
-
+        assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
+        assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
         const {
           uid,
           token,
@@ -44,7 +43,7 @@ const controller = {
         };
         sendDatas = response(data);
         res.send(sendDatas);
-      });
+      }).catch(next);
   },
   logout: async (req, res) => {
     console.log('logout');

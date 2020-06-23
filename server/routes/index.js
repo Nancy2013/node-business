@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-06-22 19:30:49
+ * @LastEditTime: 2020-06-23 19:40:15
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -19,9 +19,11 @@ module.exports = (app) => {
     app.use(`${global.URL_DEFAULT_PREFIXER}/${files[index]}`, v);
   });
 
-  app.use((err, req, res, next) => {
-    console.log('---------------------');
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
+  app.use(async (err, req, res, next) => {
+    const { statusCode, message } = err;
+    res.status(statusCode).send({
+      errcode: statusCode,
+      msg: message,
+    });
   });
 };

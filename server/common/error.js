@@ -1,11 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-28 15:12:47
- * @LastEditTime: 2020-05-28 15:50:30
+ * @LastEditTime: 2020-06-23 19:19:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\common\error.js
  */
+// 错误码应该包括http状态错误码、业务错误码
 module.exports = {
   ok: 200, // 请求成功
   redirect: 300, // 重定向
