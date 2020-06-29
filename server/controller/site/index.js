@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-06-29 19:42:48
+ * @LastEditTime: 2020-06-29 19:51:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -11,10 +11,13 @@ const Model = require('../../models')('site');
 
 const controller = {
   get: async (req, res, next) => {
-    const { offset, limit, seq } = req.body;
-    const params = {
-      ...req.body,
-    };
+    const { offset, limit, name, provincial, urban, areas, id, order, seq } = req.body;
+    const params = {};
+    console.log(JSON.stringify(params));
+    if (name) {
+      params.name = name;
+    }
+
     const totalSize = await Model.count(params);
     Model.find(params)
     .limit(limit)

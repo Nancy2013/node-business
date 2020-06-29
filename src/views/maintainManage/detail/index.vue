@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-17 13:57:02
- * @LastEditTime: 2019-09-18 15:56:00
+ * @LastEditTime: 2020-06-29 19:28:55
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -212,8 +212,8 @@
           .then(result => {
             const { errcode, data = {} } = result;
             if (errcode === 200) {
-              const { sitelocations } = data;
-              this.maintainInfos = sitelocations ? sitelocations[0] : [];
+              const { siteInfos } = data;
+              this.maintainInfos = siteInfos ? siteInfos[0] : [];
               const { lastcheck, status } = this.maintainInfos;
               this.maintainInfos.lastcheck = lastcheck
                 ? this.$moment(lastcheck).format(this.GLOBAL.TIME_FOEMAT)
