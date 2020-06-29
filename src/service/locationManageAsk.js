@@ -2,8 +2,8 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-06-22 11:51:44
- * @LastEditors: your name
+ * @LastEditTime: 2020-06-29 19:37:39
+ * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
 import { reqHandle } from 'commonPath/ajax';
@@ -15,7 +15,7 @@ export default {
     method: HTTP_METHOD.POST,
   }),
   // 查询站点详情
-  getSiteDetail: reqHandle('/site/getdetail', {
+  getSiteDetail: reqHandle('/site/detail', {
     method: HTTP_METHOD.POST,
   }),
   // 删除站点
@@ -31,15 +31,15 @@ export default {
     method: HTTP_METHOD.POST,
   }),
   // 查询省
-  siteGetProvincial: reqHandle('/site/getprovincial', {
+  siteGetProvincial: reqHandle('/site/getProvincial', {
     method: HTTP_METHOD.POST,
   }),
   // 查询市
-  siteGetUrban: reqHandle('/site/geturban', {
+  siteGetUrban: reqHandle('/site/getUrban', {
     method: HTTP_METHOD.POST,
   }),
   // 查询区
-  siteGetArea: reqHandle('/site/getarea', {
+  siteGetArea: reqHandle('/site/getArea', {
     method: HTTP_METHOD.POST,
   }),
 

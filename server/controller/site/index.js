@@ -1,16 +1,35 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-06-29 19:19:25
+ * @LastEditTime: 2020-06-29 19:42:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
  */
-const Model = require('../../models')('model');
+const { response } = require('../../common/utils');
+const Model = require('../../models')('site');
 
 const controller = {
   get: async (req, res, next) => {
-    Model.find().then(result => { }).catch(e => {
+    const { offset, limit, seq } = req.body;
+    const params = {
+      ...req.body,
+    };
+    const totalSize = await Model.count(params);
+    Model.find(params)
+    .limit(limit)
+    .skip(limit * (offset - 1))
+    .sort({ id: seq })
+    .then(result => {
+      if (result) {
+        const data = {
+          siteInfos: result,
+          totalsize: totalSize,
+        };
+        res.send(response(data));
+       }
+    })
+.catch(e => {
       next(e);
     });
   },
@@ -41,6 +60,10 @@ const controller = {
       next(e);
     });
   },
+  getProvincial: async (req, res, next) => { },
+  getUrban: async (req, res, next) => { },
+  getArea: async (req, res, next) => { },
+
 };
 module.exports = controller;
 

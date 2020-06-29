@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-06-23 19:54:59
+ * @LastEditTime: 2020-06-29 19:01:04
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -51,7 +51,7 @@ export function ajaxFulFilledHandle(data = {}, config) {
 
 export function ajaxRejectedHandle(err) {
   const {
-    response
+    response = {}
   } = err;
   const { data, statusText } = response;
   const { msg } = data;
