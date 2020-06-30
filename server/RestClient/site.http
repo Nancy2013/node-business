@@ -1,0 +1,35 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=site
+
+### get 查询
+get {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+{}
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+
