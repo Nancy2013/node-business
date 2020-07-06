@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-06-30 19:48:22
+ * @LastEditTime: 2020-07-06 19:46:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -11,14 +11,26 @@ const Model = require('../../models')('site');
 
 const controller = {
   get: async (req, res, next) => {
-    const params = {
-      ...req.body,
-    };
-    for (const key in params) {
-      if (params[key] == '') { delete params[key]; }
+    let params;
+    const { offset, limit, name, provincial, urban, areas, id, order, seq } = req.body;
+    if (id) {
+      params.id = id;
+     }
+
+    if (name) {
+      const reg = new RegExp(name, 'i'); // 不区分大小写
+      params.name = { $regex: reg };
     }
-    // const { offset, limit, name, provincial, urban, areas, id, order, seq } = req.body;
-    const { limit, offset, seq } = req.body;
+    if (provincial) {
+      params.provincial = provincial;
+    }
+    if (urban) {
+      params.urban = urban;
+    }
+    if (areas) {
+      params.areas = areas;
+    }
+
     console.log(JSON.stringify(params));
 
     const totalSize = await Model.count(params);

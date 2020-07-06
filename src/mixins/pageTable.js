@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-06-09 19:53:23
+ * @LastEditTime: 2020-07-06 19:46:21
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -53,7 +53,7 @@ export default which => ({
       const params = {
         offset: pagination.current,
         limit: pagination.pageSize,
-        seq: 1,
+        seq: -1,
         ...($which.params || {}),
       };
       Object.keys(tableFilter).map(v => {

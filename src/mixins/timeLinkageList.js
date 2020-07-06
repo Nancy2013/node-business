@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-27 15:49:56
- * @LastEditTime: 2019-09-26 09:59:39
+ * @LastEditTime: 2020-07-06 19:47:21
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -119,7 +119,7 @@ export default which => ({
         limit: pageSize,
         offset: current,
         order: 'createtime',
-        seq: 1,
+        seq: -1,
         type: typeMap[`${which}`],
       };
       const { errcode, data = {} } = await timeLinkageAsk.getTimeLinkageList(params);

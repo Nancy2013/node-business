@@ -263,13 +263,13 @@
           areas: areaname,
           order: 'id',
         });
-        const { sitelocations = [] } = data;
-        sitelocations.forEach(v => {
+        const { siteInfos = [] } = data;
+        siteInfos.forEach(v => {
           if (v.lastcheck) {
             v.lastcheck = this.$moment(v.lastcheck).format(this.GLOBAL.TIME_FOEMAT);
           }
         });
-        return { total: data.totalsize, data: data.sitelocations };
+        return { total: data.totalsize, data: data.siteInfos };
       },
     },
   };

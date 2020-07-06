@@ -10,8 +10,16 @@ get {{url}}{{module}}/get
 post {{url}}{{module}}/add
 {{contentType}}
 
-{}
-
+{
+    "id": 44,
+    "name": "沈阳万象城",
+    "provincial": "辽宁省",
+    "urban": "沈阳市",
+    "areas": "和平区",
+    "location": "青年大街288号华润万象城",
+    "devicecnt": 1,
+    "status": "1"
+}
 
 ### detail 详情
 post {{url}}{{module}}/detail/

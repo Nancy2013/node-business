@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2019-09-18 16:10:10
+ * @LastEditTime: 2020-07-06 19:51:07
  * @LastEditors: Please set LastEditors
  */
 // Location 列表
@@ -45,17 +45,18 @@ export default which => ({
       const params = {
         limit: GLOBAL.PAGE_SIZE_S,
         offset: current,
+
         name: search,
         provincial,
         urban,
         areas,
         order: 'id',
-        seq: 1,
+        seq: -1,
       };
       locationManageAsk[`${which}List`](params)
         .then(result => {
           const { errcode, data = {} } = result;
-          const tag = which === 'site' ? 'sitelocations' : 'stores';
+          const tag = which === 'site' ? 'siteInfos' : 'stores';
           if (errcode === 200) {
             const { totalsize = 0, [tag]: datas } = data;
             this.total = totalsize;
