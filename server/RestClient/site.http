@@ -22,7 +22,7 @@ post {{url}}{{module}}/add
 }
 
 ### detail 详情
-post {{url}}{{module}}/detail/
+post {{url}}{{module}}/detail/63
 {{contentType}}
 
 

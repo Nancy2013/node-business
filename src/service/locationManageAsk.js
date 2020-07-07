@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-06-29 19:37:39
+ * @LastEditTime: 2020-07-07 19:44:10
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';

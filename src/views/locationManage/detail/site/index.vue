@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-15 11:04:03
- * @LastEditTime: 2019-10-10 17:29:22
+ * @LastEditTime: 2020-07-07 19:26:18
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -23,8 +23,8 @@
                          :colon="false"
                          label="站点名称">
               <a-input v-decorator="[ `name`,{
-          initialValue:data.name,
-          rules: [{ required: true, message: '输入站点名称长度不超过20个字符' ,max:GLOBAL.NAME_MAX_LEN}],} ]" />
+                initialValue:data.name,
+                rules: [{ required: true, message: '输入站点名称长度不超过20个字符' ,max:GLOBAL.NAME_MAX_LEN}],} ]" />
             </a-form-item>
             <a-form-item :label-col="labelCol"
                          :wrapper-col="{span:20}"
@@ -34,8 +34,8 @@
                            style="margin-right:10px;"
                            @update="updateLocation" />
               <a-input v-decorator="[ `location`,{
-          initialValue:data.location,
-          rules: [{ required: true, message: '输入详细站点位置' }],} ]"
+                         initialValue:data.location,
+                         rules: [{ required: true, message: '输入详细站点位置' }],} ]"
                        placeholder="详细地址：如道路门牌"
                        class="component-w-224" />
             </a-form-item>
@@ -456,8 +456,8 @@
           .then(result => {
             const { errcode, data = {} } = result;
             if (errcode === 200) {
-              const { details = [] } = data;
-              this.data = details[0] || {};
+              const { sites } = data;
+              this.data = sites || {};
               const { provincial = '北京市', urban = '市辖区', areas = '东城区' } = this.data;
               this.defaultValue = [provincial, urban, areas];
               this.getFiles();

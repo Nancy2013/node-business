@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-06-29 19:19:25
+ * @LastEditTime: 2020-07-07 19:29:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -23,7 +23,7 @@ const controller = {
   detail: async (req, res, next) => {
     const { id } = req.params;
     const params = { id };
-    Model.find(params).then(result => { }).catch(e => {
+    Model.findOneAndRemove(params).then(result => { }).catch(e => {
       next(e);
     });
   },

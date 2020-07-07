@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-06 19:46:05
+ * @LastEditTime: 2020-07-07 20:01:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
  */
+const baseModule = 'site';
 const { response } = require('../../common/utils');
-const Model = require('../../models')('site');
+const Model = require('../../models')(baseModule);
 
 const controller = {
   get: async (req, res, next) => {
@@ -31,17 +32,15 @@ const controller = {
       params.areas = areas;
     }
 
-    console.log(JSON.stringify(params));
-
     const totalSize = await Model.count(params);
     Model.find(params)
     .limit(limit)
     .skip(limit * (offset - 1))
-    .sort({ id: seq })
+    .sort({ [order]: seq })
     .then(result => {
       if (result) {
         const data = {
-          siteInfos: result,
+          [`${baseModule}Infos`]: result,
           totalsize: totalSize,
         };
         res.send(response(data));
@@ -65,9 +64,18 @@ const controller = {
     });
   },
   detail: async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.body;
     const params = { id };
-    Model.find(params).then(result => { }).catch(e => {
+    Model.findOne(params).then(result => {
+      if (result) {
+        const data = {
+          [`${baseModule}s`]: result,
+        };
+
+        res.send(response(data));
+      }
+      console.log(JSON.stringify(result));
+     }).catch(e => {
       next(e);
     });
   },
@@ -79,7 +87,7 @@ const controller = {
     });
   },
   del: async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.body;
     const params = { id };
     Model.findOneAndDelete(params).then(result => { }).catch(e => {
       next(e);
