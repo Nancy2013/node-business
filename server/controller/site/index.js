@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-07 20:01:56
+ * @LastEditTime: 2020-07-13 19:18:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -52,6 +52,7 @@ const controller = {
   },
   add: async (req, res, next) => {
     const params = req.body;
+    const { provincial, urban, areas, } = req.body;
     Model.create(params).then(result => {
       if (result) {
         const data = {
@@ -82,7 +83,11 @@ const controller = {
   mod: async (req, res, next) => {
     const { id } = req.params;
     const params = req.body;
-    Model.findOneAndUpdate(id, params).then(result => { }).catch(e => {
+    Model.findOneAndUpdate(id, params).then(result => {
+      if (result) {
+        res.send(response());
+       }
+    }).catch(e => {
       next(e);
     });
   },
