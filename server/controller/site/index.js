@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-13 19:18:55
+ * @LastEditTime: 2020-07-14 19:59:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -9,6 +9,7 @@
 const baseModule = 'site';
 const { response } = require('../../common/utils');
 const Model = require('../../models')(baseModule);
+const LocationModel = require('../../models')('location');
 
 const controller = {
   get: async (req, res, next) => {
@@ -52,12 +53,38 @@ const controller = {
   },
   add: async (req, res, next) => {
     const params = req.body;
-    const { provincial, urban, areas, } = req.body;
-    Model.create(params).then(result => {
+    const { provincial, urban, areas } = req.body;
+    const provincialParams = {
+      type: module === 'site' ? 1 : 2,
+      parentId: '0',
+      name: provincial,
+    };
+    Model.create(params).then(async result => {
       if (result) {
         const data = {
           ...params
         };
+        // 添加省市区
+        const provincialExist = await LocationModel.findOne(provincialParams);
+        if (!provincialExist) {
+          LocationModel.create(provincialParams);
+        }
+        const urbanParams = {
+          parentId: provincialExist._id,
+          name: urban,
+        };
+        const urbanExist = await LocationModel.findOne(urbanParams);
+        if (!urbanExist) {
+          LocationModel.create(urbanParams);
+        }
+        const areasParams = {
+          parentId: urbanExist._id,
+          name: areas,
+        };
+        const areasExist = await LocationModel.findOne(areasParams);
+        if (!areasExist) {
+          LocationModel.create(areasExist);
+         }
         res.send(response(data));
       }
      }).catch(e => {
@@ -98,7 +125,24 @@ const controller = {
       next(e);
     });
   },
-  getProvincial: async (req, res, next) => { },
+  getProvincial: async (req, res, next) => {
+    const params = {
+      ...req.body,
+    };
+
+    const totalsize = await Model.count(params);
+    Model.find(params).then(result => {
+      if (result) {
+        const data = {
+          provincials: result,
+          totalsize,
+        };
+        res.send(response(data));
+       }
+    }).catch(e => {
+      next(e);
+    });
+  },
   getUrban: async (req, res, next) => { },
   getArea: async (req, res, next) => { },
 
