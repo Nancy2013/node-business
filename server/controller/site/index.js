@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-14 19:59:19
+ * @LastEditTime: 2020-07-20 19:32:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -59,32 +59,33 @@ const controller = {
       parentId: '0',
       name: provincial,
     };
+    let provincialExist, urbanExist, areasExist;
     Model.create(params).then(async result => {
       if (result) {
         const data = {
           ...params
         };
         // 添加省市区
-        const provincialExist = await LocationModel.findOne(provincialParams);
-        if (!provincialExist) {
-          LocationModel.create(provincialParams);
-        }
-        const urbanParams = {
-          parentId: provincialExist._id,
-          name: urban,
-        };
-        const urbanExist = await LocationModel.findOne(urbanParams);
-        if (!urbanExist) {
-          LocationModel.create(urbanParams);
-        }
-        const areasParams = {
-          parentId: urbanExist._id,
-          name: areas,
-        };
-        const areasExist = await LocationModel.findOne(areasParams);
-        if (!areasExist) {
-          LocationModel.create(areasExist);
-         }
+        provincialExist = await LocationModel.findOne(provincialParams);
+        // if (!provincialExist) {
+        //   provincialExist=await LocationModel.create(provincialParams)
+        // }
+        // const urbanParams = {
+        //   parentId: provincialExist._id,
+        //   name: urban,
+        // };
+        // urbanExist = await LocationModel.findOne(urbanParams);
+        // if (!urbanExist) {
+        //   urbanExist=await LocationModel.create(urbanParams);
+        // }
+        // const areasParams = {
+        //   parentId: urbanExist._id,
+        //   name: areas,
+        // };
+        // areasExist = await LocationModel.findOne(areasParams);
+        // if (!areasExist) {
+        //   areasExist=await LocationModel.create(areasExist);
+        //  }
         res.send(response(data));
       }
      }).catch(e => {
@@ -110,8 +111,41 @@ const controller = {
   mod: async (req, res, next) => {
     const { id } = req.params;
     const params = req.body;
-    Model.findOneAndUpdate(id, params).then(result => {
+    const { provincial, urban, areas } = req.body;
+    const provincialParams = {
+      type: module === 'site' ? 1 : 2,
+      parentId: '0',
+      name: provincial,
+    };
+    let provincialExist, urbanExist, areasExist;
+    Model.findOneAndUpdate(id, params).then(async result => {
       if (result) {
+
+        // // 添加省市区
+        provincialExist = await LocationModel.findOne(provincialParams);
+        console.log(JSON.stringify(provincialExist));
+        if (!provincialExist) {
+          provincialExist=await LocationModel.create(provincialParams)
+        }
+        const urbanParams = {
+          parentId: provincialExist._id,
+          name: urban,
+          type: 3,
+        };
+        urbanExist = await LocationModel.findOne(urbanParams);
+        if (!urbanExist) {
+          urbanExist=await LocationModel.create(urbanParams);
+        }
+        const areasParams = {
+          parentId: urbanExist._id,
+          name: areas,
+          type: 4,
+        };
+        areasExist = await LocationModel.findOne(areasParams); 
+        if (!areasExist) {
+          areasExist=await LocationModel.create(areasParams);
+        }
+        
         res.send(response());
        }
     }).catch(e => {
