@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-20 19:32:20
+ * @LastEditTime: 2020-07-23 19:43:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -121,30 +121,30 @@ const controller = {
     Model.findOneAndUpdate(id, params).then(async result => {
       if (result) {
 
-        // // 添加省市区
-        provincialExist = await LocationModel.findOne(provincialParams);
-        console.log(JSON.stringify(provincialExist));
-        if (!provincialExist) {
-          provincialExist=await LocationModel.create(provincialParams)
-        }
-        const urbanParams = {
-          parentId: provincialExist._id,
-          name: urban,
-          type: 3,
-        };
-        urbanExist = await LocationModel.findOne(urbanParams);
-        if (!urbanExist) {
-          urbanExist=await LocationModel.create(urbanParams);
-        }
-        const areasParams = {
-          parentId: urbanExist._id,
-          name: areas,
-          type: 4,
-        };
-        areasExist = await LocationModel.findOne(areasParams); 
-        if (!areasExist) {
-          areasExist=await LocationModel.create(areasParams);
-        }
+        // 添加省市区
+        // provincialExist = await LocationModel.findOne(provincialParams);
+        // console.log(JSON.stringify(provincialExist));
+        // if (!provincialExist) {
+        //   provincialExist=await LocationModel.create(provincialParams)
+        // }
+        // const urbanParams = {
+        //   parentId: provincialExist._id,
+        //   name: urban,
+        //   type: 3,
+        // };
+        // urbanExist = await LocationModel.findOne(urbanParams);
+        // if (!urbanExist) {
+        //   urbanExist=await LocationModel.create(urbanParams);
+        // }
+        // const areasParams = {
+        //   parentId: urbanExist._id,
+        //   name: areas,
+        //   type: 4,
+        // };
+        // areasExist = await LocationModel.findOne(areasParams); 
+        // if (!areasExist) {
+        //   areasExist=await LocationModel.create(areasParams);
+        // }
         
         res.send(response());
        }

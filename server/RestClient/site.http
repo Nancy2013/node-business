@@ -27,10 +27,20 @@ post {{url}}{{module}}/detail/63
 
 
 ### mod 修改
-post {{url}}{{module}}/mod/
+post {{url}}{{module}}/mod
 {{contentType}}
 
-{}
+{
+"_id": "5f030b4bdc8e0c03bc48fb57",
+"id": "58",
+"name": "先天下购物广场",
+"provincial": "河北省",
+"urban": "石家庄市",
+"areas": "长安区",
+"location": "中山东路326号",
+"status": "1",
+"__v": 0
+}
 
 
 ### del 删除
