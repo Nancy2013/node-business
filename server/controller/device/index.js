@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-16 19:30:40
+ * @LastEditTime: 2020-08-20 19:29:51
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -29,7 +29,7 @@ const controller = {
     if (did) {
       params.did = did;
     }
-    const totalSize = await Model.count(params);
+    const totalSize = await Model.countDocuments(params);
     Model.find(params)
       .limit(limit)
       .skip(limit * (offset - 1))

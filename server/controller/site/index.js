@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-07-23 19:43:36
+ * @LastEditTime: 2020-08-27 19:53:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -33,7 +33,7 @@ const controller = {
       params.areas = areas;
     }
 
-    const totalSize = await Model.count(params);
+    const totalSize = await Model.countDocuments(params);
     Model.find(params)
     .limit(limit)
     .skip(limit * (offset - 1))
@@ -66,7 +66,7 @@ const controller = {
           ...params
         };
         // 添加省市区
-        provincialExist = await LocationModel.findOne(provincialParams);
+        // provincialExist = await LocationModel.findOne(provincialParams);
         // if (!provincialExist) {
         //   provincialExist=await LocationModel.create(provincialParams)
         // }
@@ -109,43 +109,41 @@ const controller = {
     });
   },
   mod: async (req, res, next) => {
-    const { id } = req.params;
     const params = req.body;
-    const { provincial, urban, areas } = req.body;
+    const { provincial, urban, areas, id } = req.body;
+    const conditions  = { id };
     const provincialParams = {
       type: module === 'site' ? 1 : 2,
       parentId: '0',
       name: provincial,
     };
     let provincialExist, urbanExist, areasExist;
-    Model.findOneAndUpdate(id, params).then(async result => {
+    Model.findOneAndUpdate(conditions, params).then(async result => {
       if (result) {
-
         // 添加省市区
-        // provincialExist = await LocationModel.findOne(provincialParams);
-        // console.log(JSON.stringify(provincialExist));
-        // if (!provincialExist) {
-        //   provincialExist=await LocationModel.create(provincialParams)
-        // }
-        // const urbanParams = {
-        //   parentId: provincialExist._id,
-        //   name: urban,
-        //   type: 3,
-        // };
-        // urbanExist = await LocationModel.findOne(urbanParams);
-        // if (!urbanExist) {
-        //   urbanExist=await LocationModel.create(urbanParams);
-        // }
-        // const areasParams = {
-        //   parentId: urbanExist._id,
-        //   name: areas,
-        //   type: 4,
-        // };
-        // areasExist = await LocationModel.findOne(areasParams); 
-        // if (!areasExist) {
-        //   areasExist=await LocationModel.create(areasParams);
-        // }
-        
+        provincialExist = await LocationModel.findOne(provincialParams);
+        console.log(JSON.stringify(provincialExist));
+        if (!provincialExist) {
+          provincialExist=await LocationModel.create(provincialParams)
+        }
+        const urbanParams = {
+          parentId: provincialExist._id,
+          name: urban,
+          type: 3,
+        };
+        urbanExist = await LocationModel.findOne(urbanParams);
+        if (!urbanExist) {
+          urbanExist=await LocationModel.create(urbanParams);
+        }
+        const areasParams = {
+          parentId: urbanExist._id,
+          name: areas,
+          type: 4,
+        };
+        areasExist = await LocationModel.findOne(areasParams); 
+        if (!areasExist) {
+          areasExist=await LocationModel.create(areasParams);
+        }
         res.send(response());
        }
     }).catch(e => {
@@ -153,9 +151,12 @@ const controller = {
     });
   },
   del: async (req, res, next) => {
-    const { id } = req.body;
-    const params = { id };
-    Model.findOneAndDelete(params).then(result => { }).catch(e => {
+    const params = {id:req.body.siteids[0]};
+    Model.findOneAndDelete(params).then(result => { 
+      if (result) {
+        res.send(response());
+       }
+    }).catch(e => {
       next(e);
     });
   },
@@ -164,7 +165,7 @@ const controller = {
       ...req.body,
     };
 
-    const totalsize = await Model.count(params);
+    const totalsize = await Model.countDocuments(params);
     Model.find(params).then(result => {
       if (result) {
         const data = {
