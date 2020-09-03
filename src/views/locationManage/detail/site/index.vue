@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-15 11:04:03
- * @LastEditTime: 2020-07-07 19:26:18
+ * @LastEditTime: 2020-09-03 11:27:04
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -448,7 +448,7 @@
         const params = {
           limit: 1,
           offset: 1,
-          id: parseInt(id),
+          id: id,
         };
 
         locationManageAsk

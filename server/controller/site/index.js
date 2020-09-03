@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-03 10:54:58
+ * @LastEditTime: 2020-09-03 11:34:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -37,6 +37,9 @@ const controller = {
     .sort({ [order]: seq })
     .then(result => {
       if (result) {
+        result.forEach(v => { 
+          v.id=v._id
+        });
         const data = {
           [`${baseModule}Infos`]: result,
           totalsize: totalSize,
@@ -49,7 +52,10 @@ const controller = {
     });
   },
   add: async (req, res, next) => {
-    const params = req.body;
+    const params = {
+      ...req.body,
+      devicecnt:0,
+    } ;
     const { provincial, urban, areas } = req.body;
     const provincialParams = {
       type: module === 'site' ? 1 : 2,
@@ -91,8 +97,8 @@ const controller = {
   },
   detail: async (req, res, next) => {
     const { id } = req.body;
-    const params = { id };
-    Model.findOne(params).then(result => {
+    const params = id;
+    Model.findById(params).then(result => {
       if (result) {
         const data = {
           [`${baseModule}s`]: result,
@@ -108,7 +114,7 @@ const controller = {
   mod: async (req, res, next) => {
     const params = req.body;
     const { provincial, urban, areas, id } = req.body;
-    const conditions  = { id };
+    const conditions  = { _id:id };
     const provincialParams = {
       type: module === 'site' ? 1 : 2,
       parentId: '0',
@@ -148,7 +154,7 @@ const controller = {
     });
   },
   del: async (req, res, next) => {
-    const params = {id:req.body.siteids[0]};
+    const params = {_id:req.body.siteids[0]};
     Model.findOneAndDelete(params).then(result => { 
       if (result) {
         res.send(response());
