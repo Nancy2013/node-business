@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-09-03 11:30:21
+ * @LastEditTime: 2020-09-03 15:17:40
  * @LastEditors: Please set LastEditors
  */
 // Location 列表
@@ -50,7 +50,7 @@ export default which => ({
         provincial,
         urban,
         areas,
-        order: 'id',
+        order: '_id',
         seq: -1,
       };
       locationManageAsk[`${which}List`](params)
