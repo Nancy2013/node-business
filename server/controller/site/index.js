@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-03 11:34:17
+ * @LastEditTime: 2020-09-03 15:01:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -32,14 +32,13 @@ const controller = {
 
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
+    .lean()
     .limit(limit)
     .skip(limit * (offset - 1))
     .sort({ [order]: seq })
     .then(result => {
       if (result) {
-        result.forEach(v => { 
-          v.id=v._id
-        });
+        result.forEach(v => v.id = v._id);     
         const data = {
           [`${baseModule}Infos`]: result,
           totalsize: totalSize,
@@ -69,26 +68,29 @@ const controller = {
           ...params
         };
         // 添加省市区
-        // provincialExist = await LocationModel.findOne(provincialParams);
-        // if (!provincialExist) {
-        //   provincialExist=await LocationModel.create(provincialParams)
-        // }
-        // const urbanParams = {
-        //   parentId: provincialExist._id,
-        //   name: urban,
-        // };
-        // urbanExist = await LocationModel.findOne(urbanParams);
-        // if (!urbanExist) {
-        //   urbanExist=await LocationModel.create(urbanParams);
-        // }
-        // const areasParams = {
-        //   parentId: urbanExist._id,
-        //   name: areas,
-        // };
-        // areasExist = await LocationModel.findOne(areasParams);
-        // if (!areasExist) {
-        //   areasExist=await LocationModel.create(areasExist);
-        //  }
+        provincialExist = await LocationModel.findOne(provincialParams);
+        console.log(JSON.stringify(provincialExist));
+        if (!provincialExist) {
+          provincialExist=await LocationModel.create(provincialParams)
+        }
+        const urbanParams = {
+          parentId: provincialExist._id,
+          name: urban,
+          type: 3,
+        };
+        urbanExist = await LocationModel.findOne(urbanParams);
+        if (!urbanExist) {
+          urbanExist=await LocationModel.create(urbanParams);
+        }
+        const areasParams = {
+          parentId: urbanExist._id,
+          name: areas,
+          type: 4,
+        };
+        areasExist = await LocationModel.findOne(areasParams); 
+        if (!areasExist) {
+          areasExist=await LocationModel.create(areasParams);
+        }
         res.send(response(data));
       }
      }).catch(e => {
@@ -113,8 +115,8 @@ const controller = {
   },
   mod: async (req, res, next) => {
     const params = req.body;
-    const { provincial, urban, areas, id } = req.body;
-    const conditions  = { _id:id };
+    const { provincial, urban, areas, _id } = req.body;
+    const conditions  = { _id };
     const provincialParams = {
       type: module === 'site' ? 1 : 2,
       parentId: '0',
