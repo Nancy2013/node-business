@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-07-07 19:44:10
+ * @LastEditTime: 2020-09-03 17:01:57
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
@@ -47,6 +47,10 @@ export default {
   /* 门店 */
   // 查询门店
   storeList: reqHandle('/store/get', {
+    method: HTTP_METHOD.POST,
+  }),
+  // 查询门店详情
+  getStoreDetail: reqHandle('/store/detail', {
     method: HTTP_METHOD.POST,
   }),
   // 删除门店

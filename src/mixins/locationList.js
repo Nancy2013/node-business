@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-09-03 15:17:40
+ * @LastEditTime: 2020-09-03 16:39:03
  * @LastEditors: Please set LastEditors
  */
 // Location 列表
@@ -56,7 +56,7 @@ export default which => ({
       locationManageAsk[`${which}List`](params)
         .then(result => {
           const { errcode, data = {} } = result;
-          const tag = which === 'site' ? 'siteInfos' : 'stores';
+          const tag = `${which}Infos`;
           if (errcode === 200) {
             const { totalsize = 0, [tag]: datas } = data;
             this.total = totalsize;

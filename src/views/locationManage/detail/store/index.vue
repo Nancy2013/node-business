@@ -2,8 +2,8 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-10-10 10:56:24
- * @LastEditTime: 2019-10-10 10:56:24
- * @LastEditors: your name
+ * @LastEditTime: 2020-09-03 17:01:19
+ * @LastEditors: Please set LastEditors
  -->
 <template>
   <a-spin :spinning="spinning">
@@ -252,16 +252,16 @@
         const params = {
           limit: 1,
           offset: 1,
-          id: parseInt(id),
+          id,
         };
 
         locationManageAsk
-          .storeList(params)
+          .getStoreDetail(params)
           .then(result => {
             const { errcode, data = {} } = result;
             if (errcode === 200) {
               const { stores = [] } = data;
-              this.data = stores[0] || {};
+              this.data = stores || {};
               const { provincial = '北京市', urban = '市辖区', areas = '东城区' } = this.data;
               this.defaultValue = [provincial, urban, areas];
             }

@@ -1,6 +1,6 @@
 @url = http://localhost:3000/node-business/
 @contentType = content-type: application/json
-@module=site
+@module=store
 
 ### get 查询
 get {{url}}{{module}}/get
@@ -11,14 +11,11 @@ post {{url}}{{module}}/add
 {{contentType}}
 
 {
-    "id": 44,
-    "name": "沈阳万象城",
-    "provincial": "辽宁省",
-    "urban": "沈阳市",
-    "areas": "和平区",
-    "location": "青年大街288号华润万象城",
-    "devicecnt": 1,
-    "status": "1"
+    "name": "佛山顺联国际",
+    "provincial": "广东省",
+    "urban": "佛山市",
+    "areas": "禅城区",
+    "location": "季华五路33号顺联国际购物中心4F傲胜专柜"
 }
 
 ### detail 详情
