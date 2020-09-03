@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-08-20 19:29:51
+ * @LastEditTime: 2020-09-03 10:39:53
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -33,7 +33,7 @@ const controller = {
     Model.find(params)
       .limit(limit)
       .skip(limit * (offset - 1))
-      .sort({ id: seq })
+      .sort({ _id: seq })
       .then(result => {
       console.log(result);
       if (result) {
@@ -57,8 +57,8 @@ const controller = {
     });
   },
   detail: async (req, res) => {
-    const { id } = req.params;
-    const params = { id };
+    const { did } = req.params;
+    const params = { did };
     Model.findOne(params).then(result => {
       const data = {
         deviceInfos: result,
@@ -69,15 +69,16 @@ const controller = {
     });
   },
   mod: async (req, res) => {
-    const { id } = req.params;
+    const { did } = req.params;
+    const conditions  = { did };
     const params = req.body;
-    Model.findOneAndUpdate(id, params).then(result => { }).catch(e => {
+    Model.findOneAndUpdate(conditions, params).then(result => { }).catch(e => {
       console.error(e);
     });
   },
   del: async (req, res) => {
-    const { id } = req.params;
-    const params = { id };
+    const { did } = req.params;
+    const params = { did };
     Model.findOneAndDelete(params).then(result => { }).catch(e => {
       console.error(e);
     });

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-08-27 19:53:14
+ * @LastEditTime: 2020-09-03 10:54:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -14,10 +14,7 @@ const LocationModel = require('../../models')('location');
 const controller = {
   get: async (req, res, next) => {
     let params;
-    const { offset, limit, name, provincial, urban, areas, id, order, seq } = req.body;
-    if (id) {
-      params.id = id;
-     }
+    const { offset, limit, name, provincial, urban, areas,order, seq } = req.body;
 
     if (name) {
       const reg = new RegExp(name, 'i'); // 不区分大小写

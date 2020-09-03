@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-06-09 10:39:13
+ * @LastEditTime: 2020-09-03 10:29:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -9,10 +9,6 @@
 const mongoose = require('mongoose');
 
 module.exports = new mongoose.Schema({
-  id: {
-    type: String,
-    unique: true,
-  },
   did: {
     type: String,
   },

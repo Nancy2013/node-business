@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-06-22 19:12:25
+ * @LastEditTime: 2020-09-03 10:50:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -31,7 +31,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/public', express.static(`${__dirname}/public`));
 app.all('*', (req, res, next) => {
-  console.log('node-business');
+  console.log(JSON.stringify(req.body));
   next();
 });
 
