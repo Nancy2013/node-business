@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-04 16:35:00
+ * @LastEditTime: 2020-09-04 17:05:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -23,6 +23,10 @@ const storage = multer.diskStorage({
     const ext = originalname.slice(originalname.indexOf('.'), originalname.length);
     const filename = name + Date.now() + ext;
     cb(null, filename)
+  },
+  onError : function(err, next) {
+    console.log('error', err);
+    next(err);
   }
 });
 const upload = multer({
