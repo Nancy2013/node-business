@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-04 11:08:32
+ * @LastEditTime: 2020-09-04 15:40:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -112,6 +112,7 @@ module.exports = function (baseModule) {
       const params = {
         ...req.body,
         devicecnt: 0,
+        picurl:'',
       };
       Model.create(params).then(async result => {
         if (result) {
