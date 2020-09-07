@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-09-03 10:50:13
+ * @LastEditTime: 2020-09-07 14:44:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -21,6 +21,9 @@ const libs = require('./libs');
 // 全局引用第三方依赖包
 libs();
 const router = require('./routes/index');
+const {
+  PORT
+} = require('./config');
 
 app.use(bodyparser.urlencoded({
   extended: true,
@@ -30,14 +33,14 @@ app.use(cors());
 // 请求体解析中间件，传递的参数为json格式，存放在body中
 app.use(express.json());
 app.use('/public', express.static(`${__dirname}/public`));
+app.use('/uploads', express.static(`${__dirname}/uploads`));
 app.all('*', (req, res, next) => {
   console.log(JSON.stringify(req.body));
   next();
 });
 
-
 mongoose(app);
 router(app);
-app.listen(3000, () => {
-  console.log('server : http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`server : http://localhost:${PORT}`);
 });

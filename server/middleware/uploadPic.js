@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-04 17:05:19
+ * @LastEditTime: 2020-09-07 13:56:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -9,7 +9,6 @@
 
 const multer = require('multer');
 
-// TODO上传图片错误处理
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/pic/sitelocation')
