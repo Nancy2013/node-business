@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-29 09:57:38
- * @LastEditTime: 2019-09-18 10:16:06
+ * @LastEditTime: 2020-09-08 17:00:38
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -14,9 +14,9 @@
         省
       </a-select-option>
       <a-select-option v-for="item in provinceData"
-                       :key="item.provincial"
-                       :value="item.provincial">
-        {{ item.provincial }}
+                       :key="item.name"
+                       :value="item._id">
+        {{ item.name }}
       </a-select-option>
     </a-select>
     <a-select v-model="urban"
@@ -27,9 +27,9 @@
         市
       </a-select-option>
       <a-select-option v-for="item in cityData"
-                       :key="item.urban"
-                       :value="item.urban">
-        {{ item.urban }}
+                       :key="item.name"
+                       :value="item._id">
+        {{ item.name }}
       </a-select-option>
     </a-select>
     <a-select v-model="areas"
@@ -39,9 +39,9 @@
         区
       </a-select-option>
       <a-select-option v-for="item in districtData"
-                       :key="item.areas"
-                       :value="item.areas">
-        {{ item.areas }}
+                       :key="item.name"
+                       :value="item._id">
+        {{ item.name }}
       </a-select-option>
     </a-select>
   </div>
@@ -125,17 +125,32 @@
       },
       // 选择区
       handleDistrictChange() {
-        const { provincial, urban, areas } = this;
-        const payload = [provincial, urban, areas];
+        const {
+          provincial,
+          urban,
+          areas,
+          getLocationName,
+          provinceData,
+          cityData,
+          districtData,
+        } = this;
+        const payload = [
+          getLocationName(provinceData, provincial),
+          getLocationName(cityData, urban),
+          getLocationName(districtData, areas),
+        ];
         this.updateLocation(payload);
         this.$emit('change');
+      },
+      getLocationName(data, _id) {
+        // 将id转换成名称
+        const current = data && data.find(item => item._id === _id);
+        return current ? current.name : '';
       },
       // 查询省份
       getProvincial() {
         const { name, projectInfo } = this;
-        const params = {
-          projectid: `${projectInfo.id}`,
-        };
+        const params = {};
         locationManageAsk[`${name}GetProvincial`](params)
           .then(result => {
             const { errcode, data = {} } = result;
@@ -151,7 +166,7 @@
         this.urban = '-1';
         const { provincial, name } = this;
         const params = {
-          provincial,
+          parentId: provincial,
         };
         await locationManageAsk[`${name}GetUrban`](params)
           .then(result => {
@@ -168,17 +183,14 @@
         this.areas = '-1';
         const { provincial, urban, name } = this;
         const params = {
-          provincial,
-          urban,
+          parentId: urban,
         };
         await locationManageAsk[`${name}GetArea`](params)
           .then(result => {
             const { errcode, data = {} } = result;
             if (errcode === 200) {
-              const { areas = [] } = data;
-              this.districtData = areas;
-              const payload = [provincial, urban, this.areas];
-              this.updateLocation(payload);
+              const { areass = [] } = data;
+              this.districtData = areass;
             }
           })
           .catch(e => console.error(e));

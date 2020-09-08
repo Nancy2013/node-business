@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-04 15:40:59
+ * @LastEditTime: 2020-09-08 17:39:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -22,8 +22,10 @@ module.exports = function (baseModule) {
       urban,
       areas
     } = req.body;
+    console.log('----------', baseModule);
+    
     const provincialParams = {
-      type: module === 'site' ? 1 : 2,
+      type: baseModule === 'site' ? 1 : 2,
       parentId: '0',
       name: provincial,
     };
@@ -56,9 +58,43 @@ module.exports = function (baseModule) {
     params ? res.send(response(params)) : res.send(response());
   };
 
+  // 查询地区
+  const getLocation =async function (req, res,next, level) { 
+    const params = {
+      ...req.body,
+    };
+    switch (level) { 
+      case 'provincial':
+        // 省
+        params.type = baseModule === 'site' ? 1 : 2;
+        break;
+      case 'urban':
+        // 市
+        params.type = 3;
+        break;
+      case 'areas':
+        // 区
+        params.type = 4;
+        break;
+    }
+    
+    const totalsize = await LocationModel.countDocuments(params);
+    LocationModel.find(params).then(result => {
+      if (result) {
+        const data = {
+          [`${level}s`]: result,
+          totalsize,
+        };
+        res.send(response(data));
+      }
+    }).catch(e => {
+      next(e);
+    });
+  };
+
   const controller = {
     get: async (req, res, next) => {
-      let params;
+      let params = {};
       const {
         offset,
         limit,
@@ -111,8 +147,10 @@ module.exports = function (baseModule) {
     add: async (req, res, next) => {
       const params = {
         ...req.body,
-        devicecnt: 0,
-        picurl:'',
+      };
+      if (baseModule==='site') { 
+        params.devicecnt = 0;
+        params.picurl = '';
       };
       Model.create(params).then(async result => {
         if (result) {
@@ -154,7 +192,7 @@ module.exports = function (baseModule) {
     },
     del: async (req, res, next) => {
       const params = {
-        _id: req.body.siteids[0]
+        _id: req.body[`${baseModule}ids`][0]
       };
       Model.findOneAndDelete(params).then(result => {
         if (result) {
@@ -165,25 +203,14 @@ module.exports = function (baseModule) {
       });
     },
     getProvincial: async (req, res, next) => {
-      const params = {
-        ...req.body,
-      };
-
-      const totalsize = await Model.countDocuments(params);
-      Model.find(params).then(result => {
-        if (result) {
-          const data = {
-            provincials: result,
-            totalsize,
-          };
-          res.send(response(data));
-        }
-      }).catch(e => {
-        next(e);
-      });
+      getLocation(req, res, next,'provincial');
     },
-    getUrban: async (req, res, next) => { },
-    getArea: async (req, res, next) => { },
+    getUrban: async (req, res, next) => { 
+      getLocation(req, res, next,'urban');
+    },
+    getArea: async (req, res, next) => {
+      getLocation(req, res, next,'areas');
+     },
   };
   return controller;
 };
