@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-08 13:53:18
+ * @LastEditTime: 2020-09-09 10:09:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
     next(err);
   }
 });
-const upload = multer({
+const uploadPic = multer({
   storage,
   limits: {
     //限制文件大小2M
@@ -55,4 +55,4 @@ const upload = multer({
   },
 });
 
-module.exports = upload;
+module.exports = uploadPic;
