@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-09-09 16:14:38
+ * @LastEditTime: 2020-09-09 16:25:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -16,7 +16,7 @@ const cors = require('cors');
 // 加载mongoose模块，这个中间件是nodejs与mongoDB数据库的桥梁
 const mongoose = require('./mongodb/db');
 const libs = require('./libs');
-const jwtCheck = require('./middleware');
+const {jwtCheck} = require('./middleware');
 
 // 全局引用第三方依赖包
 libs();
@@ -37,7 +37,7 @@ app.use('/uploads', express.static(`${__dirname}/uploads`));
 app.all('*', (req, res, next) => {
   console.log(JSON.stringify(req.body));
   next();
-});
+},jwtCheck);
 
 mongoose(app);
 router(app);

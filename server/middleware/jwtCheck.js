@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-09-09 15:15:41
- * @LastEditTime: 2020-09-09 16:14:20
+ * @LastEditTime: 2020-09-09 16:32:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\middleware\jwtCheck.js
@@ -15,10 +15,10 @@ const {
 } = require('../config');
 const errorCode = require('../common/error');
 
-const jwtCheck = function (req, res, next) {
+const jwtCheck = (req, res, next) => {
   const {
     token
-  } = req.header;
+  } = req.headers;
   jwt.verify(token, SECRET, (err,decoded) => { 
     if (err) {
       const { name, message } = err;
