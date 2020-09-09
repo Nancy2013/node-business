@@ -1,13 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-09-07 14:44:10
+ * @LastEditTime: 2020-09-09 16:14:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
  */
 const express = require('express');
-
 const app = express();
 
 // 加载bodyparser模块，用来解析前端post方式提交过来的数据
@@ -17,6 +16,7 @@ const cors = require('cors');
 // 加载mongoose模块，这个中间件是nodejs与mongoDB数据库的桥梁
 const mongoose = require('./mongodb/db');
 const libs = require('./libs');
+const jwtCheck = require('./middleware');
 
 // 全局引用第三方依赖包
 libs();

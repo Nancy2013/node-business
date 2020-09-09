@@ -1,13 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-06-23 19:44:26
+ * @LastEditTime: 2020-09-09 15:57:06
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
 const assert = require('http-assert');
 const Model = require('../../models')('account');
+const {
+  SECRET
+} = require('../../config');
+const jwt = require('jsonwebtoken');
 const {
   response
 } = require('../../common/utils');
@@ -32,9 +36,15 @@ const controller = {
         assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
         const {
           uid,
-          token,
+          _id,
           pid
         } = result;
+        // 生成token,有效时长24小时
+        const token = jwt.sign({
+          id: String(_id)
+        }, SECRET, {
+          expiresIn: 60 * 1
+        })
         const data = {
           uid,
           token,
@@ -49,11 +59,11 @@ const controller = {
     console.log('logout');
   },
   mod: async (req, res) => {
-    const {
-      id
-    } = req.params;
+    const conditions = {
+      _id: req.params.id
+    }
     const params = req.body;
-    const result = await Model.findOneAndUpdate(id, params);
+    const result = await Model.findOneAndUpdate(conditions, params);
     res.send({
       errcode: 200,
       msg: 'success',

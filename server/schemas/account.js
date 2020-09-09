@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-05-28 09:56:47
+ * @LastEditTime: 2020-09-09 14:31:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -13,9 +13,6 @@ module.exports = new mongoose.Schema({
     type: String,
   },
   token: {
-    type: String,
-  },
-  id: {
     type: String,
   },
   displayname: {
