@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-09-09 15:15:41
- * @LastEditTime: 2020-09-10 15:25:02
+ * @LastEditTime: 2020-09-10 15:48:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\middleware\jwtCheck.js
@@ -28,8 +28,8 @@ const jwtCheck = (req, res, next) => {
       // 错误处理 
       if (err) {
       const { name, message } = err;
-        res.status(errorCode.forbidden).send({
-          errcode: errorCode.forbidden,
+        res.status(errorCode.unAuthorized).send({
+          errcode: errorCode.unAuthorized,
           msg: `${name} ${message}`,
         });
       } else { 
