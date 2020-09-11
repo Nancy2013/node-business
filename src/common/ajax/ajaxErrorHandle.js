@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-09-11 16:15:39
+ * @LastEditTime: 2020-09-11 17:24:21
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -13,6 +13,7 @@ import {
   DEFAULT_ERR_MSG
 } from 'configPath/index';
 import Message from 'ant-design-vue/lib/message';
+import Vue from 'vue';
 
 // TODO 错误码拦截
 export function ajaxFulFilledHandle(data = {}, config) {
@@ -29,15 +30,10 @@ export function ajaxFulFilledHandle(data = {}, config) {
     } else {
       if (errcode === 401) {
         // token过期
-        const {
-          href,
-          hash
-        } = window.location;
         Message.info('token过期，请重新登录');
         localStorage.removeItem(`authB_${PROJECT.id}`);
         localStorage.removeItem(`userInfoB_${PROJECT.id}`);
-        // TODO 使用Vue router进行界面跳转
-        window.location = href.replace(hash, '#/login');
+        Vue.router.push({name:'/login'});
       } else {
         if (errMsg.length > 100) {
           errMsg = `${errMsg.slice(0, 100)}...`;
