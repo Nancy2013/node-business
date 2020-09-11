@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-10 17:40:52
+ * @LastEditTime: 2020-09-11 15:54:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -28,6 +28,7 @@ const storage = multer.diskStorage({
     const filename = name + Date.now() + ext;
     cb(null, filename)
   },
+  // TODO上传图片错误处理
   onError: function (err, next) {
     console.log('error', err);
     next(err);
@@ -45,7 +46,6 @@ const uploadPic = multer({
     // 类型限制
     const types = ['image/png', 'image/jpeg'];
     const isType = types.includes(file.mimetype);
-    console.log(isType);
 
     if (isType) {
       cb(null, true)

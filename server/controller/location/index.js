@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-10 15:13:08
+ * @LastEditTime: 2020-09-11 10:41:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -22,7 +22,6 @@ module.exports = function (baseModule) {
       urban,
       areas
     } = req.body;
-    console.log('----------', baseModule);
     
     const provincialParams = {
       type: baseModule === 'site' ? 1 : 2,
@@ -87,9 +86,7 @@ module.exports = function (baseModule) {
         };
         res.send(response(data));
       }
-    }).catch(e => {
-      next(e);
-    });
+    }).catch(next);
   };
 
   const controller = {
