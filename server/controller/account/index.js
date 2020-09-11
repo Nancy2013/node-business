@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-10 14:50:10
+ * @LastEditTime: 2020-09-11 16:18:44
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -43,7 +43,7 @@ const controller = {
         const token = jwt.sign({
           id: String(_id)
         }, SECRET, {
-          expiresIn: 60 * 60
+          expiresIn: 60 * 60 * 24
         })
         const data = {
           uid,
@@ -55,8 +55,8 @@ const controller = {
         res.send(sendDatas);
       }).catch(next);
   },
-  logout: async (req, res) => {
-    console.log('logout');
+  logout: async (req, res, next) => {
+    res.send(response(null));
   },
   mod: async (req, res) => {
     const conditions = {

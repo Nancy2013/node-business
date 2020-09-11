@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-28 15:12:47
- * @LastEditTime: 2020-09-10 15:47:49
+ * @LastEditTime: 2020-09-11 16:13:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\common\error.js
@@ -28,5 +28,5 @@ module.exports = {
   serviceUnavailable: 503, // 服务器停机
   gatewayTimeout: 504, // 网关请求超时
   insufficientStorage: 507,  // Storage不充分
-  networkAuthenticationRequired:511,  // 需要网络授权
+  networkAuthenticationRequired: 511,  // 需要网络授权
 };
