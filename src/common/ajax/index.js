@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-09-11 17:22:58
+ * @LastEditTime: 2020-09-14 14:52:08
  * @LastEditors: Please set LastEditors
  */
 import {
@@ -48,7 +48,7 @@ function setAxiosCfg() {
       sign: signSha1,
       token,
     },
-    validateStatus: (status) => status === 200,
+    validateStatus: (status) => status===200,
   };
 }
 

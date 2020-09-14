@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-12 11:27:59
- * @LastEditTime: 2020-05-27 15:12:47
+ * @LastEditTime: 2020-09-14 14:32:52
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -159,9 +159,11 @@ async function dynamicRoutes(to, from, next) {
 // 会在store上注册 `store.state.route`
 sync(store, router);
 
-new Vue({
+const app=new Vue({
   i18n,
   store,
   router,
   ...App,
 }).$mount('#app');
+
+export default app;
