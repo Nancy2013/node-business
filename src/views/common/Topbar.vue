@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-11-12 16:50:22
+ * @LastEditTime: 2020-09-14 16:02:28
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -58,7 +58,10 @@
       ...mapState('app', ['userInfo', 'projectInfo']),
     },
     created() {
-      this.setUserInfo(JSON.parse(localStorage[`userInfoB_${this.projectInfo.id}`]));
+      const userInfo = localStorage[`userInfoB_${this.projectInfo.id}`];
+      if (userInfo) {
+        this.setUserInfo(JSON.parse(userInfo));
+      }
     },
     mounted() {},
     methods: {
