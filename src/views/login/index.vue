@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-10-29 17:34:16
+ * @LastEditTime: 2020-09-16 15:17:31
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -136,7 +136,7 @@
             .then(result => {
               const { errcode, data } = result;
               if (errcode === 200) {
-                const { accountinfo, uid, token } = data;
+                const { accountinfo, token } = data;
                 // 同步用户登录信息
                 const auth = {
                   token,
