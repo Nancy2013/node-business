@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-16 15:34:20
+ * @LastEditTime: 2020-09-16 16:19:27
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -100,7 +100,7 @@ const controller = {
       token: '',
       pid: PID,
       rolename: '',
-      createtime: new Date(),
+      createtime: new Date().toISOString(),
       validtime: null,
       expiretime:null,
     };
