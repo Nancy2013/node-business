@@ -1,14 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-17 16:20:56
+ * @LastEditTime: 2020-09-17 16:48:06
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-const assert = require('http-assert');
 const Model = require('../../models')('role');
-const errorCode = require('../../common/error');
 const {
   response
 } = require('../../common/utils');
