@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-09-17 16:39:58
+ * @LastEditTime: 2020-09-17 16:46:40
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -134,24 +134,7 @@
           ...record,
         };
         await this.getAllUrl();
-        // const { id } = this.current;
-        // const params = {
-        //   rid: `${id}`,
-        // };
         this.selected = this.current.urlIds;
-        // userManageAsk
-        //   .getRU(params)
-        //   .then(result => {
-        //     const { errcode, data = {} } = result;
-        //     if (errcode === 200) {
-        //       const { alist = [] } = data;
-        //       this.selected = alist && alist.map(v => v.urlid);
-        //       this.ruids = alist && alist.map(v => v.id);
-        //     }
-        //   })
-        //   .catch(e => {
-        //     console.error(e);
-        //   });
       },
       // 获取权限
       getAllUrl() {
