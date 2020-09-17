@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-16 16:19:27
+ * @LastEditTime: 2020-09-17 17:28:48
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -59,10 +59,16 @@ const controller = {
   logout: async (req, res, next) => {
     res.send(response(null));
   },
- 
+
   // 查询
   get: async (req, res) => {
-    const { limit, offset, seq, displayname, roleid } = req.body;
+    const {
+      limit,
+      offset,
+      seq,
+      displayname,
+      roleid
+    } = req.body;
     const params = {};
     if (displayname) {
       const reg = new RegExp(displayname, 'i'); // 不区分大小写
@@ -70,19 +76,25 @@ const controller = {
         $regex: reg
       };
     }
-    if (roleid) { 
-      params.roleid = roleid;
+
+    // 过滤安装工
+    if (roleid) {
+      params.roleid = roleid.indexOf('-') < 0 ? roleid : {
+        $ne: roleid.replace('-', '')
+      };
     }
+
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
+      .lean()
       .limit(limit)
       .skip(limit * (offset - 1))
       .sort({
         _id: seq
       })
       .then(result => {
-        console.log(result);
         if (result) {
+          result.map(v => v.id = v._id);
           const data = {
             alist: result,
             totalsize: totalSize,
@@ -92,9 +104,9 @@ const controller = {
       })
       .catch(next);
   },
-  
+
   // 添加
-  add: async (req, res,next) => {
+  add: async (req, res, next) => {
     const params = {
       ...req.body,
       token: '',
@@ -102,31 +114,40 @@ const controller = {
       rolename: '',
       createtime: new Date().toISOString(),
       validtime: null,
-      expiretime:null,
+      expiretime: null,
     };
-    Model.create(params).then(result => { 
-      if (result) { 
+    Model.create(params).then(result => {
+      if (result) {
         res.send(response(params));
       }
     }).catch(next);
   },
 
   // 修改
-  mod: async (req, res,next) => {
+  mod: async (req, res, next) => {
     const conditions = {
-      _id: req.params.id
-    }
+      _id: req.body._id
+    };
     const params = req.body;
-    const result = await Model.findOneAndUpdate(conditions, params);
-    res.send({
-      errcode: 200,
-      msg: 'success',
-    });
+    Model.findOneAndUpdate(conditions, params).then(result => {
+      if (result) {
+        res.send(response(params));
+      }
+    }).catch(next);
   },
 
   // 删除
-  del: async (req, res,next) => {
-    console.log('del');
+  del: async (req, res, next) => {
+    const params = {
+      _id: req.body.uid,
+    };
+    Model.findOneAndDelete(params).then(result => {
+      if (result) {
+        res.send(response());
+      }
+    }).catch(e => {
+      next(e);
+    });
   },
 };
 module.exports = controller;
