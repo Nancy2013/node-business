@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-17 16:52:54
+ * @LastEditTime: 2020-09-17 16:52:37
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-const Model = require('../../models')('role');
+const Model = require('../../models')('base');
 const {
   response
 } = require('../../common/utils');
@@ -70,7 +70,7 @@ const controller = {
   // 删除
   del: async (req, res, next) => {
     const params = {
-      _id: req.body.uid,
+      _id: req.body.id,
     };
     Model.findOneAndDelete(params).then(result => {
       if (result) {
