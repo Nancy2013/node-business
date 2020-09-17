@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-16 16:52:06
+ * @LastEditTime: 2020-09-17 16:20:56
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -14,20 +14,25 @@ const {
 } = require('../../common/utils');
 
 const controller = {
-  
+
   // 查询
-  get: async (req, res, next) => { 
-    const { limit, offset, seq,} = req.body;
+  get: async (req, res, next) => {
+    const {
+      limit,
+      offset,
+      seq,
+    } = req.body;
     const params = {};
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
+      .lean()
       .limit(limit)
       .skip(limit * (offset - 1))
       .sort({
         _id: seq
       })
       .then(result => {
-        console.log(result);
+        result.map(v => v.id = v._id);
         if (result) {
           const data = {
             alist: result,
@@ -38,26 +43,45 @@ const controller = {
       })
       .catch(next);
   },
-  
-  // 添加
-  add: async (req, res, next) => { },
-  
+
+  // 添加,1：系统自动添加；2：通过平台添加
+  add: async (req, res, next) => {
+    const params = {
+      ...req.body,
+    }
+
+    Model.create(params).then(result => {
+      if (result) {
+        res.send(response(params));
+      }
+    }).catch(next)
+  },
+
   // 修改
   mod: async (req, res, next) => {
     const conditions = {
-      _id: req.params.id
-    }
+      _id: req.body._id
+    };
     const params = req.body;
-    const result = await Model.findOneAndUpdate(conditions, params);
-    res.send({
-      errcode: 200,
-      msg: 'success',
-    });
+    Model.findOneAndUpdate(conditions, params).then(result => {
+      if (result) {
+        res.send(response(params));
+      }
+    }).catch(next);
   },
 
   // 删除
   del: async (req, res, next) => {
-    console.log('del');
+    const params = {
+      _id: req.body.uid,
+    };
+    Model.findOneAndDelete(params).then(result => {
+      if (result) {
+        res.send(response());
+      }
+    }).catch(e => {
+      next(e);
+    });
   },
 };
 module.exports = controller;

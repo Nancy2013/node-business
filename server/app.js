@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-09-10 11:17:26
+ * @LastEditTime: 2020-09-17 14:03:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -37,7 +37,9 @@ app.use('/uploads', express.static(`${__dirname}/uploads`));
 app.all('*', (req, res, next) => {
   console.log(JSON.stringify(req.body));
   next();
-},jwtCheck);
+  // jwtCheck
+});
+
 
 mongoose(app);
 router(app);

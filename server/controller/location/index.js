@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-11 10:41:11
+ * @LastEditTime: 2020-09-17 15:56:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -175,10 +175,10 @@ module.exports = function (baseModule) {
       });
     },
     mod: async (req, res, next) => {
-      const params = req.body;
       const conditions = {
         _id: req.body._id
       };
+      const params = req.body;
       Model.findOneAndUpdate(conditions, params).then(async result => {
         if (result) {
           operateData(req, res)

@@ -2,8 +2,8 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-06-22 11:51:44
- * @LastEditors: your name
+ * @LastEditTime: 2020-09-17 16:40:20
+ * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
 import { reqHandle } from 'commonPath/ajax';
@@ -42,19 +42,7 @@ export default {
     method: HTTP_METHOD.POST,
   }),
   // 查询
-  getUrlsite: reqHandle('/urlsite/get', {
-    method: HTTP_METHOD.POST,
-  }),
-  // 查询角色url
-  getRU: reqHandle('/roleurl/getroleurl', {
-    method: HTTP_METHOD.POST,
-  }),
-  // 绑定角色权限
-  bindRU: reqHandle('/roleurl/bindrurl', {
-    method: HTTP_METHOD.POST,
-  }),
-  // 解绑角色权限
-  unbindRU: reqHandle('/roleurl/unbindrurl', {
+  getUrlsite: reqHandle('/module/get', {
     method: HTTP_METHOD.POST,
   }),
   // 获取登录令牌

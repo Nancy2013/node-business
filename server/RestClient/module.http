@@ -1,0 +1,185 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=module
+
+### get 查询
+post {{url}}{{module}}/get
+{{contentType}}
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+[
+    {
+        "urlname": "账号管理",
+        "urlpath": "/account"
+    },
+    {
+        "urlname": "项目管理",
+        "urlpath": "/project"
+    },
+    {
+        "urlname": "角色管理",
+        "urlpath": "/role"
+    },
+    {
+        "urlname": "权限管理",
+        "urlpath": "/privilege"
+    },
+    {
+        "urlname": "角色权限绑定管理",
+        "urlpath": "/roleprivilege"
+    },
+    {
+        "urlname": "权限接口绑定管理",
+        "urlpath": "/privilegeurl"
+    },
+    {
+        "urlname": "角色接口绑定管理",
+        "urlpath": "/roleurl"
+    },
+    {
+        "urlname": "接口管理功能",
+        "urlpath": "/urlsite"
+    },
+    {
+        "urlname": "设备管理功能",
+        "urlpath": "/device"
+    },
+    {
+        "urlname": "设备分组管理功能",
+        "urlpath": "/group"
+    },
+    {
+        "urlname": "产品管理功能",
+        "urlpath": "/product"
+    },
+    {
+        "urlname": "设备报修管理功能",
+        "urlpath": "/repair"
+    },
+    {
+        "urlname": "安装/维护任务管理功能",
+        "urlpath": "/assignment"
+    },
+    {
+        "urlname": "博联数据对接功能",
+        "urlpath": "/openproxy"
+    },
+    {
+        "urlname": "登录日志查询功能",
+        "urlpath": "/loginlog"
+    },
+    {
+        "urlname": "操作系统日志查询功能",
+        "urlpath": "/systemlog"
+    },
+    {
+        "urlname": "体验卷管理功能",
+        "urlpath": "/ticket"
+    },
+    {
+        "urlname": "体验卷分享功能",
+        "urlpath": "/ticketuser"
+    },
+    {
+        "urlname": "体验站点管理功能",
+        "urlpath": "/site"
+    },
+    {
+        "urlname": "线下门店管理功能",
+        "urlpath": "/store"
+    },
+    {
+        "urlname": "设备远程控制功能",
+        "urlpath": "/devcontrol"
+    },
+    {
+        "urlname": "意见反馈功能",
+        "urlpath": "/feedback"
+    },
+    {
+        "urlname": "设备服务日志功能",
+        "urlpath": "/deviceservice"
+    },
+    {
+        "urlname": "黑白名单功能",
+        "urlpath": "/iptable"
+    },
+    {
+        "urlname": "产品类型管理功能",
+        "urlpath": "/category"
+    },
+    {
+        "urlname": "定时联动日志",
+        "urlpath": "/tasklog"
+    },
+    {
+        "urlname": "数据可视化功能",
+        "urlpath": "/display"
+    },
+    {
+        "urlname": "文件上传功能",
+        "urlpath": "/fileupload"
+    },
+    {
+        "urlname": "设备联动管理功能",
+        "urlpath": "/task"
+    },
+    {
+        "urlname": "所有权限",
+        "urlpath": "*"
+    },
+    {
+        "urlname": "设备管理模块",
+        "urlpath": "/deviceManage"
+    },
+    {
+        "urlname": "分组管理模块",
+        "urlpath": "/groupManage"
+    },
+    {
+        "urlname": "维护管理模块",
+        "urlpath": "/maintainManage"
+    },
+    {
+        "urlname": "位置管理模块",
+        "urlpath": "/locationManage"
+    },
+    {
+        "urlname": "任务管理模块",
+        "urlpath": "/taskManage"
+    },
+    {
+        "urlname": "数据展示模块",
+        "urlpath": "/dataDisplay"
+    },
+    {
+        "urlname": "人员管理模块",
+        "urlpath": "/userManage"
+    }
+]
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+

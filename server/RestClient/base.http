@@ -3,7 +3,7 @@
 @module=base
 
 ### get 查询
-get {{url}}{{module}}/get
+post {{url}}{{module}}/get
 
 
 ### add 添加
