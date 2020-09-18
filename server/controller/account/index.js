@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-18 16:01:32
+ * @LastEditTime: 2020-09-18 16:18:11
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -85,10 +85,9 @@ const controller = {
     }
 
     const totalSize = await Model.countDocuments(params);
+    // 关联角色模型，关联字段是roleid,只返回rolename，默认返回_id
     Model.find(params)
-      .populate('roleid', {
-        rolename: 1
-      })
+      .populate('roleid', 'rolename')
       .lean()
       .limit(limit)
       .skip(limit * (offset - 1))
