@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-17 17:28:48
+ * @LastEditTime: 2020-09-18 10:29:19
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -61,7 +61,7 @@ const controller = {
   },
 
   // 查询
-  get: async (req, res) => {
+  get: async (req, res,next) => {
     const {
       limit,
       offset,
