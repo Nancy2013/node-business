@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-18 10:29:19
+ * @LastEditTime: 2020-09-18 16:01:32
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -61,7 +61,7 @@ const controller = {
   },
 
   // 查询
-  get: async (req, res,next) => {
+  get: async (req, res, next) => {
     const {
       limit,
       offset,
@@ -86,6 +86,9 @@ const controller = {
 
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
+      .populate('roleid', {
+        rolename: 1
+      })
       .lean()
       .limit(limit)
       .skip(limit * (offset - 1))
@@ -94,7 +97,12 @@ const controller = {
       })
       .then(result => {
         if (result) {
-          result.map(v => v.id = v._id);
+          result.map(v => {
+            v.id = v._id
+            const { _id,rolename } = v.roleid;
+            v.roleid = _id;
+            v.rolename = rolename;
+          });
           const data = {
             alist: result,
             totalsize: totalSize,
@@ -109,9 +117,7 @@ const controller = {
   add: async (req, res, next) => {
     const params = {
       ...req.body,
-      token: '',
       pid: PID,
-      rolename: '',
       createtime: new Date().toISOString(),
       validtime: null,
       expiretime: null,

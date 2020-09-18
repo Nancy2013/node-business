@@ -21,20 +21,10 @@ post {{url}}{{module}}/add
 {{contentType}}
 
 {
-  "uid": "",
-  "token": "",
-  "displayname": "测试",
-  "accountname": "12601403070",
-  "accountpwd": "123456",
-  "pid": "",
-  "roleid": "",
-  "rolename": "",
-  "name": "test",
-  "sex": "",
-  "job": "",
-  "age": 0,
-  "hobby": "爱好广泛",
-  "createtime": ""
+  "displayname": "Juliette",
+  "accountname": "13601403070",
+  "accountpwd": "e10adc3949ba59abbe56e057f20f883e",
+  "roleid": "5f63210a629b25115001047d"
 }
 
 
@@ -43,19 +33,9 @@ post {{url}}{{module}}/mod/08e937e6-0fc7-4135-bfca-83080e4acbc6
 {{contentType}}
 
 {
-  "uid": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxIiwiZXhwIjoxNTkwNzE2OTI3LCJqdGkiOiJUT0RPIiwiaWF0IjoxNTkwNjMwNTI3LCJpc3MiOiIxODAxMzk1OTU4OCIsIm5iZiI6MTU5MDYzMDUyNywic3ViIjoiMSJ9.UF69F-7fOY5syeuWX4tN2V1thiM02TvfV8RKMUV610E",
-  "id": "08e937e6-0fc7-4135-bfca-83080e4acbc6",
+  "_id": "5ece1a8786210260ac75e866",
   "displayname": "Juliette",
   "accountname": "13601403070",
   "accountpwd": "e10adc3949ba59abbe56e057f20f883e",
-  "pid": "1",
   "roleid": "fef5272e-c9f2-4661-b47e-91375855e3eb",
-  "rolename": "项目管理员",
-  "name": "Juliette",
-  "sex": "",
-  "job": "",
-  "age": 0,
-  "hobby": "爱好广泛",
-  "createtime": ""
 }

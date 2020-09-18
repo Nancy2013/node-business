@@ -1,20 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-09-16 15:26:38
+ * @LastEditTime: 2020-09-18 15:50:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
  */
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 module.exports = new mongoose.Schema({
-  // uid: {
-  //   type: String,
-  // },
-  token: {
-    type: String,
-  },
   displayname: {
     type: String,
   },
@@ -29,10 +24,8 @@ module.exports = new mongoose.Schema({
     type: String,
   },
   roleid: {
-    type: String,
-  },
-  rolename: {
-    type: String,
+    type: ObjectId,
+    ref: 'Role',
   },
   createtime: {
     type: String,
