@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-18 16:18:11
+ * @LastEditTime: 2020-09-21 15:51:00
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -9,7 +9,7 @@
 const assert = require('http-assert');
 const Model = require('../../models')('account');
 const {
-  SECRET,
+  PRIVATE_KEY,
   PID
 } = require('../../config');
 const jwt = require('jsonwebtoken');
@@ -43,7 +43,7 @@ const controller = {
         // 生成token,有效时长24小时
         const token = jwt.sign({
           id: String(_id)
-        }, SECRET, {
+        }, PRIVATE_KEY, {
           expiresIn: 60 * 60 * 24
         })
         const data = {
@@ -98,7 +98,10 @@ const controller = {
         if (result) {
           result.map(v => {
             v.id = v._id
-            const { _id,rolename } = v.roleid;
+            const {
+              _id,
+              rolename
+            } = v.roleid;
             v.roleid = _id;
             v.rolename = rolename;
           });
@@ -120,6 +123,7 @@ const controller = {
       createtime: new Date().toISOString(),
       validtime: null,
       expiretime: null,
+      token: '',
     };
     Model.create(params).then(result => {
       if (result) {
@@ -130,13 +134,35 @@ const controller = {
 
   // 修改
   mod: async (req, res, next) => {
+    const _id = req.body.id
     const conditions = {
-      _id: req.body._id
+      _id,
     };
-    const params = req.body;
-    Model.findOneAndUpdate(conditions, params).then(result => {
+    const {
+      validtime,
+      expiretime
+    } = req.body;
+
+    // 生成登录有效期
+    const validToken = jwt.sign({
+      id: String(_id),
+      validtime,
+      expiretime,
+    }, PRIVATE_KEY);
+    const params = {
+      ...req.body,
+      validToken,
+    };
+    Model.findOneAndUpdate(conditions, params, {
+      new: true, // 返回修改后的数据
+      upsert: true, // 如果数据不存在，则执行插入
+    }).then(result => {
+      console.log('---------------');
+
+      console.log(JSON.stringify(result));
+
       if (result) {
-        res.send(response(params));
+        res.send(response(result));
       }
     }).catch(next);
   },

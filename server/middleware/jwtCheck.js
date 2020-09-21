@@ -8,7 +8,7 @@
  */
 const jwt = require('jsonwebtoken');
 const {
-  SECRET,
+  PRIVATE_KEY,
   TOKEN_WHITE_PATH
 } = require('../config');
 const errorCode = require('../common/error');
@@ -24,7 +24,7 @@ const jwtCheck = (req, res, next) => {
     // 跳过token验证
     next();
   } else { 
-    jwt.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, PRIVATE_KEY, (err, decoded) => {
       // 错误处理 
       if (err) {
       const { name, message } = err;

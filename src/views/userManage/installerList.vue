@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-10-16 17:42:32
+ * @LastEditTime: 2020-09-21 16:15:33
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -262,7 +262,7 @@
         this.isdownload = false;
         const { dateFormat } = this;
         const { validtime, expiretime, vetimestr } = this.current;
-        if (vetimestr && vetimestr != '-') {
+        if (validtime && expiretime) {
           this.defaultTime = [moment(validtime, dateFormat), moment(expiretime, dateFormat)];
         } else {
           this.defaultTime = [];
@@ -388,14 +388,11 @@
           this.$message.warning('请先选择授权有效期限！');
           return;
         }
-        const auth = await this.modAccountAuth();
-        if (auth) {
-          // 修改用户信息成功
-          const token = await this.getToken();
-          if (token) {
-            // 获得token成功
-            this.generateQRcode(token);
-          }
+        const token = await this.modAccountAuth();
+
+        if (token) {
+          // 获得token成功
+          this.generateQRcode(token);
         }
       },
       // 修改用户授权有效期限
@@ -411,10 +408,11 @@
         return userManageAsk
           .modAccounttable(params)
           .then(result => {
-            const { errcode } = result;
+            const { errcode, data } = result;
             if (errcode === 200) {
+              const { validToken } = data;
               this.getInstallerList();
-              return true;
+              return validToken;
             }
             return false;
           })
@@ -422,26 +420,7 @@
             console.error(e);
           });
       },
-      // 获得二维码token
-      async getToken() {
-        const { accountpwd, accountname } = this.current;
-        const params = {
-          accountname,
-          password: accountpwd,
-          ctype: '2', // 安装工请求token
-          pid: `${this.projectInfo.id}`,
-        };
-        return userManageAsk
-          .getToken(params)
-          .then(result => {
-            const { errcode, data = {} } = result;
-            if (errcode === 200) {
-              return data.token;
-            }
-            return null;
-          })
-          .catch(e => console.error(e));
-      },
+
       // 显示二维码
       generateQRcode(token) {
         QRCode.toDataURL(token)
@@ -514,6 +493,14 @@
             const { errcode, data = {} } = result;
             if (errcode === 200) {
               const { alist = [] } = data;
+              alist.map(v => {
+                const { validtime, expiretime } = v;
+                if (validtime && expiretime) {
+                  v.vetimestr = `${moment(validtime).format('YYYY.MM.DD')}~${moment(
+                    expiretime
+                  ).format('YYYY.MM.DD')}`;
+                }
+              });
               this.data = alist.filter(v => v.rolename === '安装工');
               const { pagination } = this;
               this.pagination = {

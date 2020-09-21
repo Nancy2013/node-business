@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-09-18 16:25:16
+ * @LastEditTime: 2020-09-21 15:17:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -34,6 +34,9 @@ module.exports = new mongoose.Schema({
     type: String,
   },
   expiretime: {
+    type: String,
+  },
+  validToken: {
     type: String,
   },
 });
