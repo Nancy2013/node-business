@@ -12,7 +12,8 @@ const config = {
   PORT: 3000, // 端口
   PRIVATE_KEY: 'token', // 加密密钥
   TOKEN_WHITE_PATH: ['login'], // token验证白名单
-  PID:1,
+  PID: 1,
+  FORMAT_TIME: 'YYYY-MM-DD', // 格式化时间
 }
 
 module.exports = config;

@@ -1,16 +1,18 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-21 16:38:39
+ * @LastEditTime: 2020-09-21 18:01:30
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
+const moment = require('moment');
 const assert = require('http-assert');
 const Model = require('../../models')('account');
 const {
   PRIVATE_KEY,
-  PID
+  PID,
+  FORMAT_TIME
 } = require('../../config');
 const jwt = require('jsonwebtoken');
 const {
@@ -35,6 +37,20 @@ const controller = {
       .then(result => {
         assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
         assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
+        const {
+          validtime,
+          expiretime
+        } = result;
+        
+        if (validtime&&expiretime) { 
+          const noBefore = moment(moment(validtime).format(FORMAT_TIME)).isBefore(new Date(),'day');
+          const expireIn = moment(moment(expiretime).format(FORMAT_TIME)).isAfter(new Date(),'day');
+          console.log("noBefore:  ",noBefore,"expireIn: ",expireIn);
+          
+        assert(noBefore, errorCode.forbidden, '不在有效登录期限内');
+        assert(expireIn, errorCode.forbidden, '不在有效登录期限内');
+        }
+        
         const {
           uid,
           _id,
