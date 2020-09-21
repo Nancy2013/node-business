@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-21 15:51:00
+ * @LastEditTime: 2020-09-21 16:38:39
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -157,10 +157,6 @@ const controller = {
       new: true, // 返回修改后的数据
       upsert: true, // 如果数据不存在，则执行插入
     }).then(result => {
-      console.log('---------------');
-
-      console.log(JSON.stringify(result));
-
       if (result) {
         res.send(response(result));
       }
