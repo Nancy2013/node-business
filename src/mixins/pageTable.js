@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:43
- * @LastEditTime: 2020-07-06 19:46:21
+ * @LastEditTime: 2020-09-22 14:37:24
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -17,7 +17,7 @@ export default which => ({
       pagination: {
         defaultCurrent: 1,
         current: 1,
-        pageSize: 5,
+        pageSize: 15,
         total: 0,
       },
     };

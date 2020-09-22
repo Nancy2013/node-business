@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-17 15:56:25
+ * @LastEditTime: 2020-09-22 15:50:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -22,7 +22,7 @@ module.exports = function (baseModule) {
       urban,
       areas
     } = req.body;
-    
+
     const provincialParams = {
       type: baseModule === 'site' ? 1 : 2,
       parentId: '0',
@@ -58,11 +58,11 @@ module.exports = function (baseModule) {
   };
 
   // 查询地区
-  const getLocation =async function (req, res,next, level) { 
+  const getLocation = async function (req, res, next, level) {
     const params = {
       ...req.body,
     };
-    switch (level) { 
+    switch (level) {
       case 'provincial':
         // 省
         params.type = baseModule === 'site' ? 1 : 2;
@@ -76,7 +76,7 @@ module.exports = function (baseModule) {
         params.type = 4;
         break;
     }
-    
+
     const totalsize = await LocationModel.countDocuments(params);
     LocationModel.find(params).then(result => {
       if (result) {
@@ -145,9 +145,11 @@ module.exports = function (baseModule) {
       const params = {
         ...req.body,
       };
-      if (baseModule==='site') { 
+      if (baseModule === 'site') {
         params.devicecnt = 0;
         params.picurl = '';
+        params.devicecnt = 0;
+        params.checkcycle = 0;
       };
       Model.create(params).then(async result => {
         if (result) {
@@ -179,7 +181,9 @@ module.exports = function (baseModule) {
         _id: req.body._id
       };
       const params = req.body;
-      Model.findOneAndUpdate(conditions, params).then(async result => {
+      Model.findOneAndUpdate(conditions, params, {
+        new: true
+      }).then(async result => {
         if (result) {
           operateData(req, res)
         }
@@ -200,14 +204,14 @@ module.exports = function (baseModule) {
       });
     },
     getProvincial: async (req, res, next) => {
-      getLocation(req, res, next,'provincial');
+      getLocation(req, res, next, 'provincial');
     },
-    getUrban: async (req, res, next) => { 
-      getLocation(req, res, next,'urban');
+    getUrban: async (req, res, next) => {
+      getLocation(req, res, next, 'urban');
     },
     getArea: async (req, res, next) => {
-      getLocation(req, res, next,'areas');
-     },
+      getLocation(req, res, next, 'area');
+    },
   };
   return controller;
 };

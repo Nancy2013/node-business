@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:30:30
- * @LastEditTime: 2020-09-04 11:07:53
+ * @LastEditTime: 2020-09-22 14:33:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\routes\app.js
@@ -18,5 +18,4 @@ router.post('/del', controller.del);
 router.post('/getProvincial', controller.getProvincial);
 router.post('/getUrban', controller.getUrban);
 router.post('/getArea', controller.getArea);
-
 module.exports = router;
