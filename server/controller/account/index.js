@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-22 09:29:30
+ * @LastEditTime: 2020-09-22 13:58:45
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -19,6 +19,7 @@ const {
   response
 } = require('../../common/utils');
 const errorCode = require('../../common/error');
+const errorMsg = require('../../common/msg');
 
 const {
   isEmpty
@@ -35,8 +36,8 @@ const controller = {
         accountname
       })
       .then(result => {
-        assert(!isEmpty(result), errorCode.forbidden, '用户不存在');
-        assert(result.accountpwd === password, errorCode.forbidden, '密码错误');
+        assert(!isEmpty(result), errorCode.forbidden, errorMsg.userError);
+        assert(result.accountpwd === password, errorCode.forbidden, errorMsg.psdError);
         const {
           validtime,
           expiretime
@@ -44,10 +45,10 @@ const controller = {
 
         if (validtime && expiretime) {
           const noBefore = moment(moment(validtime).format(FORMAT_TIME)).isBefore(new Date(), 'day');
-          assert(noBefore, errorCode.forbidden, '不在有效登录期限内');
+          assert(noBefore, errorCode.forbidden, errorMsg.validError);
           
           const expireIn = moment(moment(expiretime).format(FORMAT_TIME)).isAfter(new Date(), 'day');
-          assert(expireIn, errorCode.forbidden, '不在有效登录期限内');
+          assert(expireIn, errorCode.forbidden, errorMsg.validError);
         }
 
         const {

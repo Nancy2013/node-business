@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-22 14:11:05
+ * @LastEditTime: 2020-09-22 14:13:46
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-const Model = require('../../models')('base');
+const Model = require('../../models')('maintain');
 const {
   response
 } = require('../../common/utils');
@@ -42,19 +42,6 @@ const controller = {
       .catch(next);
   },
 
-  // 添加
-  add: async (req, res, next) => {
-    const params = {
-      ...req.body,
-    }
-
-    Model.create(params).then(result => {
-      if (result) {
-        res.send(response(params));
-      }
-    }).catch(next)
-  },
-
   // 详情
   detail: async (req, res, next) => {
     const {
@@ -84,20 +71,6 @@ const controller = {
         res.send(response(params));
       }
     }).catch(next);
-  },
-
-  // 删除
-  del: async (req, res, next) => {
-    const params = {
-      _id: req.body.id,
-    };
-    Model.findOneAndDelete(params).then(result => {
-      if (result) {
-        res.send(response());
-      }
-    }).catch(e => {
-      next(e);
-    });
   },
 };
 module.exports = controller;
