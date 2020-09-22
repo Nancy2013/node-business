@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-09-21 15:24:49
+ * @LastEditTime: 2020-09-22 17:19:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -14,6 +14,7 @@ const config = {
   TOKEN_WHITE_PATH: ['login'], // token验证白名单
   PID: 1,
   FORMAT_TIME: 'YYYY-MM-DD', // 格式化时间
+  FORMAT_SITE_TIME:'YYYY-MM', // 查询站点
 }
 
 module.exports = config;

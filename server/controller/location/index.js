@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-22 15:50:18
+ * @LastEditTime: 2020-09-22 17:17:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
@@ -144,12 +144,14 @@ module.exports = function (baseModule) {
     add: async (req, res, next) => {
       const params = {
         ...req.body,
+        createtime: new Date().toISOString(),
       };
       if (baseModule === 'site') {
         params.devicecnt = 0;
         params.picurl = '';
         params.devicecnt = 0;
         params.checkcycle = 0;
+
       };
       Model.create(params).then(async result => {
         if (result) {
@@ -211,6 +213,30 @@ module.exports = function (baseModule) {
     },
     getArea: async (req, res, next) => {
       getLocation(req, res, next, 'area');
+    },
+
+    // 查询站点使用情况
+    showSite: async (req, res, next) => {
+      const {
+        starttime,
+        seq,
+      } = req.body;
+      const params = {};
+      const totalSize = await Model.countDocuments(params);
+      Model.find(params)
+        .sort({
+          _id: seq
+        })
+        .then(result => {
+          if (result) {
+            const data = {
+              sites:result,
+              totalsize: totalSize,
+            };
+            res.send(response(data));
+          }
+        })
+        .catch(next);
     },
   };
   return controller;
