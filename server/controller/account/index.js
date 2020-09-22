@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-21 18:01:30
+ * @LastEditTime: 2020-09-22 09:29:30
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -41,16 +41,15 @@ const controller = {
           validtime,
           expiretime
         } = result;
-        
-        if (validtime&&expiretime) { 
-          const noBefore = moment(moment(validtime).format(FORMAT_TIME)).isBefore(new Date(),'day');
-          const expireIn = moment(moment(expiretime).format(FORMAT_TIME)).isAfter(new Date(),'day');
-          console.log("noBefore:  ",noBefore,"expireIn: ",expireIn);
+
+        if (validtime && expiretime) {
+          const noBefore = moment(moment(validtime).format(FORMAT_TIME)).isBefore(new Date(), 'day');
+          assert(noBefore, errorCode.forbidden, '不在有效登录期限内');
           
-        assert(noBefore, errorCode.forbidden, '不在有效登录期限内');
-        assert(expireIn, errorCode.forbidden, '不在有效登录期限内');
+          const expireIn = moment(moment(expiretime).format(FORMAT_TIME)).isAfter(new Date(), 'day');
+          assert(expireIn, errorCode.forbidden, '不在有效登录期限内');
         }
-        
+
         const {
           uid,
           _id,
