@@ -1,19 +1,23 @@
 /*
  * @Author: your name
  * @Date: 2020-05-20 15:10:23
- * @LastEditTime: 2020-09-22 17:17:03
+ * @LastEditTime: 2020-09-23 14:28:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\controller\app\index.js
  */
 
-
+const moment = require('moment');
 module.exports = function (baseModule) {
   const {
     response
   } = require('../../common/utils');
+  const {
+    FORMAT_SITE_TIME
+  } = require('../../config');
   const Model = require('../../models')(baseModule);
   const LocationModel = require('../../models')('location');
+
 
   // 添加修改数据
   const operateData = async function (req, res, params) {
@@ -221,17 +225,39 @@ module.exports = function (baseModule) {
         starttime,
         seq,
       } = req.body;
-      const params = {};
+      const params = {
+        createtime: {
+          $gt: moment(`${starttime - 1}`).endOf('year').toISOString(),
+          $lte: moment(`${starttime}`).endOf('year').toISOString()
+        },
+      };
       const totalSize = await Model.countDocuments(params);
       Model.find(params)
         .sort({
-          _id: seq
+          createtime: seq
         })
         .then(result => {
           if (result) {
+            const monthStatistics = [];
+            result.map(v => {
+              const month = moment(v.createtime).format(FORMAT_SITE_TIME);
+              const newMonth = monthStatistics.find(k => {
+                if (k.date === month) {
+                  k.count++;
+                  return true;
+                }
+              });
+
+              if (!newMonth) {
+                monthStatistics.push({
+                  count: 1,
+                  date: month,
+                });
+              }
+            })
             const data = {
-              sites:result,
-              totalsize: totalSize,
+              sites: monthStatistics,
+              totalsize: result.length,
             };
             res.send(response(data));
           }

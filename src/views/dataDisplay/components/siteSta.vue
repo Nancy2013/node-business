@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-19 10:09:18
- * @LastEditTime: 2020-09-22 17:24:38
+ * @LastEditTime: 2020-09-23 14:33:54
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -165,7 +165,7 @@ export default {
         limit: this.GLOBAL.MAX_LEN,
         offset: 1,
         order: 'date',
-        seq: 0,
+        seq: -1,
         starttime: siteYear,
       };
       await dataDisplayAsk
@@ -174,22 +174,22 @@ export default {
           result => {
             const { errcode, data = [] } = result;
             if (errcode === 200) {
+              const { sites = [], totalsize = 0 } = data;
               this.totalNum.length = 12;
               this.totalNum.fill(0);
               this.countNum.length = 12;
               this.countNum.fill(0);
               console.log('长度', this.countNum);
-              data &&
-                data.forEach(v => {
-                  if (v.date) {
-                    this.monthNum = this.$moment(v.date).format(this.MONTH);
-                    console.log('月', this.monthNum);
-                    const i = this.monthNum - 1;
-                    this.totalNum[i] = v.total;
-                    this.countNum[i] = v.total;
-                    console.log('数组', this.countNum);
-                  }
-                });
+              sites.forEach(v => {
+                if (v.date) {
+                  this.monthNum = this.$moment(v.date).format(this.MONTH);
+                  console.log('月', this.monthNum);
+                  const i = this.monthNum - 1;
+                  this.totalNum[i] = v.count;
+                  this.countNum[i] = v.count;
+                  console.log('数组', this.countNum);
+                }
+              });
             }
           },
           () => {}
