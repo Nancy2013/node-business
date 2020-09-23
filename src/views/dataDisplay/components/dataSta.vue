@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-19 10:09:18
- * @LastEditTime: 2019-10-11 16:28:26
+ * @LastEditTime: 2020-09-23 15:59:46
  * @LastEditors: Please set LastEditors
  -->
 <!-- 数据展示 -->
@@ -30,162 +30,162 @@
   </div>
 </template>
 <script>
-  import service from 'servicePath/index';
-  import { mapGetters, mapMutations } from 'vuex';
-  import echarts from 'echarts';
+import service from 'servicePath/index';
+import { mapGetters, mapMutations } from 'vuex';
+import echarts from 'echarts';
 
-  const { dataDisplayAsk } = service;
-  export default {
-    name: 'DataSta',
-    components: {},
-    props: {},
-    data() {
-      return {
-        charts: '',
-        dataStatistics: [],
-        monthNum: 0,
-        MONTH: 'M',
-        yearList: [],
-        ticketYear: new Date().getFullYear(),
-      };
-    },
-    computed: {},
-    watch: {},
-    async created() {
-      await this.getStatistics();
+const { dataDisplayAsk } = service;
+export default {
+  name: 'DataSta',
+  components: {},
+  props: {},
+  data() {
+    return {
+      charts: '',
+      dataStatistics: [],
+      monthNum: 0,
+      MONTH: 'M',
+      yearList: [],
+      ticketYear: new Date().getFullYear(),
+    };
+  },
+  computed: {},
+  watch: {},
+  async created() {
+    await this.getStatistics();
+    this.$nextTick(function() {
+      this.drawLine('lineChart');
+    });
+    this.getSelectYear();
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.initChart);
+  },
+  mounted() {
+    this.initChart();
+  },
+  methods: {
+    async handleChange(val) {
+      await this.getStatistics(val);
       this.$nextTick(function() {
         this.drawLine('lineChart');
       });
-      this.getSelectYear();
     },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.initChart);
+    getSelectYear() {
+      const thisYear = new Date().getFullYear();
+      const eYear = thisYear - 5;
+      for (let i = eYear; i <= thisYear; i += 1) {
+        this.yearList.push(i);
+      }
     },
-    mounted() {
-      this.initChart();
-    },
-    methods: {
-      async handleChange(val) {
-        await this.getStatistics(val);
-        this.$nextTick(function() {
-          this.drawLine('lineChart');
-        });
-      },
-      getSelectYear() {
-        const thisYear = new Date().getFullYear();
-        const eYear = thisYear - 5;
-        for (let i = eYear; i <= thisYear; i += 1) {
-          this.yearList.push(i);
-        }
-      },
-      drawLine(id) {
-        this.charts = echarts.init(document.getElementById(id));
-        this.charts.setOption({
-          title: {
-            show: false,
-          },
-          tooltip: {
-            trigger: 'axis',
-          },
-          legend: {
-            show: false,
-          },
-          grid: {
-            left: '3%',
-            right: '5%',
-            bottom: '10%',
-            containLabel: true,
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [
-              '1月',
-              '2月',
-              '3月',
-              '4月',
-              '5月',
-              '6月',
-              '7月',
-              '8月',
-              '9月',
-              '10月',
-              '11月',
-              '12月',
-            ],
-          },
-          yAxis: {
-            splitLine: {
-              show: false,
-            },
-            show: false,
-          },
-
-          series: [
-            {
-              name: '数据统计',
-              type: 'line',
-              stack: '总量',
-              data: this.dataStatistics,
-              itemStyle: {
-                color: this.GLOBAL.THEME_COLOR,
-              },
-            },
+    drawLine(id) {
+      this.charts = echarts.init(document.getElementById(id));
+      this.charts.setOption({
+        title: {
+          show: false,
+        },
+        tooltip: {
+          trigger: 'axis',
+        },
+        legend: {
+          show: false,
+        },
+        grid: {
+          left: '3%',
+          right: '5%',
+          bottom: '10%',
+          containLabel: true,
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: [
+            '1月',
+            '2月',
+            '3月',
+            '4月',
+            '5月',
+            '6月',
+            '7月',
+            '8月',
+            '9月',
+            '10月',
+            '11月',
+            '12月',
           ],
-        });
-      },
-      initChart() {
-        setTimeout(() => {
-          window.addEventListener('resize', () => {
-            this.charts.resize();
-          });
-        }, 20);
-      },
-      async getStatistics() {
-        const { ticketYear } = this;
-        const params = {
-          limit: this.GLOBAL.MAX_LEN,
-          offset: 1,
-          order: 'date',
-          seq: 0,
-          starttime: `${ticketYear}-01-01`,
-          endtime: `${ticketYear}-12-31`,
-        };
-        await dataDisplayAsk
-          .getStatistics(params)
-          .then(
-            result => {
-              const { errcode, data = [] } = result;
-              if (errcode === 200) {
-                this.dataStatistics.length = 12;
-                this.dataStatistics.fill(0);
-                data &&
-                  data.forEach(v => {
-                    if (v.date) {
-                      this.monthNum = this.$moment(v.date).format(this.MONTH);
-                      const i = this.monthNum - 1;
-                      this.dataStatistics[i] = v.count;
-                    }
-                  });
-              }
+        },
+        yAxis: {
+          splitLine: {
+            show: false,
+          },
+          show: false,
+        },
+
+        series: [
+          {
+            name: '数据统计',
+            type: 'line',
+            stack: '总量',
+            data: this.dataStatistics,
+            itemStyle: {
+              color: this.GLOBAL.THEME_COLOR,
             },
-            () => {}
-          )
-          .catch(e => {
-            console.error(e);
-          });
-      },
+          },
+        ],
+      });
     },
-  };
+    initChart() {
+      setTimeout(() => {
+        window.addEventListener('resize', () => {
+          this.charts.resize();
+        });
+      }, 20);
+    },
+    async getStatistics() {
+      const { ticketYear } = this;
+      const params = {
+        limit: this.GLOBAL.MAX_LEN,
+        offset: 1,
+        order: 'date',
+        seq: 0,
+        starttime: `${ticketYear}-01-01`,
+        endtime: `${ticketYear}-12-31`,
+      };
+      await dataDisplayAsk
+        .getStatistics(params)
+        .then(
+          result => {
+            const { errcode, data = [] } = result;
+            if (errcode === 200) {
+              this.dataStatistics.length = 12;
+              this.dataStatistics.fill(0);
+              data &&
+                data.forEach(v => {
+                  if (v.date) {
+                    this.monthNum = this.$moment(v.date).format(this.MONTH);
+                    const i = this.monthNum - 1;
+                    this.dataStatistics[i] = v.count;
+                  }
+                });
+            }
+          },
+          () => {}
+        )
+        .catch(e => {
+          console.error(e);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  .data-o-r {
-    width: 40%;
-    height: 100%;
-    display: inline-block;
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-  }
+.data-o-r {
+  width: 40%;
+  height: 100%;
+  display: inline-block;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
 </style>

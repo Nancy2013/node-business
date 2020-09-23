@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-17 16:49:25
+ * @LastEditTime: 2020-09-23 14:43:19
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -15,14 +15,13 @@ const controller = {
   
   // 查询
   get: async (req, res, next) => { 
-    const totalSize = await Model.countDocuments();
     Model.find().lean()
       .then(result => {
         if (result) {
           result.map(v=>v.id=v._id);
           const data = {
             alist: result,
-            totalsize: totalSize,
+            totalsize: result.length,
           };
           res.send(response(data));
         }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:30:30
- * @LastEditTime: 2020-06-29 19:30:56
+ * @LastEditTime: 2020-09-23 15:48:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\routes\app.js
@@ -21,5 +21,6 @@ router.post('/getErrorLogs', controller.getErrorLogs);
 router.post('/getDevServices', controller.getDevServices);
 router.post('/getRepairLogs', controller.getRepairLogs);
 router.post('/getAttributes', controller.getAttributes);
+router.post('/getStatistics', controller.getStatistics);
 
 module.exports = router;

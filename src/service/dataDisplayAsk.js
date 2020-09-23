@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-09-29 16:27:57
+ * @LastEditTime: 2020-09-23 15:52:53
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
@@ -45,10 +45,7 @@ export default {
   getSiteNum: reqHandle('/site/showsite', {
     method: HTTP_METHOD.POST,
   }),
-  getUsingRate: reqHandle('/device/showdeviceusing', {
-    method: HTTP_METHOD.POST,
-  }),
-  getBrokenRate: reqHandle('/device/showdevicebroken', {
+  getStatistics: reqHandle('/device/getStatistics', {
     method: HTTP_METHOD.POST,
   }),
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-10 15:04:31
+ * @LastEditTime: 2020-09-23 15:47:02
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -62,13 +62,16 @@ const controller = {
       })
       .catch(next);
   },
-  add: async (req, res) => {
-    const params = req.body;
+  add: async (req, res,next) => {
+    const params = {
+      ...req.body,
+      createtime: new Date().toISOString(),
+    };
     Model.create(params).then(result => {
-      console.log(JSON.stringify(result));
-    }).catch(e => {
-      console.error(e);
-    });
+      if (result) { 
+        res.send(response(result));
+      }
+    }).catch(next);
   },
   detail: async (req, res) => {
     const {
@@ -145,5 +148,22 @@ const controller = {
       console.error(e);
     });
   },
+  getStatistics: async (req, res, next) => { 
+    const { running } = req.body
+    const params = {
+      running,
+    }
+    const totalSize = await Model.countDocuments();
+    Model.find(params).then(result => { 
+      if (result) { 
+        const data = {
+          count:result.length,
+          totalsize:totalSize,
+        }
+
+        res.send(response(data))
+      }
+    }).catch(next)
+  }
 };
 module.exports = controller;
