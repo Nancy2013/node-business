@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-09-23 15:52:53
+ * @LastEditTime: 2020-09-23 17:49:43
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
@@ -12,13 +12,10 @@ export default {
   getLogList: reqHandle('/loginlog/get', {
     method: HTTP_METHOD.POST,
   }),
-  getAppLogList: reqHandle('/loginlog/getapp', {
-    method: HTTP_METHOD.POST,
-  }),
   getControlLog: reqHandle('/device/getcontrollog', {
     method: HTTP_METHOD.POST,
   }),
-  getAlarmLog: reqHandle('/device/geterrorlog', {
+  getAlarmLog: reqHandle('/errorlog/get', {
     method: HTTP_METHOD.POST,
   }),
   getSystemLog: reqHandle('/systemlog/get', {

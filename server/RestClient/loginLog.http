@@ -1,0 +1,119 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=loginLog
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+[
+    {
+        "createtime": "2020-09-23T16:29:19.338128",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:25182",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T16:28:49.023488",
+        "account": "18506278952",
+        "type": 2,
+        "ip": "172.19.0.1:59354",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T16:23:06.765716",
+        "account": "18506278952",
+        "type": 2,
+        "ip": "172.19.0.1:59006",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:52:01.259068",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:56358",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:37:23.361106",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:55630",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:35:21.71035",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:55458",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:35:03.530442",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:55442",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:35:00.272071",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:55438",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-22T13:32:05.106062",
+        "account": "13910770529",
+        "type": 2,
+        "ip": "172.19.0.1:55262",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-21T14:27:45.489397",
+        "account": "18261925814",
+        "type": 2,
+        "ip": "172.19.0.1:34580",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-21T14:06:32.194313",
+        "account": "13917463846",
+        "type": 2,
+        "ip": "172.19.0.1:34200",
+        "remark": "登录"
+    },
+    {
+        "createtime": "2020-09-21T14:06:20.415808",
+        "account": "13917463846",
+        "type": 2,
+        "ip": "172.19.0.1:34186",
+        "remark": "登录"
+    }
+]
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+

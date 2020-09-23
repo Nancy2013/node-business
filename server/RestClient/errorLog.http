@@ -1,0 +1,45 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=errorLog
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+[
+    {
+        "account": "SwimGlass",
+        "createtime": "2020-09-23T11:38:16.741863",
+        "did": "00000000000000000000c8f7426811f6",
+        "errcode": "ENDPOINT_UNREACHABLE",
+        "errmsg": "endpoint unreachable,device no response",
+        "remark": "控制命令：massage_positionleg,massage_positionback 控制参数：5,5",
+        "type": "设备控制错误"
+    }
+]
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+
