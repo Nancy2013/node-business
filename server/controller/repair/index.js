@@ -1,13 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-24 14:39:36
+ * @LastEditTime: 2020-09-24 17:43:23
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
 const moment = require('moment');
-const Model = require('../../models')('loginLog');
+const Model = require('../../models')('repair');
 const {
   response
 } = require('../../common/utils');
@@ -19,18 +19,12 @@ const controller = {
     const {
       limit,
       offset,
-      type,
       seq,
       starttime,
       endtime,
     } = req.body;
     const params = {};
-    params.type = type ? type :  {
-      $in: [2, 3, 4]
-    };
     //  TODO 时间筛选
-    console.log('starttime', moment(starttime).toISOString(),'endtime',moment(endtime).endOf('day').toISOString() );
-    
     if (starttime&&endtime) { 
       params.createtime = { $gte: moment(starttime).toISOString(), $lte: moment(endtime).endOf('day').toISOString() };
     }
