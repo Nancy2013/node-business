@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-11 09:51:56
- * @LastEditTime: 2019-09-26 15:06:49
+ * @LastEditTime: 2020-09-25 14:27:15
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -79,127 +79,127 @@
   </div>
 </template>
 <script>
-  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-  import service from 'servicePath/index';
-  import Mix from '@/mixins';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import service from 'servicePath/index';
+import Mix from '@/mixins';
 
-  const { taskManageAsk } = service;
-  const { PageTableCreaterMix } = Mix;
-  export default {
-    name: 'TaskList',
-    components: {},
-    mixins: [PageTableCreaterMix('app')],
-    props: {},
-    data() {
-      return {
-        breadcrumbRoutes: [
-          {
-            name: '任务管理',
-            breadcrumbName: '全部任务',
-          },
-        ],
-        search: '',
-        worker: '-1',
-        status: '-1',
+const { taskManageAsk } = service;
+const { PageTableCreaterMix } = Mix;
+export default {
+  name: 'TaskList',
+  components: {},
+  mixins: [PageTableCreaterMix('app')],
+  props: {},
+  data() {
+    return {
+      breadcrumbRoutes: [
+        {
+          name: '任务管理',
+          breadcrumbName: '全部任务',
+        },
+      ],
+      search: '',
+      worker: '-1',
+      status: '-1',
+    };
+  },
+  computed: {
+    ...mapGetters('taskManage', ['installList']),
+    ...mapState('taskManage', ['taskType', 'taskStatus']),
+    getStatus() {
+      return function(statusArray, val) {
+        const status = this[statusArray].filter(v => v.key === val)[0];
+        return status ? status.text : '';
       };
     },
-    computed: {
-      ...mapGetters('taskManage', ['installList']),
-      ...mapState('taskManage', ['taskType', 'taskStatus']),
-      getStatus() {
-        return function(statusArray, val) {
-          const status = this[statusArray].filter(v => v.key === val)[0];
-          return status ? status.text : '';
-        };
-      },
+  },
+  watch: {},
+  created() {
+    this.getRoleList();
+  },
+  mounted() {},
+  destroyed() {},
+  methods: {
+    ...mapActions('taskManage', ['getRoleList']),
+    // 表头
+    appColumns() {
+      const columns = [
+        {
+          title: '创建时间',
+          dataIndex: 'createtime',
+          align: 'center',
+          width: '20%',
+          scopedSlots: { customRender: 'createtime' },
+        },
+        {
+          title: '任务类型',
+          dataIndex: 'type',
+          align: 'center',
+          width: '10%',
+          scopedSlots: { customRender: 'type' },
+        },
+        {
+          title: '任务名称',
+          dataIndex: 'taskname',
+          align: 'center',
+          width: '20%',
+        },
+        {
+          title: '安装工',
+          dataIndex: 'workname',
+          align: 'center',
+          width: '10%',
+        },
+        {
+          title: '任务进度',
+          dataIndex: 'status',
+          align: 'center',
+          width: '10%',
+          scopedSlots: { customRender: 'status' },
+        },
+        {
+          title: '操作',
+          dataIndex: 'operation',
+          align: 'center',
+          width: '10%',
+          scopedSlots: { customRender: 'operation' },
+        },
+        {
+          title: '',
+          dataIndex: 'extra',
+          align: 'center',
+        },
+      ];
+      return columns;
     },
-    watch: {},
-    created() {
-      this.getRoleList();
+    doSearch() {
+      this.init();
     },
-    mounted() {},
-    destroyed() {},
-    methods: {
-      ...mapActions('taskManage', ['getRoleList']),
-      // 表头
-      appColumns() {
-        const columns = [
-          {
-            title: '创建时间',
-            dataIndex: 'createtime',
-            align: 'center',
-            width: '20%',
-            scopedSlots: { customRender: 'createtime' },
-          },
-          {
-            title: '任务类型',
-            dataIndex: 'type',
-            align: 'center',
-            width: '10%',
-            scopedSlots: { customRender: 'type' },
-          },
-          {
-            title: '任务名称',
-            dataIndex: 'taskname',
-            align: 'center',
-            width: '20%',
-          },
-          {
-            title: '安装工',
-            dataIndex: 'workname',
-            align: 'center',
-            width: '10%',
-          },
-          {
-            title: '任务进度',
-            dataIndex: 'status',
-            align: 'center',
-            width: '10%',
-            scopedSlots: { customRender: 'status' },
-          },
-          {
-            title: '操作',
-            dataIndex: 'operation',
-            align: 'center',
-            width: '10%',
-            scopedSlots: { customRender: 'operation' },
-          },
-          {
-            title: '',
-            dataIndex: 'extra',
-            align: 'center',
-          },
-        ];
-        return columns;
-      },
-      doSearch() {
-        this.init();
-      },
-      // 创建任务
-      add() {
-        this.$router.push({ name: 'taskAdd' });
-      },
-      detail(record) {
-        this.$router.push({ name: 'taskDetail', params: { id: record.id } });
-      },
-      // 请求数据
-      async appFetchList(params) {
-        const { search, type, status, worker } = this;
-        if (worker !== '-1') {
-          params.worker = worker;
-        }
-        if (status !== '-1') {
-          params.status = status;
-        }
-        const { errcode, data = {} } = await taskManageAsk.getAssignment({
-          ...params,
-          taskname: search,
-          order: 'createtime',
-        });
-        return { total: data.totalsize, data: data.assignmentInfos };
-      },
+    // 创建任务
+    add() {
+      this.$router.push({ name: 'taskAdd' });
     },
-  };
+    detail(record) {
+      this.$router.push({ name: 'taskDetail', params: { id: record.id } });
+    },
+    // 请求数据
+    async appFetchList(params) {
+      const { search, type, status, worker } = this;
+      if (worker !== '-1') {
+        params.worker = worker;
+      }
+      if (status !== '-1') {
+        params.status = status;
+      }
+      const { errcode, data = {} } = await taskManageAsk.getAssignment({
+        ...params,
+        taskname: search,
+        order: 'createtime',
+      });
+      return { total: data.totalsize, data: data.tasks };
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

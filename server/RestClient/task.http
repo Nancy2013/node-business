@@ -1,0 +1,96 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=task
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+[
+    {
+        "count": 10,
+        "inscount": 0,
+        "type": "1",
+        "status": "0",
+        "worker": "15195966892",
+        "workname": "15195966892",
+        "taskname": "王昊",
+        "createtime": "2019-09-23T10:30:31.848635",
+        "starttime": "2019-09-22T10:30:15",
+        "endtime": "2019-10-23T10:30:15"
+    },
+    {
+        "count": 1,
+        "inscount": 0,
+        "type": "1",
+        "status": "0",
+        "worker": "18068849786",
+        "workname": "黄长青",
+        "taskname": "老黄的安装任务1",
+        "createtime": "2019-09-12T09:39:04.917267",
+        "starttime": "2019-09-12T09:38:43",
+        "endtime": "2019-09-19T09:38:43"
+    },
+    {
+        "count": 1,
+        "inscount": 0,
+        "type": "1",
+        "status": "0",
+        "worker": "18512526617",
+        "workname": "何军",
+        "taskname": "老何的安装任务1",
+        "createtime": "2019-09-12T09:38:42.418915",
+        "starttime": "2019-09-12T09:38:18",
+        "endtime": "2019-09-19T09:38:18"
+    },
+    {
+        "count": 10,
+        "inscount": 0,
+        "type": "1",
+        "status": "0",
+        "worker": "18013953303",
+        "workname": "18013953303",
+        "taskname": "上海OSIM调试专用",
+        "createtime": "2019-09-10T13:35:35.961499",
+        "starttime": "2019-09-09T13:34:02",
+        "endtime": "2019-10-31T13:34:02"
+    },
+    {
+        "count": 3,
+        "inscount": 0,
+        "type": "1",
+        "status": "0",
+        "worker": "18013953303",
+        "workname": "18013953303",
+        "taskname": "11",
+        "createtime": "2019-09-06T16:38:52.434508",
+        "starttime": "2019-09-06T16:38:41",
+        "endtime": "2019-10-10T16:38:41"
+    }
+]
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-05 11:04:12
- * @LastEditTime: 2019-10-09 14:09:46
+ * @LastEditTime: 2020-09-25 15:00:15
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -141,345 +141,345 @@
 
 </template>
 <script>
-  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-  import service from 'servicePath/index';
-  import DeviceModal from './deviceModal.vue';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import service from 'servicePath/index';
+import DeviceModal from './deviceModal.vue';
 
-  const { taskManageAsk } = service;
-  export default {
-    name: 'TaskDetail',
-    components: {
-      DeviceModal,
-    },
-    mixins: [],
-    props: {},
-    data() {
-      return {
-        spinning: false,
-        breadcrumbRoutes: [],
-        form: this.$form.createForm(this),
-        labelCol: { span: 2 },
-        wrapperCol: { span: 8 },
-        columns: [],
-        id: this.$route.params.id,
-        task: {
-          devices: [],
-          type: '1',
-        },
-        dids: [],
-        selected: [],
-        rangeTime: [],
-        isModal: false,
+const { taskManageAsk } = service;
+export default {
+  name: 'TaskDetail',
+  components: {
+    DeviceModal,
+  },
+  mixins: [],
+  props: {},
+  data() {
+    return {
+      spinning: false,
+      breadcrumbRoutes: [],
+      form: this.$form.createForm(this),
+      labelCol: { span: 2 },
+      wrapperCol: { span: 8 },
+      columns: [],
+      id: this.$route.params.id,
+      task: {
+        devices: [],
+        type: '1',
+      },
+      dids: [],
+      selected: [],
+      rangeTime: [],
+      isModal: false,
+    };
+  },
+  computed: {
+    ...mapState('taskManage', ['taskType']),
+    ...mapGetters('taskManage', ['installList']),
+    ...mapState('deviceManage', ['runningStatus', 'deviceStatusArray']),
+    getStatus() {
+      return function(statusArray, val) {
+        const status = this[statusArray].filter(v => v.key === val)[0];
+        return status ? status.text : '';
       };
     },
-    computed: {
-      ...mapState('taskManage', ['taskType']),
-      ...mapGetters('taskManage', ['installList']),
-      ...mapState('deviceManage', ['runningStatus', 'deviceStatusArray']),
-      getStatus() {
-        return function(statusArray, val) {
-          const status = this[statusArray].filter(v => v.key === val)[0];
-          return status ? status.text : '';
-        };
-      },
+  },
+  watch: {},
+  async created() {
+    this.setBreadcrumb();
+    this.columns = this.getColumns();
+    await this.getRoleList();
+    this.init();
+  },
+  mounted() {},
+  destroyed() {},
+  methods: {
+    ...mapActions('taskManage', ['getRoleList']),
+    init() {
+      const { id } = this;
+      if (id) {
+        // 编辑
+        this.getAssignment();
+      }
     },
-    watch: {},
-    async created() {
-      this.setBreadcrumb();
-      this.columns = this.getColumns();
-      await this.getRoleList();
-      this.init();
-    },
-    mounted() {},
-    destroyed() {},
-    methods: {
-      ...mapActions('taskManage', ['getRoleList']),
-      init() {
-        const { id } = this;
-        if (id) {
-          // 编辑
-          this.getAssignment();
-        }
-      },
-      // 设置面包屑
-      setBreadcrumb() {
-        const breadcrumbRoutes = [
+    // 设置面包屑
+    setBreadcrumb() {
+      const breadcrumbRoutes = [
+        {
+          name: '任务管理',
+          breadcrumbName: '全部任务',
+        },
+      ];
+      if (this.id) {
+        // 详情
+        this.breadcrumbRoutes = [
+          ...breadcrumbRoutes,
           {
-            name: '任务管理',
-            breadcrumbName: '全部任务',
+            name: '',
+            breadcrumbName: '任务详情',
           },
         ];
-        if (this.id) {
-          // 详情
-          this.breadcrumbRoutes = [
-            ...breadcrumbRoutes,
-            {
-              name: '',
-              breadcrumbName: '任务详情',
-            },
-          ];
-        } else {
-          // 创建任务
-          this.breadcrumbRoutes = [
-            ...breadcrumbRoutes,
-            {
-              name: '',
-              breadcrumbName: '创建任务',
-            },
-          ];
-        }
-      },
-      // 表头
-      getColumns() {
-        const columns = [
+      } else {
+        // 创建任务
+        this.breadcrumbRoutes = [
+          ...breadcrumbRoutes,
           {
-            title: '序号',
-            dataIndex: 'index',
-            align: 'center',
-            width: '10%',
-            scopedSlots: { customRender: 'index' },
-          },
-          {
-            title: '设备名称',
-            dataIndex: 'displayname',
-            align: 'center',
-          },
-          {
-            title: 'DID',
-            dataIndex: 'did',
-            align: 'center',
-          },
-          {
-            title: '备注',
-            dataIndex: 'remark',
-            align: 'center',
-          },
-          {
-            title: '状态',
-            dataIndex: 'running',
-            align: 'center',
-            width: '20%',
-            scopedSlots: { customRender: 'running' },
+            name: '',
+            breadcrumbName: '创建任务',
           },
         ];
-        const operate = {
-          title: '',
-          dataIndex: 'operation',
+      }
+    },
+    // 表头
+    getColumns() {
+      const columns = [
+        {
+          title: '序号',
+          dataIndex: 'index',
           align: 'center',
-          scopedSlots: { customRender: 'operation' },
-        };
-        const { id } = this;
+          width: '10%',
+          scopedSlots: { customRender: 'index' },
+        },
+        {
+          title: '设备名称',
+          dataIndex: 'displayname',
+          align: 'center',
+        },
+        {
+          title: 'DID',
+          dataIndex: 'did',
+          align: 'center',
+        },
+        {
+          title: '备注',
+          dataIndex: 'remark',
+          align: 'center',
+        },
+        {
+          title: '状态',
+          dataIndex: 'running',
+          align: 'center',
+          width: '20%',
+          scopedSlots: { customRender: 'running' },
+        },
+      ];
+      const operate = {
+        title: '',
+        dataIndex: 'operation',
+        align: 'center',
+        scopedSlots: { customRender: 'operation' },
+      };
+      const { id } = this;
 
-        return id ? columns : [...columns, operate];
-      },
-      // 选择任务类型
-      handleSelectChange(value) {
-        this.task = Object.assign({}, this.task, { type: value });
-      },
-      handleSelectChangeWorker(value) {
-        const { installList } = this;
-        const worker = installList.filter(v => v.accountname === value)[0];
-        const workname = worker ? worker.displayname : '';
-        this.task = Object.assign({}, this.task, { worker: value, workname });
-      },
-      disabledDate(current) {
-        return current && current < this.$moment();
-      },
-      // 选择时间
-      onChangeTime(rangeTime) {
-        this.rangeTime = rangeTime;
-      },
-      // 选择设备
-      selectDevice() {
-        const { devices = [] } = this.task;
-        this.dids = devices.map(v => v.did);
-        this.isModal = true;
-      },
-      // 取消设备弹窗
-      handleCancel() {
-        this.isModal = false;
-      },
-      handleOk(params) {
-        const { devices = [] } = this.task;
-        this.task = Object.assign({}, this.task, { devices: devices.concat(params) });
-        this.handleCancel();
-      },
-      // 删除设备
-      delDevice(index) {
-        const { devices } = this.task;
-        devices.splice(index, 1);
-        this.task = Object.assign({}, this.task, { devices });
-      },
-      // 取消
-      cancel() {
-        this.$router.back();
-      },
-      // 删除确认弹窗
-      showDelModal() {
-        const that = this;
-        this.$confirm({
-          title: '确定要删除任务？',
-          content: '',
-          okText: '确定',
-          cancelText: '取消',
-          onOk() {
-            that.del();
-          },
-          onCancel() {},
+      return id ? columns : [...columns, operate];
+    },
+    // 选择任务类型
+    handleSelectChange(value) {
+      this.task = Object.assign({}, this.task, { type: value });
+    },
+    handleSelectChangeWorker(value) {
+      const { installList } = this;
+      const worker = installList.filter(v => v.accountname === value)[0];
+      const workname = worker ? worker.displayname : '';
+      this.task = Object.assign({}, this.task, { worker: value, workname });
+    },
+    disabledDate(current) {
+      return current && current < this.$moment();
+    },
+    // 选择时间
+    onChangeTime(rangeTime) {
+      this.rangeTime = rangeTime;
+    },
+    // 选择设备
+    selectDevice() {
+      const { devices = [] } = this.task;
+      this.dids = devices.map(v => v.did);
+      this.isModal = true;
+    },
+    // 取消设备弹窗
+    handleCancel() {
+      this.isModal = false;
+    },
+    handleOk(params) {
+      const { devices = [] } = this.task;
+      this.task = Object.assign({}, this.task, { devices: devices.concat(params) });
+      this.handleCancel();
+    },
+    // 删除设备
+    delDevice(index) {
+      const { devices } = this.task;
+      devices.splice(index, 1);
+      this.task = Object.assign({}, this.task, { devices });
+    },
+    // 取消
+    cancel() {
+      this.$router.back();
+    },
+    // 删除确认弹窗
+    showDelModal() {
+      const that = this;
+      this.$confirm({
+        title: '确定要删除任务？',
+        content: '',
+        okText: '确定',
+        cancelText: '取消',
+        onOk() {
+          that.del();
+        },
+        onCancel() {},
+      });
+    },
+    // 删除任务
+    del() {
+      this.spinning = true;
+      const { id } = this;
+      const params = {
+        assignmentids: [id],
+      };
+      taskManageAsk
+        .delAssignment(params)
+        .then(result => {
+          const { errcode, data } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            this.$router.push({ name: 'taskList' });
+          }
+          this.spinning = false;
+        })
+        .catch(e => {
+          this.spinning = false;
+          console.error(e);
         });
-      },
-      // 删除任务
-      del() {
+    },
+    // 确定按钮
+    ok() {
+      this.form.validateFields((err, fieldsValue) => {
+        if (err) {
+          return;
+        }
         this.spinning = true;
-        const { id } = this;
-        const params = {
-          assignmentids: [id],
+        const { id, rangeTime, task } = this;
+        const { taskname, worker, count } = fieldsValue;
+        this.task = {
+          ...this.task,
+          taskname,
+          worker,
+          count,
         };
-        taskManageAsk
-          .delAssignment(params)
-          .then(result => {
-            const { errcode, data } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              this.$router.push({ name: 'taskList' });
-            }
+
+        // 时限
+        if (rangeTime) {
+          const [starttime, endtime] = rangeTime;
+          this.task.starttime = starttime ? starttime.format(this.GLOBAL.TIME_FOEMAT) : '';
+          this.task.endtime = endtime ? endtime.format(this.GLOBAL.TIME_FOEMAT) : '';
+        }
+
+        // 维修任务
+        if (task.type === '0') {
+          const { devices = [] } = task;
+          if (devices.length <= 0) {
+            this.$message.warning('请先添加设备！');
             this.spinning = false;
-          })
-          .catch(e => {
-            this.spinning = false;
-            console.error(e);
-          });
-      },
-      // 确定按钮
-      ok() {
-        this.form.validateFields((err, fieldsValue) => {
-          if (err) {
             return;
           }
-          this.spinning = true;
-          const { id, rangeTime, task } = this;
-          const { taskname, worker, count } = fieldsValue;
+        }
+        // 安装设备
+        if (task.devices) {
+          const dids = task.devices.map(v => v.did);
           this.task = {
             ...this.task,
-            taskname,
-            worker,
-            count,
+            dids,
           };
-
-          // 时限
-          if (rangeTime) {
-            const [starttime, endtime] = rangeTime;
-            this.task.starttime = starttime ? starttime.format(this.GLOBAL.TIME_FOEMAT) : '';
-            this.task.endtime = endtime ? endtime.format(this.GLOBAL.TIME_FOEMAT) : '';
-          }
-
-          // 维修任务
-          if (task.type === '0') {
-            const { devices = [] } = task;
-            if (devices.length <= 0) {
-              this.$message.warning('请先添加设备！');
-              this.spinning = false;
-              return;
-            }
-          }
-          // 安装设备
-          if (task.devices) {
-            const dids = task.devices.map(v => v.did);
-            this.task = {
-              ...this.task,
-              dids,
-            };
-          }
-          if (id) {
-            // 修改
-            this.modAssignment();
-          } else {
-            // 添加
-            this.addAssignment();
-          }
-        });
-      },
-      // 添加
-      addAssignment() {
-        const params = {
-          ...this.task,
-        };
-        taskManageAsk
-          .addAssignment(params)
-          .then(result => {
-            const { errcode, data } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              this.$router.push({ name: 'taskList' });
-            }
-            this.spinning = false;
-          })
-          .catch(e => {
-            this.spinning = false;
-            console.error(e);
-          });
-      },
-      // 修改
-      modAssignment() {
-        const params = {
-          ...this.task,
-        };
-        taskManageAsk
-          .modAssignment(params)
-          .then(result => {
-            const { errcode, data } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              this.$router.push({ name: 'taskList' });
-            }
-            this.spinning = false;
-          })
-          .catch(e => {
-            this.spinning = false;
-            console.error(e);
-          });
-      },
-      // 任务详情
-      getAssignment() {
-        this.spinning = true;
-        const { id, installList = [] } = this;
-        const params = {
-          id,
-        };
-        taskManageAsk
-          .getAssignmentDetail(params)
-          .then(result => {
-            const { errcode, data = {} } = result;
-            if (errcode === 200) {
-              this.task = data;
-              const { starttime, endtime, worker } = this.task;
-              if (starttime) {
-                this.rangeTime = [this.$moment(starttime), this.$moment(endtime)];
-              }
-              const pos = installList.findIndex(v => v.accountname === worker);
-              if (pos < 0) {
-                this.task.worker = '';
-              }
-            }
-            this.spinning = false;
-          })
-          .catch(e => {
-            this.spinning = false;
-            console.log(e);
-          });
-      },
+        }
+        if (id) {
+          // 修改
+          this.modAssignment();
+        } else {
+          // 添加
+          this.addAssignment();
+        }
+      });
     },
-  };
+    // 添加
+    addAssignment() {
+      const params = {
+        ...this.task,
+      };
+      taskManageAsk
+        .addAssignment(params)
+        .then(result => {
+          const { errcode, data } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            this.$router.push({ name: 'taskList' });
+          }
+          this.spinning = false;
+        })
+        .catch(e => {
+          this.spinning = false;
+          console.error(e);
+        });
+    },
+    // 修改
+    modAssignment() {
+      const params = {
+        ...this.task,
+      };
+      taskManageAsk
+        .modAssignment(params)
+        .then(result => {
+          const { errcode, data } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            this.$router.push({ name: 'taskList' });
+          }
+          this.spinning = false;
+        })
+        .catch(e => {
+          this.spinning = false;
+          console.error(e);
+        });
+    },
+    // 任务详情
+    getAssignment() {
+      this.spinning = true;
+      const { id, installList = [] } = this;
+      const params = {
+        id,
+      };
+      taskManageAsk
+        .getAssignmentDetail(params)
+        .then(result => {
+          const { errcode, data = {} } = result;
+          if (errcode === 200) {
+            this.task = data.taskInfos;
+            const { starttime, endtime, worker } = this.task;
+            if (starttime) {
+              this.rangeTime = [this.$moment(starttime), this.$moment(endtime)];
+            }
+            const pos = installList.findIndex(v => v.accountname === worker);
+            if (pos < 0) {
+              this.task.worker = '';
+            }
+          }
+          this.spinning = false;
+        })
+        .catch(e => {
+          this.spinning = false;
+          console.log(e);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="less">
-  .table-border .ant-table-thead > tr > th {
-    border: none;
-  }
-  .ant-table-placeholder,
-  .table-border .ant-table-tbody > tr > td {
-    border-bottom: 1px solid #e8e8e8;
-  }
+.table-border .ant-table-thead > tr > th {
+  border: none;
+}
+.ant-table-placeholder,
+.table-border .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #e8e8e8;
+}
 </style>
 <style lang="less" scoped>
 </style>
