@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-05 11:04:12
- * @LastEditTime: 2020-09-25 15:00:15
+ * @LastEditTime: 2020-09-27 15:27:25
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -333,7 +333,7 @@ export default {
       this.spinning = true;
       const { id } = this;
       const params = {
-        assignmentids: [id],
+        id,
       };
       taskManageAsk
         .delAssignment(params)

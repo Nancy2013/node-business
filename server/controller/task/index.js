@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-25 17:03:47
+ * @LastEditTime: 2020-09-27 17:27:45
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -40,25 +40,31 @@ const controller = {
 
     const totalSize = await Model.countDocuments(params);
     Model.aggregate([ // 聚合查询
-      {
-        $match: {...params}
-      },
-      {
-        $lookup: {
-          from: "accounts", // 数据库中集合名称
-          localField: 'worker', // 内部查找字段
-          foreignField: 'accountname',  // 外部关联字段
-          as: 'workerInfo', // 查询结果存储字段
-        }
-      },
-    ]) 
+        {
+          $match: {
+            ...params
+          }
+        },
+        {
+          $lookup: {
+            from: "accounts", // 数据库中集合名称
+            localField: 'worker', // 内部查找字段
+            foreignField: 'accountname', // 外部关联字段
+            as: 'workerInfo', // 查询结果存储字段
+          },
+        },
+      ])
       .skip(limit * (offset - 1)) // aggregate方法中，skip需要早于limit，否则后面查询不到数据
       .limit(limit)
       .sort({
         _id: seq
       })
       .then(result => {
-        result.map(v => v.id = v._id);
+        result.map(v => {
+          v.id = v._id;
+          v.worker = v.workerInfo[0] ? v.workerInfo[0].worker : ''
+          v.workname = v.workerInfo[0] ? v.workerInfo[0].displayname : '';
+        });
         if (result) {
           const data = {
             tasks: result,
@@ -73,7 +79,12 @@ const controller = {
   // 添加
   add: async (req, res, next) => {
 
-    const params = req.body
+    const params = {
+      ...req.body,
+      count: 0,
+      status: '0',
+      createtime: new Date().toISOString(),
+    }
 
     Model.create(params).then(result => {
       if (result) {
@@ -88,16 +99,17 @@ const controller = {
       id
     } = req.body;
     const params = id;
-    Model.findById(params).then(result => {
-      if (result) {
-        const data = {
-          taskInfos: result,
-        };
-        res.send(response(data));
-      }
-    }).catch(e => {
-      next(e);
-    });
+    Model.findById(params)
+      .populate('devices')
+      .then(result => {
+        if (result) {
+          console.log(JSON.stringify(result));
+          const data = {
+            taskInfos: result,
+          };
+          res.send(response(data));
+        }
+      }).catch(next);
   },
 
   // 修改

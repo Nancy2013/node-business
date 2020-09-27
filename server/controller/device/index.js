@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-23 15:47:02
+ * @LastEditTime: 2020-09-27 17:23:51
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -12,7 +12,7 @@ const {
 const Model = require('../../models')('device');
 
 const controller = {
-  get: async (req, res) => {
+  get: async (req, res,next) => {
     const {
       offset,
       limit,
@@ -73,23 +73,25 @@ const controller = {
       }
     }).catch(next);
   },
-  detail: async (req, res) => {
+  detail: async (req, res,next) => {
     const {
       did
     } = req.params;
     const params = {
       did
     };
-    Model.findOne(params).then(result => {
-      const data = {
-        deviceInfos: result,
-      };
-      req.send(response(data));
-    }).catch(e => {
-      console.error(e);
-    });
+    Model.findOne(params)
+      .then(result => {
+        if (result) {
+          const data = {
+            deviceInfos: result,
+          };
+          req.send(response(data));
+        }
+      
+    }).catch(next);
   },
-  mod: async (req, res) => {
+  mod: async (req, res,next) => {
     const {
       did
     } = req.params;
@@ -97,56 +99,40 @@ const controller = {
       did
     };
     const params = req.body;
-    Model.findOneAndUpdate(conditions, params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndUpdate(conditions, params).then(result => {}).catch(next);
   },
-  del: async (req, res) => {
+  del: async (req, res,next) => {
     const {
       did
     } = req.params;
     const params = {
       did
     };
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  controls: async (req, res) => {
+  controls: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getControlLogs: async (req, res) => {
+  getControlLogs: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getErrorLogs: async (req, res) => {
+  getErrorLogs: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getDevServices: async (req, res) => {
+  getDevServices: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getRepairLogs: async (req, res) => {
+  getRepairLogs: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getAttributes: async (req, res) => {
+  getAttributes: async (req, res,next) => {
     const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(e => {
-      console.error(e);
-    });
+    Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
   getStatistics: async (req, res, next) => { 
     const { running } = req.body
