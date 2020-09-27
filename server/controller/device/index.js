@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-27 17:23:51
+ * @LastEditTime: 2020-09-27 17:56:29
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -12,6 +12,7 @@ const {
 const Model = require('../../models')('device');
 
 const controller = {
+  // TODO 查询任务故障设备过滤
   get: async (req, res,next) => {
     const {
       offset,
