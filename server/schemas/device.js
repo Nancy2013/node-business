@@ -1,12 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-09-23 14:51:15
+ * @LastEditTime: 2020-09-28 14:53:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
  */
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 module.exports = new mongoose.Schema({
   did: {
@@ -43,7 +44,8 @@ module.exports = new mongoose.Schema({
     type: String,
   },
   siteid: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'Site',
+    type: ObjectId,
+    ref: 'Site',
   },
   worker: {
     type: String,
@@ -58,7 +60,12 @@ module.exports = new mongoose.Schema({
     type: Number,
   },
   groupid: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'Group',
+    type: ObjectId,
+    ref: 'Group',
+  },
+  taskid: {
+    type: ObjectId,
+    ref:'Task',
   },
   status: {
     Apricon: String,

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-08 14:52:18
- * @LastEditTime: 2020-09-27 17:36:26
+ * @LastEditTime: 2020-09-28 16:03:25
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -216,9 +216,10 @@ export default {
           // 只查询空闲设备
           params[flag] = -1;
           break;
-        case 'task':
+        case 'taskid':
           // 只查询不在线设备
           params.running = '-1';
+          params[flag] = -1;
           break;
         case 'timeLinkage':
           params.productid = productid;

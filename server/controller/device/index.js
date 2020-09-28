@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-27 17:56:29
+ * @LastEditTime: 2020-09-28 16:05:29
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -21,7 +21,11 @@ const controller = {
       location,
       online,
       did,
-      seq
+      seq,
+      siteid,
+      groupid,
+      taskid,
+      running,
     } = req.body;
 
     const params = {};
@@ -43,6 +47,19 @@ const controller = {
     }
     if (did) {
       params.did = did;
+    }
+    // 查询空闲设备
+    if (siteid===-1) {
+      params.siteid = null;
+    }
+    if (groupid===-1) {
+      params.groupid = null;
+    }
+    if (taskid === -1) {
+      params.taskid = null;
+    }
+    if (running) {
+      params.running = running;
     }
     const totalSize = await Model.countDocuments(params);
     Model.find(params)

@@ -1,12 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-27 17:27:45
+ * @LastEditTime: 2020-09-28 16:12:16
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
 const Model = require('../../models')('task');
+const DeviceModel = require('../../models')('device');
 const {
   response
 } = require('../../common/utils');
@@ -86,9 +87,24 @@ const controller = {
       createtime: new Date().toISOString(),
     }
 
-    Model.create(params).then(result => {
+    Model.create(params).then( result => {
       if (result) {
-        res.send(response(params));
+        const { _id, devices } = result;
+        // 绑定故障设备
+        if (devices && devices.length > 0) {
+          const deviceParams = {
+            taskid:_id,
+          }
+
+          devices.map(async v => {
+            const conditions = {
+              _id:v._id,
+            }
+            await DeviceModel.findByIdAndUpdate(conditions, deviceParams).then(deviceResult => {})
+          })
+        } 
+
+        res.send(response(result));
       }
     }).catch(next)
   },
@@ -130,11 +146,24 @@ const controller = {
 
   // 删除
   del: async (req, res, next) => {
+    const {id,devices } = req.body;
     const params = {
-      _id: req.body.id,
+      _id:id,
     };
     Model.findOneAndDelete(params).then(result => {
       if (result) {
+        // 释放故障设备
+        if (devices && devices.length > 0) {
+          const deviceParams = {
+            taskid:null,
+          }
+          devices.map(async v => {
+            const conditions = {
+              _id:v._id,
+            }
+            await DeviceModel.findByIdAndUpdate(conditions, deviceParams).then(deviceResult => {})
+          })
+        }
         res.send(response());
       }
     }).catch(next);

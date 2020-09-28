@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-05 11:04:12
- * @LastEditTime: 2020-09-27 15:27:25
+ * @LastEditTime: 2020-09-28 16:08:52
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -133,7 +133,7 @@
       </bl-page-wrapper>
       <DeviceModal v-if="isModal"
                    :data="dids"
-                   flag="task"
+                   flag="taskid"
                    @cancel="handleCancel"
                    @ok="handleOk" />
     </div>
@@ -331,9 +331,10 @@ export default {
     // 删除任务
     del() {
       this.spinning = true;
-      const { id } = this;
+      const { id, task } = this;
       const params = {
         id,
+        devices: task.devices,
       };
       taskManageAsk
         .delAssignment(params)
