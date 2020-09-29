@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-09-28 17:07:16
+ * @LastEditTime: 2020-09-29 14:46:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -16,9 +16,9 @@ module.exports = new mongoose.Schema({
   parentgid: {
     type:String,
   },
-  devicenum: {
-    type:Number,
-  },
+  // devicenum: {
+  //   type:Number,
+  // },
   createtime: {
     type:String,
   },

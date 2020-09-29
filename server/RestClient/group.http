@@ -1,0 +1,39 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=group
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+ {
+      "name": "OSIM",
+      "parentgid": 0,
+      "isnode": 0
+}
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+
