@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 10:36:21
- * @LastEditTime: 2019-10-29 14:53:40
+ * @LastEditTime: 2020-09-30 15:45:19
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -17,7 +17,7 @@
              @cancel="cancel">
       <a-form :form="form"
               hide-required-mark>
-        <a-form-item v-if="group.parentgid"
+        <a-form-item v-if="group.parentgid!='0'"
                      :label-col="labelCol"
                      :wrapper-col="wrapperCol"
                      :colon="false"
@@ -58,162 +58,162 @@
   </div>
 </template>
 <script>
-  import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
-  import service from 'servicePath/index';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
+import service from 'servicePath/index';
 
-  const { groupManageAsk } = service;
+const { groupManageAsk } = service;
 
-  export default {
-    name: 'AddModal',
-    components: {},
-    mixins: [],
-    props: {
-      isAdd: {
-        type: Boolean,
-        default: true,
-      },
+export default {
+  name: 'AddModal',
+  components: {},
+  mixins: [],
+  props: {
+    isAdd: {
+      type: Boolean,
+      default: true,
     },
-    data() {
-      return {
-        form: this.$form.createForm(this),
-        isModal: true,
-        labelCol: { span: 5 },
-        wrapperCol: { span: 18 },
-      };
+  },
+  data() {
+    return {
+      form: this.$form.createForm(this),
+      isModal: true,
+      labelCol: { span: 5 },
+      wrapperCol: { span: 18 },
+    };
+  },
+  computed: {
+    ...mapState('groupManage', ['node']),
+    ...mapGetters('groupManage', ['formatGroup']),
+    group() {
+      const { isAdd } = this;
+      return this.formatGroup(isAdd);
     },
-    computed: {
-      ...mapState('groupManage', ['node']),
-      ...mapGetters('groupManage', ['formatGroup']),
-      group() {
-        const { isAdd } = this;
-        return this.formatGroup(isAdd);
-      },
-      modalTitle() {
-        const { id } = this.group;
-        return `${id ? '编辑' : '添加'}分组`;
-      },
-      isShowDel() {
-        const { isJump, $children = [], expanded, dataRef = {} } = this.node;
-        if (isJump) {
-          // 跳转选中，都不显示删除按钮
-          return false;
+    modalTitle() {
+      const { id } = this.group;
+      return `${id ? '编辑' : '添加'}分组`;
+    },
+    isShowDel() {
+      const { isJump, $children = [], expanded, dataRef = {} } = this.node;
+      if (isJump) {
+        // 跳转选中，都不显示删除按钮
+        return false;
+      }
+      // 判断是否有子分组 展开时有1个无效子节点 | 折叠有2个无效子节点
+      const isGroupEmpty =
+        (expanded && $children && $children.length <= 1) ||
+        (!expanded && $children && $children.length <= 2);
+      // 判断是否有子设备
+      const isDeviceEmpty = dataRef && !dataRef.devicenum;
+      // 显示删除按钮条件: 非根分组 | 编辑分组 | 无子分组 | 无设备
+      return dataRef.parentgid && this.group.id && isGroupEmpty && isDeviceEmpty;
+    },
+  },
+  watch: {},
+  created() {},
+  mounted() {},
+  destroyed() {},
+  methods: {
+    ...mapMutations('groupManage', ['updateNode']),
+    // 取消
+    cancel() {
+      this.$emit('cancel');
+    },
+    // 确定
+    ok() {
+      this.form.validateFields((err, fieldsValue) => {
+        if (err) {
+          return;
         }
-        // 判断是否有子分组 展开时有1个无效子节点 | 折叠有2个无效子节点
-        const isGroupEmpty =
-          (expanded && $children && $children.length <= 1) ||
-          (!expanded && $children && $children.length <= 2);
-        // 判断是否有子设备
-        const isDeviceEmpty = dataRef && !dataRef.devicenum;
-        // 显示删除按钮条件: 非根分组 | 编辑分组 | 无子分组 | 无设备
-        return dataRef.parentgid && this.group.id && isGroupEmpty && isDeviceEmpty;
-      },
+        const { isAdd } = this;
+        if (isAdd) {
+          // 添加
+          this.addGroup();
+        } else {
+          // 编辑
+          this.modGroup();
+        }
+      });
     },
-    watch: {},
-    created() {},
-    mounted() {},
-    destroyed() {},
-    methods: {
-      ...mapMutations('groupManage', ['updateNode']),
-      // 取消
-      cancel() {
-        this.$emit('cancel');
-      },
-      // 确定
-      ok() {
-        this.form.validateFields((err, fieldsValue) => {
-          if (err) {
-            return;
-          }
-          const { isAdd } = this;
-          if (isAdd) {
-            // 添加
-            this.addGroup();
-          } else {
-            // 编辑
-            this.modGroup();
-          }
-        });
-      },
-      // 删除提示
-      showDelModal() {
-        const that = this;
-        this.$confirm({
-          title: '确定删除该数据？',
-          content: '',
-          okText: '确定',
-          cancelText: '取消',
-          onOk() {
-            that.del();
-          },
-          onCancel() {},
-        });
-      },
-      // 删除
-      del() {
-        const { id } = this.group;
-        const params = { id };
-        groupManageAsk
-          .delGroup(params)
-          .then(result => {
-            const { errcode } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              this.$emit('del');
-            }
-          })
-          .catch(e => {
-            console.error(e);
-          });
-      },
-      addGroup() {
-        const { name } = this.form.getFieldsValue();
-        const params = {
-          ...this.group,
-          name,
-        };
-        groupManageAsk
-          .addGroup(params)
-          .then(result => {
-            const { errcode, data = {} } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              // 根分组
-              this.$emit('ok', data);
-            }
-          })
-          .catch(e => {
-            console.error(e);
-          });
-      },
-      modGroup() {
-        const { name } = this.form.getFieldsValue();
-        const params = {
-          ...this.group,
-          name,
-          title: `${name}(${this.group.devicenum || 0}台)`,
-        };
-        groupManageAsk
-          .modGroup(params)
-          .then(result => {
-            const { errcode } = result;
-            if (errcode === 200) {
-              this.$message.success('操作成功！');
-              const { node } = this;
-              const { devicenum } = node.dataRef;
-              const newNode = {
-                ...node,
-                dataRef: params,
-                title: `${name}(${devicenum || 0}台)`,
-              };
-              this.$emit('ok', newNode);
-            }
-          })
-          .catch(e => {
-            console.error(e);
-          });
-      },
+    // 删除提示
+    showDelModal() {
+      const that = this;
+      this.$confirm({
+        title: '确定删除该数据？',
+        content: '',
+        okText: '确定',
+        cancelText: '取消',
+        onOk() {
+          that.del();
+        },
+        onCancel() {},
+      });
     },
-  };
+    // 删除
+    del() {
+      const { id } = this.group;
+      const params = { id };
+      groupManageAsk
+        .delGroup(params)
+        .then(result => {
+          const { errcode } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            this.$emit('del');
+          }
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    },
+    addGroup() {
+      const { name } = this.form.getFieldsValue();
+      const params = {
+        ...this.group,
+        name,
+      };
+      groupManageAsk
+        .addGroup(params)
+        .then(result => {
+          const { errcode, data = {} } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            // 根分组
+            this.$emit('ok', data);
+          }
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    },
+    modGroup() {
+      const { name } = this.form.getFieldsValue();
+      const params = {
+        ...this.group,
+        name,
+        title: `${name}(${this.group.devicenum || 0}台)`,
+      };
+      groupManageAsk
+        .modGroup(params)
+        .then(result => {
+          const { errcode } = result;
+          if (errcode === 200) {
+            this.$message.success('操作成功！');
+            const { node } = this;
+            const { devicenum } = node.dataRef;
+            const newNode = {
+              ...node,
+              dataRef: params,
+              title: `${name}(${devicenum || 0}台)`,
+            };
+            this.$emit('ok', newNode);
+          }
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-29 17:23:15
+ * @LastEditTime: 2020-09-30 15:32:10
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -43,24 +43,12 @@ const controller = {
       .then(groupResult => {
         // 查询子节点
         if (groupResult) {
-          const promises = group.map((v, index) => {
+          group.map((v, index) => {
             v.isnode = groupResult[index] === 0 ? 0 : 1;
-
-            const deviceParams = {
-              groupid: v._id,
-            }
-            return DeviceModel.countDocuments(deviceParams);
           })
-          return Promise.all(promises);
+          const data = group;
+          res.send(response(data));
         }
-      })
-      .then(deviceResult => {
-        // 查询设备
-        group.map((v, index) => {
-          v.devicenum = deviceResult[index];
-        })
-        const data = group;
-        res.send(response(data));
       })
       .catch(next);
   },
@@ -92,7 +80,7 @@ const controller = {
     const params = {
       ...req.body,
       createtime: new Date().toISOString(),
-      // devicenum: 0,
+      devicenum: 0,
     }
 
     Model.create(params).then(result => {
@@ -101,8 +89,6 @@ const controller = {
       }
     }).catch(next)
   },
-
-
 
   // 修改
   mod: async (req, res, next) => {
@@ -142,7 +128,7 @@ const controller = {
     let params = {
       groupid: id,
     };
-    const totalSize = await Model.countDocuments(params);
+    const totalSize = await DeviceModel.countDocuments(params);
     DeviceModel.find(params)
       .lean()
       .limit(limit)
@@ -175,12 +161,15 @@ const controller = {
         _id: v._id
       }
       const params = {
-        groupid: flag === 'add' ? id : null,
+        groupid: flag === 'add' ? id : null, // 绑定或解绑设备
       };
       await DeviceModel.findOneAndUpdate(conditions, params, {
         new: true,
         upsert: true
-      }).then(result => {}).catch(next)
+      }).then(result => {
+        // 更新分组设备
+        
+      }).catch(next)
     });
 
     res.send(response());

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-31 17:25:38
- * @LastEditTime: 2020-09-29 15:07:15
+ * @LastEditTime: 2020-09-30 15:47:52
  * @LastEditors: Please set LastEditors
  -->
 <!-- 分组管理 -->
@@ -365,14 +365,14 @@ export default {
         node,
       } = this;
       const { dataRef, $parent } = node;
-      if (dataRef && dataRef.parentgid) {
+      if (dataRef && dataRef.parentgid != '0') {
         // 选中父分组
         await treeBar.onLoadData(node.$parent);
         treeBar.onSelect([dataRef.parentgid], { selected: true, node: $parent });
 
         // 判断是否为空tree
         const { parentgid, children } = node.$parent.dataRef;
-        if (parentgid === 0) {
+        if (parentgid === '0') {
           this.updateIsEmpty(children.length === 0);
         }
       } else {
@@ -393,7 +393,7 @@ export default {
         // 添加分组
         const rootParentgid = data.parentgid;
         // 根分组
-        if (!rootParentgid) {
+        if (rootParentgid != '0') {
           treeBar.getGroup();
         } else {
           await this.getGroup();
@@ -401,7 +401,7 @@ export default {
 
           // root节点 判断是否为空
           const { parentgid, children } = node.dataRef;
-          if (parentgid === 0) {
+          if (parentgid === '0') {
             this.updateIsEmpty(children.length === 0);
           }
         }

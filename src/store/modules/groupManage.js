@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-08-19 15:29:22
+ * @LastEditTime: 2020-09-30 15:22:31
  * @LastEditors: Please set LastEditors
  */
 import service from 'servicePath/index';
@@ -41,6 +41,9 @@ const groupManage = {
           };
         }
       }
+      console.log('****************');
+      console.log(state.node.dataRef);
+      
       return state.node.dataRef || {};
     },
   },
