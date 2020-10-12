@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-30 15:32:10
+ * @LastEditTime: 2020-10-12 15:28:21
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -85,6 +85,7 @@ const controller = {
 
     Model.create(params).then(result => {
       if (result) {
+        params.id = result._id;
         res.send(response(params));
       }
     }).catch(next)
@@ -101,7 +102,7 @@ const controller = {
       upsert: true
     }).then(result => {
       if (result) {
-        res.send(response(params));
+        res.send(response(result));
       }
     }).catch(next);
   },
@@ -158,7 +159,7 @@ const controller = {
 
     deviceids.map(async v => {
       const conditions = {
-        _id: v._id
+        did: v
       }
       const params = {
         groupid: flag === 'add' ? id : null, // 绑定或解绑设备
@@ -167,11 +168,10 @@ const controller = {
         new: true,
         upsert: true
       }).then(result => {
-        // 更新分组设备
         
       }).catch(next)
     });
-
+    // 更新分组设备
     res.send(response());
   },
 };
