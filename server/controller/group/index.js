@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-12 15:28:21
+ * @LastEditTime: 2020-10-12 17:53:52
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -12,9 +12,21 @@ const {
   response
 } = require('../../common/utils');
 
+// TODO
+const sumDevice = function (allGroup,group) {
+  allGroup.map(v => {
+    if (v.parentgid === group.id) {
+      group.devicenum = group.devicenum + sumDevice(allGroup, v).devicenum;
+      }
+  })
+  
+  return group;
+};
+
 const controller = {
 
-  // 查询子分组
+  
+  
   get: async (req, res, next) => {
     const {
       id
@@ -24,6 +36,9 @@ const controller = {
       params.parentgid = id;
     }
     let group;
+    let allGroup = await Model.find();
+
+    // 查询子分组
     Model.find(params)
       .lean()
       .then(result => {
@@ -45,6 +60,7 @@ const controller = {
         if (groupResult) {
           group.map((v, index) => {
             v.isnode = groupResult[index] === 0 ? 0 : 1;
+            v.devicenum=sumDevice(allGroup, v).devicenum;
           })
           const data = group;
           res.send(response(data));
@@ -157,6 +173,7 @@ const controller = {
       deviceids
     } = req.body;
 
+    // 更新设备状态
     deviceids.map(async v => {
       const conditions = {
         did: v
@@ -168,11 +185,30 @@ const controller = {
         new: true,
         upsert: true
       }).then(result => {
-        
+
       }).catch(next)
     });
-    // 更新分组设备
-    res.send(response());
+
+    // 更新分组设备数量
+    const groupCnditions = {
+      _id: id,
+    }
+    const {
+      devicenum,
+      parentgid,
+    } = await Model.findById(id);
+    const groupParams = {
+      devicenum: flag === 'add' ? devicenum + deviceids.length : devicenum - deviceids.length,
+    }
+    Model.findOneAndUpdate(groupCnditions, groupParams, {
+      new: true,
+      upsert: true
+    }).then(result => {
+      if (result) {
+        res.send(response());
+      }
+    }).catch(next);
+
   },
 };
 module.exports = controller;

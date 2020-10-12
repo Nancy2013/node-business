@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-09-30 15:22:31
+ * @LastEditTime: 2020-10-12 17:28:27
  * @LastEditors: Please set LastEditors
  */
 import service from 'servicePath/index';
@@ -20,7 +20,6 @@ const groupManage = {
 
   mutations: {
     updateNode(state, payload) {
-      // console.error(payload);
       state.node = payload || { dataRef: {} };
     },
     updateIsEmpty(state, payload) {
@@ -41,8 +40,6 @@ const groupManage = {
           };
         }
       }
-      console.log('****************');
-      console.log(state.node.dataRef);
       
       return state.node.dataRef || {};
     },

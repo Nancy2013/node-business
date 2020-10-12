@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-31 17:25:38
- * @LastEditTime: 2020-10-12 14:51:22
+ * @LastEditTime: 2020-10-12 16:40:32
  * @LastEditors: Please set LastEditors
  -->
 <!-- 分组管理 -->
@@ -341,17 +341,6 @@ export default {
     },
     // 添加分组
     addGroup() {
-      // const { dataRef } = this.node;
-      // if (dataRef) {
-      //   const { path } = dataRef;
-      //   if (path) {
-      //     const nodeLevel = (path.match(new RegExp('-', 'g')) || []).length;
-      //     if (nodeLevel >= this.GLOBAL.MAX_TREE_LEVEL - 1) {
-      //       this.$message.warning('最多为四级分组！');
-      //       return;
-      //     }
-      //   }
-      // }
       this.isAdd = true;
       this.isGroupModal = true;
     },
