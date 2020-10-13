@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-10 10:36:21
- * @LastEditTime: 2020-09-30 15:45:19
+ * @LastEditTime: 2020-10-13 17:47:59
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -92,6 +92,8 @@ export default {
       const { id } = this.group;
       return `${id ? '编辑' : '添加'}分组`;
     },
+
+    // TODO 显示删除按钮
     isShowDel() {
       const { isJump, $children = [], expanded, dataRef = {} } = this.node;
       if (isJump) {
@@ -102,10 +104,11 @@ export default {
       const isGroupEmpty =
         (expanded && $children && $children.length <= 1) ||
         (!expanded && $children && $children.length <= 2);
+
       // 判断是否有子设备
       const isDeviceEmpty = dataRef && !dataRef.devicenum;
       // 显示删除按钮条件: 非根分组 | 编辑分组 | 无子分组 | 无设备
-      return dataRef.parentgid && this.group.id && isGroupEmpty && isDeviceEmpty;
+      return this.group.id && isGroupEmpty && isDeviceEmpty;
     },
   },
   watch: {},

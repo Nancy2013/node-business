@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-31 17:25:38
- * @LastEditTime: 2020-10-12 16:40:32
+ * @LastEditTime: 2020-10-13 17:26:39
  * @LastEditors: Please set LastEditors
  -->
 <!-- 分组管理 -->
@@ -378,6 +378,7 @@ export default {
         isAdd,
         node,
       } = this;
+
       if (isAdd) {
         // 添加分组
         const rootParentgid = data.parentgid;
@@ -394,6 +395,10 @@ export default {
             this.updateIsEmpty(children.length === 0);
           }
         }
+        // this.updateNode({
+        //   ...node,
+        //   isnode: 1,
+        // });
       } else {
         // 编辑分组
         this.updateNode(data); // 更新store node
