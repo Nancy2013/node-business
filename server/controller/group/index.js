@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-12 17:53:52
+ * @LastEditTime: 2020-10-13 14:44:42
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -12,21 +12,17 @@ const {
   response
 } = require('../../common/utils');
 
-// TODO
-const sumDevice = function (allGroup,group) {
+// 递归统计设备数量
+const sumDevice = function (allGroup, group) {
   allGroup.map(v => {
-    if (v.parentgid === group.id) {
+    if (v.parentgid == group.id) { 
       group.devicenum = group.devicenum + sumDevice(allGroup, v).devicenum;
       }
   })
-  
   return group;
 };
 
 const controller = {
-
-  
-  
   get: async (req, res, next) => {
     const {
       id
@@ -68,28 +64,6 @@ const controller = {
       })
       .catch(next);
   },
-
-  // 查询
-  // getAll: async (req, res, next) => {
-  //   const {
-  //     id,
-  //   } = req.body;
-  //   const params = {
-  //     parentgid: id ? id : 0,
-  //   };
-  //   Model.find(params)
-  //     .sort({
-  //       _id: -1
-  //     })
-  //     .then(result => {
-  //       result.map(v => v.id = v._id);
-  //       if (result) {
-  //         const data = result;
-  //         res.send(response(data));
-  //       }
-  //     })
-  //     .catch(next);
-  // },
 
   // 添加
   add: async (req, res, next) => {
@@ -195,7 +169,6 @@ const controller = {
     }
     const {
       devicenum,
-      parentgid,
     } = await Model.findById(id);
     const groupParams = {
       devicenum: flag === 'add' ? devicenum + deviceids.length : devicenum - deviceids.length,
