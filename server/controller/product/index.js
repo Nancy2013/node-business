@@ -1,12 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-14 16:59:07
+ * @LastEditTime: 2020-10-14 16:59:39
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
  */
-const Model = require('../../models')('base');
+const Model = require('../../models')('product');
 const {
   response
 } = require('../../common/utils');
@@ -15,16 +15,10 @@ const controller = {
 
   // 查询
   get: async (req, res, next) => {
-    const {
-      limit,
-      offset,
-    } = req.body;
     const params = {};
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
       .lean()
-      .limit(limit)
-      .skip(limit * (offset - 1))
       .sort({
         _id: 1
       })
@@ -66,31 +60,6 @@ const controller = {
           data: result,
         };
         res.send(response(data));
-      }
-    }).catch(next);
-  },
-
-  // 修改
-  mod: async (req, res, next) => {
-    const conditions = {
-      _id: req.body._id
-    };
-    const params = req.body;
-    Model.findOneAndUpdate(conditions, params, {new:true,upsert:true}).then(result => {
-      if (result) {
-        res.send(response(params));
-      }
-    }).catch(next);
-  },
-
-  // 删除
-  del: async (req, res, next) => {
-    const params = {
-      _id: req.body.id,
-    };
-    Model.findOneAndDelete(params).then(result => {
-      if (result) {
-        res.send(response());
       }
     }).catch(next);
   },

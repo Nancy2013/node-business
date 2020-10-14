@@ -1,0 +1,74 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=product
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+{
+    "productname": "大韦温控器",
+    "devicetype": "20141",
+    "productversion": "HVAC",
+    "pid": "000000000000000000000000ad4e0000",
+    "categoryid": "5f86bf28205ad6a1f416dc9f",
+    "attributes": [
+        {
+            "openname": "关,开",
+            "opennamespace": "DNA.KeyValueControl",
+            "openversion": "2",
+            "openproxy": "pwr",
+            "openvalue": "0,1",
+            "displayname": "开关",
+            "dnaname": "KeyValueControl",
+            "dnanamespace": "DNA.KeyValueControl",
+            "dnaversion": "2",
+            "dnakit": "pwr",
+            "dnavalue": "0,1",
+            "productid": "000000000000000000000000ad4e0000",
+            "operationtype": "1",
+            "valuetype": "2"
+        },
+        {
+            "openname": "温度",
+            "opennamespace": "DNA.KeyValueControl",
+            "openversion": "2",
+            "openproxy": "temp",
+            "openvalue": "10-30",
+            "displayname": "温度",
+            "dnaname": "KeyValueControl",
+            "dnanamespace": "DNA.KeyValueControl",
+            "dnaversion": "2",
+            "dnakit": "temp",
+            "dnavalue": "10-30",
+            "productid": "000000000000000000000000ad4e0000",
+            "operationtype": "1",
+            "valuetype": "3"
+        }
+    ]
+}
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+

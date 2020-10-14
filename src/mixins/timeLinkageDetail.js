@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-27 15:49:56
- * @LastEditTime: 2019-09-29 16:17:20
+ * @LastEditTime: 2020-10-14 16:42:34
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -25,7 +25,7 @@ export default which => ({
       form: this.$form.createForm(this),
       labelCol: { span: 2 },
       wrapperCol: { span: 8 },
-      id: parseInt(this.$route.params.id),
+      id: this.$route.params.id,
       data: {
         enable: 1,
         schedule: {

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-27 15:49:56
- * @LastEditTime: 2020-07-06 19:47:21
+ * @LastEditTime: 2020-10-14 16:34:36
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -124,15 +124,15 @@ export default which => ({
       };
       const { errcode, data = {} } = await timeLinkageAsk.getTimeLinkageList(params);
       this.formatData(data);
-      return { total: data.totalsize, data: data.taskinfo };
+      return { total: data.totalsize, data: data.alist };
     },
     // 格式化定时数据格式
     formatData(data) {
-      const { taskinfo = [] } = data;
+      const { alist = [] } = data;
       switch (which) {
         case 'timing':
-          if (taskinfo) {
-            taskinfo.forEach(v => {
+          if (alist) {
+            alist.forEach(v => {
               const { weekday } = v;
               v.enable = v.enable === 1;
               v.weekday = this.formatRepeat(weekday);
@@ -141,8 +141,8 @@ export default which => ({
 
           break;
         case 'scene':
-          if (taskinfo) {
-            taskinfo.forEach(v => { v.execute = false; });
+          if (alist) {
+            alist.forEach(v => { v.execute = false; });
           }
           break;
         default: break;

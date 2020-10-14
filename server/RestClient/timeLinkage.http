@@ -1,0 +1,80 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=timeLinkage
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+{
+    "name": "延迟关演示",
+    "type": 3,
+    "remark": "",
+    "createtime": "2019-10-11T11:41:11.262105",
+    "updatetime": "2019-10-11T15:28:25",
+    "enable": 0,
+    "delay": 0,
+    "schedule": {
+        "starttime": "",
+        "endtime": "",
+        "month": 0,
+        "day": 0,
+        "weekday": "",
+        "isrepeat": 0
+    },
+    "effects": [
+        {
+            "deviceid": "c8f742fe2871000021000100ee4dd755",
+            "devicename": "LS1-2",
+            "productid": "0000000000000000000000001d000100",
+            "actions": [
+                {
+                    "attrmethod": "power",
+                    "attrvalue": "OFF",
+                    "attrname": " 枚举型-关"
+                }
+            ]
+        }
+    ],
+    "factors": [
+        {
+            "deviceid": "c8f742fe2871000021000100ee4dd755",
+            "devicename": "LS1-2",
+            "productid": "0000000000000000000000001d000100",
+            "actions": [
+                {
+                    "attrmethod": "power",
+                    "attrvalue": "ON",
+                    "attrname": " 枚举型",
+                    "valuetype": "2",
+                    "trend": -1
+                }
+            ]
+        }
+    ]
+}
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+

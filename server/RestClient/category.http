@@ -1,0 +1,66 @@
+@url = http://localhost:3000/node-business/
+@contentType = content-type: application/json
+@module=category
+
+### get 查询
+post {{url}}{{module}}/get
+
+
+### add 添加
+post {{url}}{{module}}/add
+{{contentType}}
+
+[
+    {
+        "name": "自动化的产品分类"
+    },
+    {
+        "name": "osim按摩椅"
+    },
+    {
+        "name": "未分类"
+    },
+    {
+        "name": "LS1开关面板"
+    },
+    {
+        "name": "86控制盒"
+    },
+    {
+        "name": "空调控制"
+    },
+    {
+        "name": "wifi插座"
+    },
+    {
+        "name": "Light"
+    },
+    {
+        "name": "IHG"
+    },
+    {
+        "name": "LS2开关面板"
+    }
+]
+
+
+### detail 详情
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+### mod 修改
+post {{url}}{{module}}/mod/
+{{contentType}}
+
+{}
+
+
+### del 删除
+post {{url}}{{module}}/detail/
+{{contentType}}
+
+
+
+
+
