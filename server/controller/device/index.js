@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-28 16:28:40
+ * @LastEditTime: 2020-10-15 14:46:45
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -10,8 +10,10 @@ const {
   response
 } = require('../../common/utils');
 const Model = require('../../models')('device');
+const ProductModel=require('../../models')('product');
 
 const controller = {
+  // 查询
   get: async (req, res,next) => {
     const {
       offset,
@@ -79,6 +81,8 @@ const controller = {
       })
       .catch(next);
   },
+
+  // 添加
   add: async (req, res,next) => {
     const params = {
       ...req.body,
@@ -90,6 +94,8 @@ const controller = {
       }
     }).catch(next);
   },
+
+  // 详情
   detail: async (req, res,next) => {
     const {
       did
@@ -108,6 +114,8 @@ const controller = {
       
     }).catch(next);
   },
+
+  // 修改
   mod: async (req, res,next) => {
     const {
       did
@@ -118,6 +126,8 @@ const controller = {
     const params = req.body;
     Model.findOneAndUpdate(conditions, params).then(result => {}).catch(next);
   },
+
+  // 删除
   del: async (req, res,next) => {
     const {
       did
@@ -127,30 +137,57 @@ const controller = {
     };
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
+
+  // 控制
   controls: async (req, res,next) => {
     const params = req.body;
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
+
+  // 查询控制日志
   getControlLogs: async (req, res,next) => {
     const params = req.body;
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
+
+  // 查询错误日志
   getErrorLogs: async (req, res,next) => {
     const params = req.body;
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
+
+  // 查询服务
   getDevServices: async (req, res,next) => {
     const params = req.body;
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
+
+  // 查询保修日志
   getRepairLogs: async (req, res,next) => {
     const params = req.body;
     Model.findOneAndDelete(params).then(result => {}).catch(next);
   },
-  getAttributes: async (req, res,next) => {
-    const params = req.body;
-    Model.findOneAndDelete(params).then(result => {}).catch(next);
+  
+  // 查询产品属性
+  getAttributes: async (req, res, next) => {
+    const {productid}= req.body;
+    const params = {
+      pid:productid
+    } 
+    ProductModel.find(params)
+      .lean()
+      .then(result => {
+      if (result) {
+        const data = {
+          attributes:result[0]?result[0].attributes:[],
+        }
+
+        res.send(response(data));
+      }
+    }).catch(next);
   },
+
+  // 查询统计
   getStatistics: async (req, res, next) => { 
     const { running } = req.body
     const params = {

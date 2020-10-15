@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-08 14:52:18
- * @LastEditTime: 2020-09-28 16:03:25
+ * @LastEditTime: 2020-10-15 14:17:18
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -184,12 +184,8 @@ export default {
     },
     // 查询所有分组
     getAllGroup() {
-      const params = {
-        id: 0,
-        name: '',
-      };
       groupManageAsk
-        .getAllGroup(params)
+        .getGroup()
         .then(result => {
           const { errcode, data = {} } = result;
           if (errcode === 200) {

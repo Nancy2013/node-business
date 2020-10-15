@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-14 15:22:37
+ * @LastEditTime: 2020-10-15 14:09:04
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -67,10 +67,7 @@ const controller = {
     const params = id;
     Model.findById(params).then(result => {
       if (result) {
-        const data = {
-          data: result,
-        };
-        res.send(response(data));
+        res.send(response(result));
       }
     }).catch(next);
   },

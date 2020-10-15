@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-09-29 14:23:18
+ * @LastEditTime: 2020-10-15 14:22:28
  * @LastEditors: Please set LastEditors
  */
 import { HTTP_METHOD } from 'configPath/index';
@@ -12,10 +12,6 @@ export default {
 /* 分组 */
   // 获取子分组和设备
   getGroup: reqHandle('/group/get', {
-    method: HTTP_METHOD.POST,
-  }),
-  // 获取所有分组
-  getAllGroup: reqHandle('/group/getAll', {
     method: HTTP_METHOD.POST,
   }),
   // 添加
@@ -38,8 +34,4 @@ export default {
   getDevice: reqHandle('/group/getdevice', {
     method: HTTP_METHOD.POST,
   }),
-  // // 添加组设备
-  // addDevice: reqHandle('/group/adddevice', {
-  //   method: HTTP_METHOD.POST,
-  // }),
 };

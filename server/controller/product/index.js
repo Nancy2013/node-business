@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-14 16:59:39
+ * @LastEditTime: 2020-10-15 14:45:27
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -26,7 +26,7 @@ const controller = {
         result.map(v => v.id = v._id);
         if (result) {
           const data = {
-            alist: result,
+            productsinfo: result,
             totalsize: totalSize,
           };
           res.send(response(data));
