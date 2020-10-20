@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-20 16:35:48
+ * @LastEditTime: 2020-10-20 16:39:27
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -15,7 +15,6 @@ const ProductModel=require('../../models')('product');
 const controller = {
   // 查询
   get: async (req, res, next) => {
-    console.log('*****************');
     const {
       offset,
       limit,
