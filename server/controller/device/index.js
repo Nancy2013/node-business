@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-15 14:46:45
+ * @LastEditTime: 2020-10-20 16:35:48
  * @LastEditors: Please set LastEditors
  * @Description: In project Settings Edit
  * @FilePath: \node-business\server\controller\project\index.js
@@ -14,7 +14,8 @@ const ProductModel=require('../../models')('product');
 
 const controller = {
   // 查询
-  get: async (req, res,next) => {
+  get: async (req, res, next) => {
+    console.log('*****************');
     const {
       offset,
       limit,
@@ -22,7 +23,6 @@ const controller = {
       location,
       online,
       did,
-      seq,
       siteid,
       groupid,
       taskid,
@@ -53,8 +53,8 @@ const controller = {
     if (siteid===-1) {
       params.siteid = null;
     }
-    if (groupid===-1) {
-      params.groupid = null;
+    if (groupid) {
+      params.groupid =groupid===-1?null:groupid;
     }
     if (taskid === -1) {
       params.taskid = null;
@@ -62,15 +62,15 @@ const controller = {
     if (running) {
       params.running = running;
     }
+    
     const totalSize = await Model.countDocuments(params);
     Model.find(params)
       .limit(limit)
       .skip(limit * (offset - 1))
       .sort({
-        _id: seq
+        _id: 1
       })
       .then(result => {
-        console.log(result);
         if (result) {
           const data = {
             deviceInfos: result,

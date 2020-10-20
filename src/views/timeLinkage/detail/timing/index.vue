@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-22 16:41:01
- * @LastEditTime: 2019-10-30 10:47:20
+ * @LastEditTime: 2020-10-20 14:51:53
  * @LastEditors: Please set LastEditors
  -->
 <!-- 定时、场景、联动 -->
@@ -76,8 +76,8 @@
                       style="width:100%"
                       @change="handleChange">
               <a-select-option v-for="v in productList"
-                               :key="v.id"
-                               :value="v.id">{{ v.productname }}</a-select-option>
+                               :key="v.pid"
+                               :value="v.pid">{{ v.productname }}</a-select-option>
             </a-select>
           </a-col>
           <a-col :span="8">
