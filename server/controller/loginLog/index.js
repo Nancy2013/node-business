@@ -28,7 +28,6 @@ const controller = {
     params.type = type ? type :  {
       $in: [2, 3, 4]
     };
-    //  TODO 时间筛选
     console.log('starttime', moment(starttime).toISOString(),'endtime',moment(endtime).endOf('day').toISOString() );
     
     if (starttime&&endtime) { 

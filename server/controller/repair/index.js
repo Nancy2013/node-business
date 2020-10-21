@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-09-24 17:43:23
+ * @LastEditTime: 2020-10-21 17:27:47
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -24,7 +24,6 @@ const controller = {
       endtime,
     } = req.body;
     const params = {};
-    //  TODO 时间筛选
     if (starttime&&endtime) { 
       params.createtime = { $gte: moment(starttime).toISOString(), $lte: moment(endtime).endOf('day').toISOString() };
     }

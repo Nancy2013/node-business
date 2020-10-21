@@ -24,7 +24,6 @@ const controller = {
       endtime,
     } = req.body;
     const params = {};
-    //  TODO 时间筛选
     if (starttime&&endtime) { 
       params.createtime = { $gte: moment(starttime).toISOString(), $lte: moment(endtime).endOf('day').toISOString() };
     }
