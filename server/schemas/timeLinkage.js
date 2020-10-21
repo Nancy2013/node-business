@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:37:39
- * @LastEditTime: 2020-10-21 15:06:56
+ * @LastEditTime: 2020-10-21 17:19:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\views\index.js
@@ -36,6 +36,6 @@ module.exports = new mongoose.Schema({
     type:Array,
   },
   sceneids: {
-    type: [{type:ObjectId,ref:'TimeLinkage'}]
+    type:[{type:ObjectId,ref:'TimeLinkage'}],
   }
 });

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-21 15:30:16
+ * @LastEditTime: 2020-10-21 17:22:20
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -70,7 +70,12 @@ const controller = {
       .lean()
       .then(result => {
         if (result) {
-          result.linktasks = result.sceneids;
+          result.linktasks = result.sceneids.map(v => { 
+            return {
+              ...v,
+              id:v._id,
+            }
+          });
           res.send(response(result));
       }
     }).catch(next);
