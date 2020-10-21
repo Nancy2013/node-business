@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-27 15:49:56
- * @LastEditTime: 2020-10-20 17:46:33
+ * @LastEditTime: 2020-10-21 15:23:33
  * @LastEditors: Please set LastEditors
  */
 // 用于具有表格分页功能的组件使用
@@ -227,6 +227,7 @@ export default which => ({
           if (!this.isValidLinkage()) {
             return;
           }
+          this.data.sceneids=linktasks.map(v=>v.id);
         } else {
           // 定时||场景
           if (effects.length <= 0) {
@@ -351,7 +352,7 @@ export default which => ({
       this.$emit('updateSpinning', true);
       const { id } = this;
       const params = {
-        ids: [id],
+        id,
       };
       timeLinkageAsk
         .delTimeLinkage(params)

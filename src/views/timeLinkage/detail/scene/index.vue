@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-22 16:41:01
- * @LastEditTime: 2019-10-09 09:57:36
+ * @LastEditTime: 2020-10-21 14:05:02
  * @LastEditors: Please set LastEditors
  -->
 <!-- 定时、场景、联动 -->
@@ -31,7 +31,7 @@
         <div v-if="data.effects&&data.effects.length>0"
              class="tag-box mt10">
           <div v-for="(item,index) in data.effects"
-               :key="item.did"
+               :key="item.deviceid"
                class="tag">
             <a-row>
               <!-- 自定义定时-设备信息&设备状态 -->

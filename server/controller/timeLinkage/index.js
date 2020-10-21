@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-19 16:32:59
- * @LastEditTime: 2020-10-15 14:09:04
+ * @LastEditTime: 2020-10-21 15:30:16
  * @LastEditors: Please set LastEditors
  * @Description: In account Settings Edit
  * @FilePath: \node-business\server\controller\account\index.js
@@ -65,9 +65,13 @@ const controller = {
       id
     } = req.body;
     const params = id;
-    Model.findById(params).then(result => {
-      if (result) {
-        res.send(response(result));
+    Model.findById(params)
+      .populate('sceneids', 'name')
+      .lean()
+      .then(result => {
+        if (result) {
+          result.linktasks = result.sceneids;
+          res.send(response(result));
       }
     }).catch(next);
   },
@@ -99,11 +103,17 @@ const controller = {
   
   // 执行
   trigger:async (req, res, next) => {
-    const params = {
-      _id: req.body.id,
-    };
-    Model.findOneAndDelete(params).then(result => {
-      
+    const {
+      id
+    } = req.body;
+    const params = id;
+    Model.findById(params).then(result => {
+      if (result) { 
+        const data = {
+          result: 1
+        }
+        res.send(response(data));
+      }
     }).catch(next);
   },
 };

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-08 14:52:18
- * @LastEditTime: 2019-09-19 13:55:44
+ * @LastEditTime: 2020-10-21 14:47:03
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -148,7 +148,7 @@
           .then(result => {
             const { errcode, data = {} } = result;
             if (errcode === 200) {
-              this.sceneList = data.taskinfo || [];
+              this.sceneList = data.alist || [];
               this.spinning = false;
             }
           })
