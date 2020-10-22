@@ -2,12 +2,11 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2019-09-23 16:01:13
+ * @LastEditTime: 2020-10-22 15:22:23
  * @LastEditors: Please set LastEditors
  */
 const alias = require('./w-build/alias')();
 
-// TODO 属性大小写格式化
 module.exports = {
   root: true,
   extends: ['plugin:vue/recommended', 'airbnb-base'],
