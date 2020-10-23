@@ -2,12 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-22 11:51:44
- * @LastEditTime: 2020-10-22 17:48:59
+ * @LastEditTime: 2020-10-23 15:56:38
  * @LastEditors: Please set LastEditors
  */
 const path = require('path');
 
-const extraPath = ''; // ./ | web
+const extraPath = 'web'; // ./ | web
 const publicPath = '';
 const distRoot = path.resolve(__dirname, '../dist');
 module.exports = {
