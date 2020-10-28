@@ -20,7 +20,7 @@
   "dependencies": {
     "ant-design-vue": "^1.3.13",
     "atob": "^2.1.2",
-    "axios": "^0.16.2",
+    "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "blob": "0.0.5",
     "element-ui": "^2.8.2",
