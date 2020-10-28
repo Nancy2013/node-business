@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-18 15:05:58
- * @LastEditTime: 2020-09-21 10:48:02
+ * @LastEditTime: 2020-10-27 17:59:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\app.js
@@ -39,7 +39,6 @@ app.all('*', (req, res, next) => {
   next();
   jwtCheck
 });
-
 
 mongoose(app);
 router(app);
