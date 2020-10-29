@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-28 16:39:34
- * @LastEditTime: 2020-10-28 17:13:10
+ * @LastEditTime: 2020-10-28 17:43:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\ecosystem.config.js
@@ -18,14 +18,14 @@ module.exports = {
 
   deploy : {
     production : {
-      user : 'ubuntu',
+      user : 'root',
       host: '10.10.30.70',
       port: "22", // 端口
       ref  : 'origin/master',
-      repo : 'github.com/Nancy2013/node-business.git',
+      repo : 'git@github.com:Nancy2013/node-business.git',
       path: '/root/volume/nginx2/html/node/node-business',
       "ssh_options": "StrictHostKeyChecking=no",
-      'pre-setup': 'apt-get install git',
+      // 'pre-setup': "ssh -t remotehost 'sudo apt-get install git'",
       "post-setup": "ls -la",
       'pre-deploy-local': "echo 'This is a local executed command'",
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',

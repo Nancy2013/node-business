@@ -20,7 +20,7 @@
  *
  * @Author: your name
  * @Date: 2020-05-18 10:57:45
- * @LastEditTime: 2020-10-20 14:13:06
+ * @LastEditTime: 2020-10-29 15:33:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\readme.md
@@ -61,3 +61,12 @@ npm run build
 文件路径: src/router/app
 
 ## 备注
+
+<!--
+TODO
+
+1、ssh key 存储；
+2、git clone 克隆;
+3、pm2 deploy 部署；
+
+ -->
