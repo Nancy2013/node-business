@@ -1,0 +1,15 @@
+# Format
+Host alias
+    HostName 10.10.30.70
+    User root
+    IdentityFile ~/.ssh/authorized_keys
+# Usage: `ssh alias` 
+# Alternative: `ssh -i ~/.ssh/mykey username@myserver.com`
+
+Host github.com
+    HostName github.com
+    User Nancy2013
+    IdentityFile ~/.ssh/id_rsa
+# Usage:
+# git@myepos:username/anyrepo.git 
+# This is for cloning any repo that uses that IdentityFile. This is a good way to make sure that your remote cloning commands use the appropriate key
