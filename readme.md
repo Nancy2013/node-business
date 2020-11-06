@@ -20,7 +20,7 @@
  *
  * @Author: your name
  * @Date: 2020-05-18 10:57:45
- * @LastEditTime: 2020-10-29 15:33:58
+ * @LastEditTime: 2020-11-06 10:54:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\readme.md
@@ -69,4 +69,5 @@ TODO
 2、git clone 克隆;
 3、pm2 deploy 部署；
 
+Tutor：https://www.ssh.com/ssh/copy-id#setting-up-public-key-authentication
  -->
