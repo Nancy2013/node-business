@@ -1,10 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2020-10-28 16:39:34
- * @LastEditTime: 2020-11-03 17:59:54
+ * @LastEditTime: 2020-12-18 10:40:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-business\server\ecosystem.config.js
+ * 
+ * pm2 deploy ecosystem.config.js production setup
+ * 
  */
 module.exports = {
   apps: [{
